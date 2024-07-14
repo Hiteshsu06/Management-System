@@ -1,0 +1,93 @@
+:root {
+  /* Color */
+  --custom-primary-color: black;
+  --custom-secondary-color: rgb(31 31 112);
+  --custom-tertiary-color: white;
+
+  /* Background color */
+  --primary-background-color: white;
+  --secondary-background-color: white;
+  --tertiary-background-color: white;
+
+  /* Button Background color */
+  --button-primary-background-color: white;
+  --button-secondary-background-color: rgb(31 31 112);
+  --button-tertiary-background-color: white;
+}
+
+[data-theme="dark"] {
+   /* Color */
+   --custom-primary-color: #1d1d1d;
+   --custom-secondary-color: #b9b9b9;
+   --custom-tertiary-color: white;
+   
+   /* Background color */
+   --primary-background-color: rgb(21 21 21 / var(--tw-bg-opacity));
+   --secondary-background-color: #1d1d1d;
+   --tertiary-background-color: #242424;
+}
+
+/* var(--color) */
+  
+/* For sidebar */
+.sidebar {
+    overflow-x: hidden;
+    transition: transform 0.3s ease;
+    transform: translateX(-100%);
+}
+
+.sidebar.open {
+    transform: translateX(0);
+}
+
+.sidebar.closed {
+    position: fixed;
+    transform: translateX(-100%);
+}
+
+.toggle-button {
+    transition: transform 0.3s ease;
+  }
+  
+  .icon {
+    display: inline-block;
+    transition: transform 0.3s ease;
+  }
+  
+  .rotate {
+    transform: rotate(180deg);
+  }
+
+  #pr_id_2_sub_0{
+    background-color: var(--secondary-background-color);
+  }
+
+  tr{
+    background-color: transparent;
+  }
+  th{
+    background-color: var(--secondary-background-color);
+    color: var(--custom-secondary-color) !important;
+    font-size: 0.8rem;
+  }
+  td{
+    background-color: var(--secondary-background-color);
+    color:var(--custom-secondary-color) !important;
+    font-size: 0.7rem;
+  }
+  .custom-menu-container > ul > li > .p-menuitem-content:hover{
+    background-color: var(--secondary-background-color);
+  }
+  .p-menu .p-menuitem:not(.p-highlight):not(.p-disabled).p-focus > .p-menuitem-content{
+    background-color: var(--tertiary-background-color);
+  }
+  .p-paginator{
+    font-size: 0.8rem;
+    background-color: var(--secondary-background-color);
+  }
+  .p-menuitem-icon{
+    color: var(--custom-tertiary-color);
+  }
+  .p-menuitem-text{
+    color: var(--custom-tertiary-color);
+  }
