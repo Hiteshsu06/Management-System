@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const apiBaseURL = 'http://localhost:3030';
+const apiBaseURL = 'https://management-system-backend-ochre.vercel.app';
 
 export const allApi = (dataurl, data, method) => {
     if ('post' === method) {
