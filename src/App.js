@@ -13,6 +13,7 @@ import "primereact/resources/themes/lara-light-cyan/theme.css";
 const Login = lazy(() => import("@pages/LoginPage"));
 const Signup = lazy(() => import("@pages/SignupPage"));
 const DashboardPage = lazy(() => import("@pages/DashboardPage"));
+const ProfilePage = lazy(() => import("@pages/ProfilePage"));
 const CompanyForm = lazy(() => import("@components/Company/CompanyForm"));
 const StockManagementForm = lazy(() => import("@components/StockManagement/StockManagementForm"));
 
@@ -32,6 +33,7 @@ function App() {
           <Route path="/edit-company/:id" element={<CompanyForm />}/>
           <Route path="/create-stock-management" element={<StockManagementForm />}/>
           <Route path="/edit-stock-management/:id" element={<StockManagementForm />}/>
+          <Route path="/edit-profile" element={<ProfilePage />}/>
         </Routes>
     </Suspense>
   );

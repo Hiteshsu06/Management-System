@@ -13,6 +13,10 @@
   --button-primary-background-color: white;
   --button-secondary-background-color: rgb(31 31 112);
   --button-tertiary-background-color: white;
+
+  /* Hover Background color */
+  --quater-background-color: rgb(74, 74, 172);
+  --avatar-menu-background-color: rgb(31 31 112);
 }
 
 [data-theme="dark"] {
@@ -25,6 +29,11 @@
    --primary-background-color: rgb(21 21 21 / var(--tw-bg-opacity));
    --secondary-background-color: #1d1d1d;
    --tertiary-background-color: #242424;
+
+   /* Hover Background color */
+  --quater-background-color: #1d1d1d;
+
+  --avatar-menu-background-color: #1d1d1d;
 }
 
 /* var(--color) */
@@ -32,7 +41,7 @@
 /* For sidebar */
 .sidebar {
     overflow-x: hidden;
-    transition: transform 0.3s ease;
+    transition: transform 0s ease;
     transform: translateX(-100%);
 }
 
@@ -76,10 +85,10 @@
     font-size: 0.7rem;
   }
   .custom-menu-container > ul > li > .p-menuitem-content:hover{
-    background-color: var(--secondary-background-color);
+    background-color: var(--quater-background-color);
   }
   .p-menu .p-menuitem:not(.p-highlight):not(.p-disabled).p-focus > .p-menuitem-content{
-    background-color: var(--tertiary-background-color);
+    background-color: var(--quater-background-color);
   }
   .p-paginator{
     font-size: 0.8rem;
@@ -90,4 +99,25 @@
   }
   .p-menuitem-text{
     color: var(--custom-tertiary-color);
+  }
+  .avatar-menu > ul > li > .p-menuitem-content{
+    background-color: var(--avatar-menu-background-color) !important;
+  }
+  .avatar-menu > ul > li > ul{
+    background-color: var(--avatar-menu-background-color) !important;
+  }
+  .avatar-menu > ul > li > .p-menuitem-content:hover{
+    background-color: var(--quater-background-color) !important;
+  }
+  .avatar-menu > ul > li > ul > li > .p-menuitem-content:hover{
+    background-color: var(--quater-background-color) !important;
+  }
+  .custom-dropdown > .p-dropdown-label{
+    font-size: 11px !important;
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+
+  }
+  .p-dropdown-items-wrapper{
+    font-size: 11px !important;
   }

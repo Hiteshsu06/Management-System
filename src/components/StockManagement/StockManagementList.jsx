@@ -8,7 +8,7 @@ import Breadcrum from "@common/Breadcrum";
 import DataTable from "@common/DataTable";
 import ButtonComponent from "@common/ButtonComponent";
 import Confirmbox from "@common/Confirmbox";
-import { allApi } from "@api/api";
+import { allApiWithHeaderToken } from "@api/api";
 
 const StockManagementList = () => {
   const [data, setData] = useState([]);
@@ -43,18 +43,18 @@ const StockManagementList = () => {
   };
   const columns = [
     { field: "category", header: t("category") },
-    { field: "brandName", header: t("brand_name") },
-    { field: "modelNumber", header: t("model_number") },
-    { field: "stockName", header: t("stock_name") },
-    { field: "productQty", header: t("product_qty") },
-    { field: "buyPrice", header: t("buy_price") },
-    { field: "sellPrice", header: t("sell_price") },
-    { field: "gst", header: t("gst") },
+    { field: "brand_name", header: t("brand_name") },
+    { field: "model_number", header: t("model_number") },
+    { field: "stock_name", header: t("stock_name") },
+    { field: "product_qty", header: t("product_qty") },
+    { field: "buy_price", header: t("buy_price") },
+    { field: "sell_price", header: t("sell_price") },
+    { field: "gst_number", header: t("gst") },
     { header: t("action"), body: actionBodyTemplate, headerStyle: { paddingLeft: '3%'} },
   ];
 
   const editStock = (item) => {
-    navigate(`/edit-company/${item?.id}`);
+    navigate(`/edit-stock-management/${item?.id}`);
   };
 
   const confirmDeleteStock = (item) => {
@@ -69,7 +69,7 @@ const StockManagementList = () => {
 
   const confirmDialogbox = () => {
     setIsConfirm(!isConfirm);
-    allApi(`stockManagement/${deleteId}`, "", "delete")
+    allApiWithHeaderToken(`stocks/${deleteId}`, "", "delete")
       .then((response) => {
         fetchStockList();
       })
@@ -84,7 +84,7 @@ const StockManagementList = () => {
 
   const fetchStockList = () => {
     // To get all stocks stored in json
-    allApi("stockManagement", "", "get")
+    allApiWithHeaderToken("stocks", "", "get")
       .then((response) => {
         setData(response?.data);
       })

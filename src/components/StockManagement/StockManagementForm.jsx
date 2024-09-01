@@ -1,15 +1,17 @@
 // components
 import ButtonComponent from "@common/ButtonComponent";
 import InputTextComponent from "@common/InputTextComponent";
-import { allApi } from "@api/api";
+import Dropdown from "@common/DropdownComponent";
+import { allApiWithHeaderToken } from "@api/api";
 
 // external libraries
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useState, useEffect } from "react";
 
-const data = {
+const structure = {
   category: "",
   brandName: "",
   modelNumber: "",
@@ -18,12 +20,39 @@ const data = {
   buyPrice: "",
   sellPrice: "",
   gst: "",
+  company: {}
 };
 
 const StockManagementForm = () => {
   const { t } = useTranslation("msg");
   const navigate = useNavigate();
   const { id } = useParams();
+  const [allCompanies, setAllCompanies] = useState([]);
+  const [data, setData] = useState(structure);
+
+  useEffect(()=>{
+    fetchCompanyList();
+    if (id) {
+      allApiWithHeaderToken(`stocks/${id}`, "", "get")
+        .then((response) => {
+          let filteredData = {
+              brandName: response?.data?.brand_name,
+              buyPrice: response?.data?.buy_price,
+              category: response?.data?.category,
+              gst: response?.data?.gst_number,
+              modelNumber: response?.data?.model_number,
+              productQty: response?.data?.product_qty,
+              sellPrice: response?.data?.sell_price,
+              stockName: response?.data?.stock_name,
+              company: response?.data?.company
+          }
+          setData(filteredData);
+        })
+        .catch((err) => {
+          console.log("err", err);
+        });
+    }
+  },[])
 
   const validationSchema = yup.object().shape({
     category: yup.string().required(t("category_is_required")),
@@ -46,8 +75,30 @@ const StockManagementForm = () => {
     }
   };
 
+  const fetchCompanyList = () => {
+    // To get all users stored in json
+    allApiWithHeaderToken("companies", "", "get")
+      .then((response) => {
+        setAllCompanies(response?.data);
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+  };
+
   const createStock = (value) => {
-    allApi("stockManagement", value, "post")
+    let body = {
+      category: value?.category,
+      brand_name: value?.brandName,
+      model_number: value?.modelNumber,
+      stock_name: value?.stockName,
+      product_qty: value?.productQty,
+      buy_price: value?.buyPrice,
+      sell_price: value?.sellPrice,
+      gst_number: value?.gst,
+      company_id: value?.company?.id
+    }
+    allApiWithHeaderToken("stocks", body, "post")
       .then(() => {
         navigate("/dashboard/stock-management");
       })
@@ -57,7 +108,7 @@ const StockManagementForm = () => {
   };
 
   const updateStock = (value) => {
-    allApi(`stockManagement/${id}`, value, "put")
+    allApiWithHeaderToken(`stockManagement/${id}`, value, "put")
       .then(() => {
         navigate("/dashboard/stock-management");
       })
@@ -78,7 +129,7 @@ const StockManagementForm = () => {
     validateOnBlur: true,
   });
 
-  const { values, errors, handleSubmit, handleChange, touched } = formik;
+  const { values, errors, handleSubmit, handleChange, touched, setFieldValue } = formik;
   return (
     <div className="flex h-screen bg-BgPrimaryColor">
       <div className="mx-16 my-auto grid h-fit w-full grid-cols-4 gap-4 bg-BgSecondaryColor p-8 border rounded border-BorderColor">
@@ -86,7 +137,7 @@ const StockManagementForm = () => {
           <InputTextComponent
             value={values?.category}
             onChange={handleChange}
-            type="category"
+            type="text"
             placeholder={t("category")}
             name="category"
             isLabel={true}
@@ -99,7 +150,7 @@ const StockManagementForm = () => {
           <InputTextComponent
             value={values?.brandName}
             onChange={handleChange}
-            type="brandName"
+            type="text"
             placeholder={t("brand_name")}
             name="brandName"
             isLabel={true}
@@ -112,7 +163,7 @@ const StockManagementForm = () => {
           <InputTextComponent
             value={values?.modelNumber}
             onChange={handleChange}
-            type="modelNumber"
+            type="text"
             placeholder={t("model_number")}
             name="modelNumber"
             isLabel={true}
@@ -125,7 +176,7 @@ const StockManagementForm = () => {
           <InputTextComponent
             value={values?.stockName}
             onChange={handleChange}
-            type="stockName"
+            type="text"
             placeholder={t("stock_name")}
             name="stockName"
             isLabel={true}
@@ -138,7 +189,7 @@ const StockManagementForm = () => {
           <InputTextComponent
             value={values?.productQty}
             onChange={handleChange}
-            type="productQty"
+            type="number"
             placeholder={t("product_qty")}
             name="productQty"
             isLabel={true}
@@ -151,7 +202,7 @@ const StockManagementForm = () => {
           <InputTextComponent
             value={values?.buyPrice}
             onChange={handleChange}
-            type="buyPrice"
+            type="number"
             placeholder={t("buy_price")}
             name="buyPrice"
             isLabel={true}
@@ -164,7 +215,7 @@ const StockManagementForm = () => {
           <InputTextComponent
             value={values?.sellPrice}
             onChange={handleChange}
-            type="sellPrice"
+            type="number"
             placeholder={t("sell_price")}
             name="sellPrice"
             isLabel={true}
@@ -177,13 +228,26 @@ const StockManagementForm = () => {
           <InputTextComponent
             value={values?.gst}
             onChange={handleChange}
-            type="gst"
+            type="text"
             placeholder={t("gst")}
             name="gst"
             isLabel={true}
             error={errors?.gst}
             touched={touched?.gst}
             className="col-span-2 w-full rounded border-[1px] border-[#ddd] px-[1rem] py-[8px] text-[11px] focus:outline-none"
+          />
+        </div>
+        <div className="col-span-2">
+          <Dropdown 
+            value={values?.company}
+            onChange={handleChange}
+            data= {allCompanies}
+            placeholder={t("select_company")}
+            name="company"
+            error={errors?.company}
+            touched={touched?.company}
+            className="col-span-2 w-full mt-5 rounded border-[1px] border-[#ddd] custom-dropdown focus:outline-none"
+            optionLabel="name"
           />
         </div>
         <div className="col-span-3"></div>

@@ -79,5 +79,10 @@
    "you_have_accepted" : "You have accepted",
    "confirmed" : "Confirmed",
    "action" : "Action",
-   "swedish" : "Swedish"
+   "swedish" : "Swedish",
+   "select_company" : "Select Company",
+   "email" : "Email",
+   "gender" : "Gender",
+   "full_address" : "Full Address",
+   "update" : "Update"
 }

@@ -37,66 +37,36 @@ const Login = () => {
   });
 
   const onHandleSubmit = async (value) => {
-    // To get all users stored in json
-    allApi("users", "", "get")
-      .then((response) => {
-        setTimeout(() => {
-          loginLogic(value, response?.data);
-        }, 1000);
-      })
-      .catch((err) => {
-        console.log("err", err);
-      });
-  };
+    let body = {
+      user: {
+        email: value?.email,
+        password: value?.password
+      }
+    }
 
-  const loginLogic = (value, allUser) => {
-    // To check the available user
-    let userIndex = allUser?.findIndex((item) => {
-      return item?.email === value?.email;
-    });
-
-    if (userIndex !== -1) {
-      if (value?.password !== allUser[userIndex]?.password) {
-        toast.current.show({
-          severity: "error",
-          summary: "Error",
-          detail: "User password not matching",
-          life: 3000,
-        });
-      } else {
-        if (checked) {
-          localStorage.setItem("keepMeLoggedIn", true);
+    // To Handle Normal submit
+    allApi(`users/sign_in`, body, "post")
+    .then((response) => {
+      if(response?.status === 200){
+        let data = {
+          firstName: response?.data?.data?.email,
+          lastName: "",
+          email: ""
         }
-        getUserDetails(value);
-        navigate("/dashboard");
+        let jwtToken = response?.headers?.authorization;
+        localStorage.setItem("user", JSON.stringify(data));
+        localStorage.setItem("token", jwtToken);
         toast.current.show({
           severity: "success",
           summary: "Success",
-          detail: "User login successfully",
-          life: 3000,
+          detail: response?.data?.message,
+          life: 1000
         });
       }
-    } else {
-      toast.current.show({
-        severity: "error",
-        summary: "Error",
-        detail: "User not found, please signup first",
-        life: 3000,
-      });
-    }
-  };
-
-  const getUserDetails = (value) => {
-    allApi(`users`, "", "get")
-      .then((response) => {
-        let userDetails = response?.data?.find(
-          (item) => item?.email === value?.email,
-        );
-        localStorage.setItem("userDetails", JSON.stringify(userDetails));
-      })
-      .catch((err) => {
-        console.log("err", err);
-      });
+    })
+    .catch((err) => {
+      console.log("err", err);
+    });
   };
 
   const loginByFacebook = () => {};
@@ -116,7 +86,7 @@ const Login = () => {
   return (
     <div className="mt-16 flex justify-center">
       <div className="w-1/4 border px-5 py-5 max-lg:px-10 max-md:px-5">
-        <Toast ref={toast} position="top-right" />
+        <Toast ref={toast} position="top-right" onHide={()=>{ navigate('/dashboard') }}/>
         <div className="text-center text-[1.5rem] font-[600] tracking-wide max-lg:text-[1.4em] max-sm:text-[1rem]">
           {t("welcome_back")}
         </div>

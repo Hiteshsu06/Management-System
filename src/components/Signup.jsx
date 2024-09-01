@@ -52,46 +52,27 @@ const Signup = () => {
   });
 
   const onHandleSubmit = async (value) => {
-    let body = structuredClone(value);
+    let body = {
+      user: {
+        email: value?.email,
+        password: value?.password
+      }
+    }
     // To get all users stored in json
-    await allApi("users", "", "get")
+    await allApi("users", body , "post")
       .then((response) => {
-        setOverallUser([...response?.data]);
+        if(response?.status === 200){
+          navigate('/')
+        }
       })
       .catch((err) => {
-        console.log("err", err);
-      });
-
-    // To check the available user
-    let userIndex = overallUser?.findIndex((item) => {
-      return item?.email === value?.email;
-    });
-
-    body.id = String(Number(overallUser?.pop()?.id) + 1);
-    if (userIndex === -1) {
-      await allApi("users", body, "post")
-        .then(() => {
-          toast.current.show({
-            severity: "success",
-            summary: "Success",
-            detail: "User has been created successfully",
-            life: 3000,
-          });
-          setTimeout(() => {
-            navigate("/");
-          }, 3000);
-        })
-        .catch((err) => {
-          console.log("err", err);
+        toast.current.show({
+          severity: "error",
+          summary: "Error",
+          detail: "User already exists",
+          life: 3000,
         });
-    } else {
-      toast.current.show({
-        severity: "error",
-        summary: "Error",
-        detail: "User already exists",
-        life: 3000,
       });
-    }
   };
 
   const formik = useFormik({

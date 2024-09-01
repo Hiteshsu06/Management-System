@@ -8,7 +8,7 @@ import Breadcrum from "@common/Breadcrum";
 import DataTable from "@common/DataTable";
 import ButtonComponent from "@common/ButtonComponent";
 import Confirmbox from "@common/Confirmbox";
-import { allApi } from "@api/api";
+import { allApiWithHeaderToken } from "@api/api";
 
 const CompanyList = () => {
   const { t } = useTranslation("msg");
@@ -43,8 +43,8 @@ const CompanyList = () => {
   const columns = [
     { field: "name", header: t("name") },
     { field: "address", header: t("address") },
-    { field: "contactNumber", header: t("contact_number") },
-    { field: "gstNumber", header: t("gst") },
+    { field: "contact_number", header: t("contact_number") },
+    { field: "gst_number", header: t("gst") },
     { header: t("action"), body: actionBodyTemplate, headerStyle: { paddingLeft: '3%'} },
   ];
 
@@ -64,7 +64,7 @@ const CompanyList = () => {
 
   const confirmDialogbox = () => {
     setIsConfirm(!isConfirm);
-    allApi(`company/${deleteId}`, "", "delete")
+    allApiWithHeaderToken(`companies/${deleteId}`, "", "delete")
       .then((response) => {
         fetchCompanyList();
       })
@@ -75,7 +75,7 @@ const CompanyList = () => {
 
   const fetchCompanyList = () => {
     // To get all users stored in json
-    allApi("company", "", "get")
+    allApiWithHeaderToken("companies", "", "get")
       .then((response) => {
         setData(response?.data);
       })

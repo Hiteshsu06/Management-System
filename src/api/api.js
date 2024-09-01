@@ -1,10 +1,12 @@
 import axios from 'axios';
-
-const apiBaseURL = 'https://management-system-backend-ochre.vercel.app';
+const apiBaseURL = 'http://127.0.0.1:3000';
 
 export const allApi = (dataurl, data, method) => {
+    const headers = {
+        'Content-Type': 'application/json'
+    }
     if ('post' === method) {
-        return axios.post(`${apiBaseURL}/${dataurl}`, data);
+        return axios.post(`${apiBaseURL}/${dataurl}`, JSON.stringify(data), { headers: headers });
     }
     if ('get' === method) {
         return axios.get(`${apiBaseURL}/${dataurl}`);
@@ -14,5 +16,25 @@ export const allApi = (dataurl, data, method) => {
     }
     if ('put' === method) {
         return axios?.put(`${apiBaseURL}/${dataurl}`, data);
+    }
+};
+
+export const allApiWithHeaderToken = (dataurl, data, method) => {
+    let token = localStorage.getItem('token');
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': token
+    }
+    if ('post' === method) {
+        return axios.post(`${apiBaseURL}/${dataurl}`, JSON.stringify(data), { headers: headers });
+    }
+    if ('get' === method) {
+        return axios.get(`${apiBaseURL}/${dataurl}`, { headers: headers });
+    }
+    if ('delete' === method) {
+        return axios.delete(`${apiBaseURL}/${dataurl}`, { headers: headers });
+    }
+    if ('put' === method) {
+        return axios?.put(`${apiBaseURL}/${dataurl}`, data, { headers: headers });
     }
 };

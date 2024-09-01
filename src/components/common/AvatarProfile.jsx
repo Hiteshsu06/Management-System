@@ -3,6 +3,7 @@ import { TieredMenu } from "primereact/tieredmenu";
 import { Avatar } from "primereact/avatar";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { allApiWithHeaderToken } from "@api/api";
 
 const AvatarProfile = ({ size, shape, userDetails }) => {
   const menu = useRef(null);
@@ -48,7 +49,15 @@ const AvatarProfile = ({ size, shape, userDetails }) => {
       label: t("logout"),
       icon: "ri-logout-circle-r-line",
       command: () => {
-        navigate("/");
+        allApiWithHeaderToken(`users/sign_out`,"", "delete")
+        .then((response) => {
+          if(response?.status === 200){
+           navigate('/')
+          }
+        })
+        .catch((err) => {
+          console.log("err", err);
+        });
         let theme = localStorage.getItem("theme");
         localStorage.clear();
         localStorage.setItem("theme", theme);

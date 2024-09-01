@@ -1,7 +1,7 @@
 // components
 import ButtonComponent from "@common/ButtonComponent";
 import InputTextComponent from "@common/InputTextComponent";
-import { allApi } from "@api/api";
+import { allApiWithHeaderToken } from "@api/api";
 
 // external libraries
 import * as yup from "yup";
@@ -42,7 +42,13 @@ const CompanyForm = () => {
   };
 
   const createCompany = (value) => {
-    allApi("company", value, "post")
+    let body = {
+      name: value?.name,
+      address: value?.address,
+      contact_number: value?.contactNumber,
+      gst_number: value?.gstNumber
+    }
+    allApiWithHeaderToken("companies", body, "post")
       .then(() => {
         navigate("/dashboard");
       })
@@ -52,7 +58,7 @@ const CompanyForm = () => {
   };
 
   const updateCompany = (value) => {
-    allApi(`company/${id}`, value, "put")
+    allApiWithHeaderToken(`company/${id}`, value, "put")
       .then(() => {
         navigate("/dashboard");
       })
@@ -67,7 +73,7 @@ const CompanyForm = () => {
 
   useEffect(() => {
     if (id) {
-      allApi(`company/${id}`, "", "get")
+      allApiWithHeaderToken(`companies/${id}`, "", "get")
         .then((response) => {
           setData(response?.data);
         })

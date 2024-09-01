@@ -14,11 +14,11 @@ const InputTextComponent = ({
   onFocus,
   error,
   touched,
-  isLabel,
+  isLabel
 }) => (
   <div className="custom-input-design w-full">
     {isLabel ? (
-      <label className="text-[13px] text-TextPrimaryColor">{placeholder}</label>
+      <label className="text-[12px] text-TextSecondaryColor ms-[4px] font-[600]">{placeholder}</label>
     ) : null}
     <InputText
       value={value}
