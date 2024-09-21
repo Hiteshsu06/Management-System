@@ -1,9 +1,9 @@
 import axios from 'axios';
-const apiBaseURL = 'http://127.0.0.1:3000';
+const apiBaseURL = 'https://management-system-backend-94z3.onrender.com';
 
 export const allApi = (dataurl, data, method) => {
     const headers = {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
     }
     if ('post' === method) {
         return axios.post(`${apiBaseURL}/${dataurl}`, JSON.stringify(data), { headers: headers });
