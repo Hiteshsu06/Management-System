@@ -246,7 +246,7 @@ const StockManagementForm = () => {
             name="company"
             error={errors?.company}
             touched={touched?.company}
-            className="col-span-2 w-full mt-5 rounded border-[1px] border-[#ddd] custom-dropdown focus:outline-none"
+            className="col-span-2 w-full rounded border-[1px] border-[#ddd] custom-dropdown focus:outline-none"
             optionLabel="name"
           />
         </div>
