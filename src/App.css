@@ -85,10 +85,16 @@
     font-size: 0.7rem;
   }
   .custom-menu-container > ul > li > .p-menuitem-content:hover{
-    background-color: var(--quater-background-color);
+    background-color: var(--quater-background-color) !important;
   }
   .p-menu .p-menuitem:not(.p-highlight):not(.p-disabled).p-focus > .p-menuitem-content{
-    background-color: var(--quater-background-color);
+    background-color: var(--quater-background-color) !important;
+  }
+  .p-tieredmenu .p-menuitem:not(.p-highlight):not(.p-disabled) > .p-menuitem-content:hover{
+    background-color: var(--quater-background-color) !important;
+  }
+  .p-tieredmenu .p-menuitem > .p-menuitem-content .p-menuitem-link{
+    background-color: var(--color-BgTertiaryColor) !important;
   }
   .p-paginator{
     font-size: 0.8rem;

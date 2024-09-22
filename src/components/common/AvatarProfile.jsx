@@ -5,7 +5,8 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { allApiWithHeaderToken } from "@api/api";
 
-const AvatarProfile = ({ size, shape, userDetails }) => {
+const AvatarProfile = ({ size, shape }) => {
+  let data = JSON.parse(localStorage.getItem("user"));
   const menu = useRef(null);
   const { t } = useTranslation("msg");
   const navigate = useNavigate();
@@ -68,7 +69,7 @@ const AvatarProfile = ({ size, shape, userDetails }) => {
   return (
     <div className="card justify-content-center flex text-TextPrimaryColor">
       <div className="me-4">
-        <div className="text-[0.8rem]">{userDetails?.firstname}</div>
+        <div className="text-[0.8rem]">{data?.email}</div>
         <div className="text-[0.6rem]">{t("super_admin")}</div>
       </div>
       <Avatar

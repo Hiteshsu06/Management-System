@@ -51,7 +51,7 @@ const Login = () => {
         let data = {
           firstName: response?.data?.data?.email,
           lastName: "",
-          email: ""
+          email: response?.data?.data?.email
         }
         let jwtToken = response?.headers?.authorization;
         localStorage.setItem("user", JSON.stringify(data));
