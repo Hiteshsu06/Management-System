@@ -1,5 +1,5 @@
 // components
-import { Topbar, Sidebar, CompanyList, StockManagementList } from "@components";
+import { Topbar, Sidebar, CompanyList, StockManagementList, StockList, SectorList, IndicesList } from "@components";
 import Loading from "@common/Loading";
 
 // utils
@@ -16,7 +16,7 @@ const DashboardPage = () => {
 
   return (
     <div className="flex h-screen overflow-hidden bg-BgPrimaryColor">
-      <div className={`sidebar ${toggle ? "open" : "closed"} h-full`}>
+      <div className={`sidebar ${toggle ? "open" : "closed"} h-full min-w-[60px]  max-lg:max-w-[60px]`}>
         <Sidebar />
       </div>
       <div className="w-full">
@@ -28,6 +28,18 @@ const DashboardPage = () => {
               <Route
                 path="/stock-management"
                 element={<StockManagementList />}
+              />
+              <Route
+                path="/stocks"
+                element={<StockList />}
+              />
+              <Route
+                path="/sector-master"
+                element={<SectorList />}
+              />
+               <Route
+                path="/indices"
+                element={<IndicesList />}
               />
             </Routes>
           </Suspense>

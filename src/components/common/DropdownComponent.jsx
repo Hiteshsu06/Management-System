@@ -2,7 +2,7 @@ import { Dropdown } from 'primereact/dropdown';
 
 const DropdownComponent = ({value, name, data, onChange, optionLabel, placeholder, className, error, touched, label}) => {
   return (
-    <div className='mt-5'>
+    <div>
        {placeholder ? (
           <label className="text-[12px] text-TextSecondaryColor ms-[4px] font-[600]">{placeholder}</label>
         ) : null}

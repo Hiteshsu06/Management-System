@@ -1,9 +1,10 @@
-import { useTranslation } from "react-i18next";
+import { ProgressSpinner } from 'primereact/progressspinner';
 
-const Loading = ({loadingText}) => {
-  const { t } = useTranslation('msg');
+const Loading = () => {
   return (
-    <div>{loadingText || t('loading')}</div>
+    <div className="flex h-screen items-center justify-content-center">
+        <ProgressSpinner style={{width: '50px', height: '50px'}} className='text-BgTertiaryColor'/>
+    </div>
   )
 }
 

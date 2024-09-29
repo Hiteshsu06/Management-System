@@ -16,6 +16,9 @@ const DashboardPage = lazy(() => import("@pages/DashboardPage"));
 const ProfilePage = lazy(() => import("@pages/ProfilePage"));
 const CompanyForm = lazy(() => import("@components/Company/CompanyForm"));
 const StockManagementForm = lazy(() => import("@components/StockManagement/StockManagementForm"));
+const StockForm = lazy(() => import("@components/Stock/StockForm"));
+const SectorForm = lazy(() => import("@components/Sector/SectorForm"));
+const IndicesForm = lazy(() => import("@components/Indices/IndicesForm"));
 
 function App() {
   const theme = localStorage.getItem('theme');
@@ -30,6 +33,9 @@ function App() {
           <Route path="/signup" element={<Signup />}/>
           <Route path="/dashboard/*" element={<DashboardPage />}/>
           <Route path="/create-company" element={<CompanyForm />}/>
+          <Route path="/create-stock" element={<StockForm />}/>
+          <Route path="/create-sector" element={<SectorForm />}/>
+          <Route path="/create-index" element={<IndicesForm />}/>
           <Route path="/edit-company/:id" element={<CompanyForm />}/>
           <Route path="/create-stock-management" element={<StockManagementForm />}/>
           <Route path="/edit-stock-management/:id" element={<StockManagementForm />}/>

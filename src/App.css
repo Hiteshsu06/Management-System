@@ -96,8 +96,12 @@
   .p-tieredmenu .p-menuitem > .p-menuitem-content .p-menuitem-link{
     background-color: var(--color-BgTertiaryColor) !important;
   }
+  .active.p-menuitem{
+    background-color: var(--quater-background-color) !important;
+  }
   .p-paginator{
     font-size: 0.8rem;
+    scale: 0.7;
     background-color: var(--secondary-background-color);
   }
   .p-menuitem-icon{
@@ -126,4 +130,26 @@
   }
   .p-dropdown-items-wrapper{
     font-size: 11px !important;
+  }
+  .p-tabview-nav > li > a{
+    border: 1px solid var(--color-BorderColor);
+    color: var(--color-BgTertiaryColor) !important;
+    font-size: 12px !important;
+  }
+  .p-tabview-nav > .p-highlight > a{
+    background-color: var(--color-BgTertiaryColor) !important;
+    color: white !important;
+    font-size: 12px !important;
+  }
+  .p-tabview .p-tabview-panels {
+    padding: 0px !important;
+  }
+  .p-datatable .p-datatable-loading-overlay {
+    background-color: transparent !important;
+  }
+  .p-datatable-loading-overlay{
+    color: var(--color-BgTertiaryColor) !important;
+  }
+  .p-tabview .p-tabview-nav li .p-tabview-nav-link {
+    padding: 1rem !important;
   }

@@ -1,7 +1,7 @@
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 
-const Datatable = ({ columns, data = [], className, showGridlines }) => {
+const Datatable = ({ columns, data = [], loader, className, showGridlines }) => {
   return (
     <div>
       <DataTable
@@ -10,6 +10,7 @@ const Datatable = ({ columns, data = [], className, showGridlines }) => {
         className={className}
         showGridlines={showGridlines}
         paginator
+        loading={loader}
         rows={5}
         rowsPerPageOptions={[5, 10, 25, 50]}
       >

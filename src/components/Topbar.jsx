@@ -56,7 +56,7 @@ const Topbar = ({ toggleExpansionSwitch }) => {
         ></i>
       </button>
       <div className="grid w-full grid-cols-12 gap-2">
-        <div className="col-span-8 flex items-center">
+        <div className="col-span-8 max-sm:hidden flex items-center">
           <InputTextComponent
             type="text"
             placeholder={t("search")}
@@ -64,7 +64,7 @@ const Topbar = ({ toggleExpansionSwitch }) => {
             className="w-full rounded border-[1px] border-[#ddd] px-[1rem] py-[8px] text-[11px] focus:outline-none"
           />
         </div>
-        <div className="col-span-4 flex justify-end text-TextPrimaryColor">
+        <div className="col-span-4 max-sm:col-span-12 flex justify-end text-TextPrimaryColor">
           <button onClick={toggleTheme} className="me-8 text-xl">
             {theme ? (
               <i className="ri-sun-line"></i>

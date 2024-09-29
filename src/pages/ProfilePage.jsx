@@ -39,20 +39,20 @@ const ProfilePage = () => {
     const { values, errors, handleSubmit, handleChange, touched } = formik;
 
   return (
-    <section class="py-10 my-auto dark:bg-gray-900">
-    <div class="lg:w-[80%] md:w-[90%] xs:w-[96%] mx-auto flex gap-4">
+    <section className="py-10 my-auto dark:bg-gray-900">
+    <div className="lg:w-[80%] md:w-[90%] xs:w-[96%] mx-auto flex gap-4">
         <div
-            class="lg:w-[88%] md:w-[80%] sm:w-[88%] xs:w-full mx-auto shadow-2xl p-4 rounded-xl h-fit self-center dark:bg-gray-800/40">
-            <div class="">
+            className="lg:w-[88%] md:w-[80%] sm:w-[88%] xs:w-full mx-auto shadow-2xl p-4 rounded-xl h-fit self-center dark:bg-gray-800/40">
+            <div className="">
                 <h4
-                    class="lg:text-3xl md:text-2xl sm:text-xl xs:text-xl font-serif font-extrabold mb-2 dark:text-white">
+                    className="lg:text-3xl md:text-2xl sm:text-xl xs:text-xl font-serif font-extrabold mb-2 dark:text-white">
                     Edit Profile
                 </h4>
                 <div>
                         <FileUpload />
                     </div>
-                    <div class="flex lg:flex-row md:flex-col sm:flex-col xs:flex-col gap-2 justify-center w-full">
-                        <div class="w-full  mb-4 mt-6">
+                    <div className="flex lg:flex-row md:flex-col sm:flex-col xs:flex-col gap-2 justify-center w-full">
+                        <div className="w-full  mb-4 mt-6">
                             <InputTextComponent
                                 value={values?.firstName}
                                 onChange={handleChange}
@@ -65,7 +65,7 @@ const ProfilePage = () => {
                                 className="w-full rounded border-[1px] border-[#ddd] px-[1rem] py-[8px] text-[11px] focus:outline-none"
                             />
                         </div>
-                        <div class="w-full  mb-4 lg:mt-6">
+                        <div className="w-full  mb-4 lg:mt-6">
                             <InputTextComponent
                                 value={values?.lastName}
                                 onChange={handleChange}
@@ -80,8 +80,8 @@ const ProfilePage = () => {
                         </div>
                     </div>
 
-                    <div class="flex lg:flex-row md:flex-col sm:flex-col xs:flex-col gap-2 justify-center w-full">
-                        <div class="w-full">
+                    <div className="flex lg:flex-row md:flex-col sm:flex-col xs:flex-col gap-2 justify-center w-full">
+                        <div className="w-full">
                             <InputTextComponent
                                 value={values?.email}
                                 onChange={handleChange}
@@ -95,7 +95,7 @@ const ProfilePage = () => {
                                 className="w-full rounded border-[1px] border-[#ddd] px-[1rem] py-[8px] text-[11px] focus:outline-none"
                             />
                         </div>
-                        <div class="w-full">
+                        <div className="w-full">
                             <InputTextComponent
                                 value={values?.address}
                                 onChange={handleChange}
@@ -109,8 +109,8 @@ const ProfilePage = () => {
                             />
                         </div>
                     </div>
-                    <div class="flex lg:flex-row md:flex-col sm:flex-col xs:flex-col gap-2 justify-center w-full">
-                        <div class="w-full">
+                    <div className="flex lg:flex-row md:flex-col sm:flex-col xs:flex-col gap-2 justify-center w-full">
+                        <div className="w-full">
                             <Dropdown 
                                 value={values?.gender}
                                 onChange={handleChange}
@@ -124,9 +124,9 @@ const ProfilePage = () => {
                                 optionLabel="name"
                             />
                         </div>
-                        <div class="w-full"></div>
+                        <div className="w-full"></div>
                     </div>
-                    <div class="w-full flex justify-end gap-4 rounded-lg mt-4 text-right text-lg font-semibold">
+                    <div className="w-full flex justify-end gap-4 rounded-lg mt-4 text-right text-lg font-semibold">
                         <ButtonComponent
                             onClick={() => handleSubmit()}
                             type="submit"

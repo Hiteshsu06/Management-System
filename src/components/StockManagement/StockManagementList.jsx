@@ -16,6 +16,7 @@ const StockManagementList = () => {
   const navigate = useNavigate();
   const [isConfirm, setIsConfirm] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
+  const [loader, setLoader] = useState(false);
 
   const item = {
     heading: t("stock_management"),
@@ -84,12 +85,15 @@ const StockManagementList = () => {
 
   const fetchStockList = () => {
     // To get all stocks stored in json
+    setLoader(true);
     allApiWithHeaderToken("stocks", "", "get")
       .then((response) => {
         setData(response?.data);
       })
       .catch((err) => {
         console.log("err", err);
+      }).finally(()=> {
+        setLoader(false);
       });
   };
 
@@ -120,6 +124,7 @@ const StockManagementList = () => {
           className="bg-BgPrimaryColor border rounded border-BorderColor"
           columns={columns}
           data={data}
+          loader={loader}
           showGridlines={true}
         />
       </div>
