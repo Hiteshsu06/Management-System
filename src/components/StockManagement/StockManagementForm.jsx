@@ -129,11 +129,11 @@ const StockManagementForm = () => {
     validateOnBlur: true,
   });
 
-  const { values, errors, handleSubmit, handleChange, touched, setFieldValue } = formik;
+  const { values, errors, handleSubmit, handleChange, touched } = formik;
   return (
     <div className="flex h-screen bg-BgPrimaryColor">
       <div className="mx-16 my-auto grid h-fit w-full grid-cols-4 gap-4 bg-BgSecondaryColor p-8 border rounded border-BorderColor">
-        <div className="col-span-2">
+        <div className="col-span-4 md:col-span-2">
           <InputTextComponent
             value={values?.category}
             onChange={handleChange}
@@ -146,7 +146,7 @@ const StockManagementForm = () => {
             className="w-full rounded border-[1px] border-[#ddd] px-[1rem] py-[8px] text-[11px] focus:outline-none"
           />
         </div>
-        <div className="col-span-2">
+        <div className="col-span-4 md:col-span-2">
           <InputTextComponent
             value={values?.brandName}
             onChange={handleChange}
@@ -159,7 +159,7 @@ const StockManagementForm = () => {
             className="col-span-2 w-full rounded border-[1px] border-[#ddd] px-[1rem] py-[8px] text-[11px] focus:outline-none"
           />
         </div>
-        <div className="col-span-2">
+        <div className="col-span-4 md:col-span-2">
           <InputTextComponent
             value={values?.modelNumber}
             onChange={handleChange}
@@ -172,7 +172,7 @@ const StockManagementForm = () => {
             className="col-span-2 w-full rounded border-[1px] border-[#ddd] px-[1rem] py-[8px] text-[11px] focus:outline-none"
           />
         </div>
-        <div className="col-span-2">
+        <div className="col-span-4 md:col-span-2">
           <InputTextComponent
             value={values?.stockName}
             onChange={handleChange}
@@ -185,7 +185,7 @@ const StockManagementForm = () => {
             className="col-span-2 w-full rounded border-[1px] border-[#ddd] px-[1rem] py-[8px] text-[11px] focus:outline-none"
           />
         </div>
-        <div className="col-span-2">
+        <div className="col-span-4 md:col-span-2">
           <InputTextComponent
             value={values?.productQty}
             onChange={handleChange}
@@ -198,7 +198,7 @@ const StockManagementForm = () => {
             className="col-span-2 w-full rounded border-[1px] border-[#ddd] px-[1rem] py-[8px] text-[11px] focus:outline-none"
           />
         </div>
-        <div className="col-span-2">
+        <div className="col-span-4 md:col-span-2">
           <InputTextComponent
             value={values?.buyPrice}
             onChange={handleChange}
@@ -211,7 +211,7 @@ const StockManagementForm = () => {
             className="col-span-2 w-full rounded border-[1px] border-[#ddd] px-[1rem] py-[8px] text-[11px] focus:outline-none"
           />
         </div>
-        <div className="col-span-2">
+        <div className="col-span-4 md:col-span-2">
           <InputTextComponent
             value={values?.sellPrice}
             onChange={handleChange}
@@ -224,7 +224,7 @@ const StockManagementForm = () => {
             className="col-span-2 w-full rounded border-[1px] border-[#ddd] px-[1rem] py-[8px] text-[11px] focus:outline-none"
           />
         </div>
-        <div className="col-span-2">
+        <div className="col-span-4 md:col-span-2">
           <InputTextComponent
             value={values?.gst}
             onChange={handleChange}
@@ -237,7 +237,7 @@ const StockManagementForm = () => {
             className="col-span-2 w-full rounded border-[1px] border-[#ddd] px-[1rem] py-[8px] text-[11px] focus:outline-none"
           />
         </div>
-        <div className="col-span-2">
+        <div className="col-span-4 md:col-span-2">
           <Dropdown 
             value={values?.company}
             onChange={handleChange}

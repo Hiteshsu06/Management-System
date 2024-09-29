@@ -29,7 +29,7 @@ const Sidebar = () => {
       label: (
         <div className="flex items-center py-[2px]">
           <i className="ri-community-line mr-2"></i>
-          <span className="hidden lg:block">{t("company")}</span>
+          <span>{t("company")}</span>
         </div>
       ),
       command: () => {
@@ -41,7 +41,7 @@ const Sidebar = () => {
       label: (
         <div className="flex items-center py-[2px]">
           <i className="ri-store-line mr-2"></i>
-          <span className="hidden lg:block">{t("stock_management")}</span>
+          <span>{t("stock_management")}</span>
         </div>
       ),
       command: () => {
@@ -53,7 +53,7 @@ const Sidebar = () => {
       label: (
         <div className="flex items-center py-[2px]">
           <i className="ri-government-line mr-2"></i>
-          <span className="hidden lg:block">{t("sector_master")}</span>
+          <span>{t("sector_master")}</span>
         </div>
       ),
       command: () => {
@@ -65,7 +65,7 @@ const Sidebar = () => {
       label: (
         <div className="flex items-center py-[2px]">
           <i className="ri-bar-chart-line mr-2"></i>
-          <span className="hidden lg:block">{t("indices")}</span>
+          <span>{t("indices")}</span>
         </div>
       ),
       command: () => {
@@ -77,7 +77,7 @@ const Sidebar = () => {
       label: (
         <div className="flex items-center py-[2px]">
           <i className="ri-archive-stack-line mr-2"></i>
-          <span className="hidden lg:block">{t("stocks")}</span>
+          <span>{t("stocks")}</span>
         </div>
       ),
       command: () => {

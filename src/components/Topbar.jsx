@@ -3,7 +3,7 @@ import InputTextComponent from "@common/InputTextComponent";
 import AvatarProfile from "@common/AvatarProfile";
 import { useTranslation } from "react-i18next";
 
-const Topbar = ({ toggleExpansionSwitch }) => {
+const Topbar = ({ toggleExpansionSwitch, toggle }) => {
   const { t } = useTranslation("msg");
   const [expand, setExpand] = useState(true);
   const [theme, setTheme] = useState(false);
@@ -41,6 +41,10 @@ const Topbar = ({ toggleExpansionSwitch }) => {
       localStorage.setItem("theme", "light");
     }
   }, [theme]);
+
+  useEffect(()=>{
+    setExpand(toggle)
+  },[toggle])
 
   return (
     <div className="flex h-16 w-full items-center gap-4 bg-BgTertiaryColor px-5">

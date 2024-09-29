@@ -96,7 +96,7 @@ const CompanyForm = () => {
   return (
     <div className="flex h-screen bg-BgPrimaryColor">
       <div className="mx-16 my-auto grid h-fit w-full grid-cols-4 gap-4 bg-BgSecondaryColor p-8 border rounded border-BorderColor">
-        <div className="col-span-2">
+        <div className="col-span-4 md:col-span-2">
           <InputTextComponent
             value={values?.name}
             onChange={handleChange}
@@ -109,7 +109,7 @@ const CompanyForm = () => {
             className="w-full rounded border-[1px] border-[#ddd] px-[1rem] py-[8px] text-[11px] focus:outline-none"
           />
         </div>
-        <div className="col-span-2">
+        <div className="col-span-4 md:col-span-2">
           <InputTextComponent
             value={values?.address}
             onChange={handleChange}
@@ -122,7 +122,7 @@ const CompanyForm = () => {
             className="col-span-2 w-full rounded border-[1px] border-[#ddd] px-[1rem] py-[8px] text-[11px] focus:outline-none"
           />
         </div>
-        <div className="col-span-2">
+        <div className="col-span-4 md:col-span-2">
           <InputTextComponent
             value={values?.contactNumber}
             onChange={handleChange}
@@ -135,7 +135,7 @@ const CompanyForm = () => {
             className="col-span-2 w-full rounded border-[1px] border-[#ddd] px-[1rem] py-[8px] text-[11px] focus:outline-none"
           />
         </div>
-        <div className="col-span-2">
+        <div className="col-span-4 md:col-span-2">
           <InputTextComponent
             value={values?.gstNumber}
             onChange={handleChange}
