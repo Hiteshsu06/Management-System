@@ -93,6 +93,9 @@
   .p-tieredmenu .p-menuitem:not(.p-highlight):not(.p-disabled) > .p-menuitem-content:hover{
     background-color: var(--quater-background-color) !important;
   }
+  .p-submenu-list{
+     background-color: var(--color-BgTertiaryColor) !important;
+  }
   .p-tieredmenu .p-menuitem > .p-menuitem-content .p-menuitem-link{
     background-color: var(--color-BgTertiaryColor) !important;
   }

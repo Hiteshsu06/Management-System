@@ -33,7 +33,7 @@ const Confirmbox = ({ isConfirm, closeDialogbox, confirmDialogbox }) => {
 
   return (
     <div>
-      <Toast ref={toast} />
+      <Toast ref={toast}  style={{scale: '0.7'}}/>
       <ConfirmDialog
         group="headless"
         content={({ headerRef, contentRef, footerRef, hide, message }) => (

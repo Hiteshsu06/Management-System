@@ -3,7 +3,7 @@ import { Topbar, Sidebar, CompanyList, StockManagementList, StockList, SectorLis
 import Loading from "@common/Loading";
 
 // utils
-import { Suspense, useState, useEffect } from "react";
+import { Suspense, useState, useLayoutEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -24,7 +24,7 @@ const DashboardPage = () => {
     }
   };
 
-  useEffect(()=>{
+  useLayoutEffect(()=>{
     if (window.innerWidth <= 1024 && toggle) {
       setToggle(false);
     }
@@ -43,7 +43,7 @@ const DashboardPage = () => {
       </div>
       <div className="w-full" onClick={handleClick}>
         <Topbar toggleExpansionSwitch={toggleExpansionSwitch} toggle={toggle}/>
-        <div className="h-[calc(100%_-_4rem)] bg-BgPrimaryColor px-5 py-2">
+        <div className="bg-BgPrimaryColor px-5 py-2">
           <Suspense fallback={<Loading loadingText={t("loading")} />}>
             <Routes>
               <Route path="/" element={<CompanyList />} />
