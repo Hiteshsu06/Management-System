@@ -3,7 +3,7 @@ import { Topbar, Sidebar, CompanyList, StockManagementList, StockList, SectorLis
 import Loading from "@common/Loading";
 
 // utils
-import { Suspense, useState } from "react";
+import { Suspense, useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -19,16 +19,27 @@ const DashboardPage = () => {
    // Function to handle click
    const handleClick = (e) => {
     e.preventDefault();
-    console.log("R",refrainTags.includes(e?.target?.tagName))
     if (window.innerWidth <= 1024 && toggle && !refrainTags.includes(e?.target?.tagName)) {
-      setToggle(!toggle);
+      setToggle(false);
     }
   };
+
+  useEffect(()=>{
+    if (window.innerWidth <= 1024 && toggle) {
+      setToggle(false);
+    }
+  },[]);
+
+  const selectSidebarItem=()=>{
+    if (window.innerWidth <= 1024 && toggle) {
+      setToggle(false);
+    }
+  }
 
   return (
     <div className="flex h-screen overflow-hidden bg-BgPrimaryColor">
       <div className={`sidebar ${toggle ? "open" : "closed"} h-full min-w-fit  max-lg:max-w-[60px] max-lg:absolute max-lg:z-10`}>
-        <Sidebar />
+        <Sidebar selectSidebarItem={selectSidebarItem}/>
       </div>
       <div className="w-full" onClick={handleClick}>
         <Topbar toggleExpansionSwitch={toggleExpansionSwitch} toggle={toggle}/>

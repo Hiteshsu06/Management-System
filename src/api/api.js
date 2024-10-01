@@ -22,7 +22,7 @@ export const allApi = (dataurl, data, method) => {
 export const allApiWithHeaderToken = (dataurl, data, method, contentType) => {
     let token = localStorage.getItem('token');
     const headers = {
-        'Content-Type': contentType,
+        'Content-Type': 'application/json',
         'Authorization': token
     }
     const axiosInstance = axios.create({

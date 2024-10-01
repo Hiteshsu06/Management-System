@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
-const Sidebar = () => {
+const Sidebar = ({selectSidebarItem}) => {
   const { t } = useTranslation("msg");
   const navigate = useNavigate();
   const location = useLocation();
@@ -23,7 +23,9 @@ const Sidebar = () => {
     } else if (path.includes("/dashboard/stocks")) {
       setActiveItem("stocks");
     }
+    selectSidebarItem(false)
   }, [location]);
+
   const items = [
     {
       label: (
@@ -86,6 +88,7 @@ const Sidebar = () => {
       className: activeItem === "stocks" ? "active" : "", // Highlight if active
     },
   ];
+
   return (
     <div className="h-full bg-BgTertiaryColor text-TextPrimaryColor">
       <div className="p-5">
@@ -98,6 +101,6 @@ const Sidebar = () => {
       />
     </div>
   );
-};
+}
 
 export default Sidebar;
