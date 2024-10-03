@@ -43,7 +43,7 @@ const DashboardPage = () => {
   }
 
   return (
-    <div className="flex h-screen overflow-hidden bg-BgPrimaryColor">
+    <div className="flex overflow-hidden bg-BgPrimaryColor">
       <div className={`sidebar ${toggle ? "open" : "closed"} h-full min-w-fit  max-lg:max-w-[60px] max-lg:absolute max-lg:z-10`}>
         <Sidebar selectSidebarItem={selectSidebarItem}/>
       </div>
