@@ -94,7 +94,7 @@ const CompanyForm = () => {
   const { values, errors, handleSubmit, handleChange, touched } = formik;
 
   return (
-    <div className="flex bg-BgPrimaryColor py-4">
+    <div className="flex h-full bg-BgPrimaryColor py-4">
       <div className="mx-4 sm:mx-16 my-auto grid h-fit w-full grid-cols-4 gap-4 bg-BgSecondaryColor p-8 border rounded border-BorderColor">
         <div className="col-span-4 md:col-span-2">
           <InputTextComponent
