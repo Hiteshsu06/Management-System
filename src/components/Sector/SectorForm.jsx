@@ -126,7 +126,7 @@ const SectorForm = () => {
         </div>
         <div className="col-span-4 md:col-span-2">
             <FileUpload 
-              value={values?.short_term}
+              value={values?.short_term_url}
               name="short_term"
               isLabel={t("stock_short_term_chart")} 
               onChange={(e)=> {
@@ -137,7 +137,7 @@ const SectorForm = () => {
         <div className="col-span-4 md:col-span-2">
             <FileUpload 
               isLabel={t("stock_long_term_chart")}
-              value={values?.long_term}
+              value={values?.long_term_url}
               name="long_term"
               onChange={(e)=> {
                 setFieldValue('long_term', e?.currentTarget?.files[0]);

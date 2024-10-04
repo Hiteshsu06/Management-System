@@ -38,6 +38,9 @@
 #root{
   height: 100vh;
 }
+.p-toast{
+  scale: 0.8;
+}
 /* var(--color) */
   
 /* For sidebar */
