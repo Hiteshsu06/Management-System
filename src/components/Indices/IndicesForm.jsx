@@ -16,7 +16,9 @@ const structure = {
   name: "",
   price: "",
   short_term: "",
-  long_term: ""
+  short_term_url: "",
+  long_term: "",
+  long_term_url: ""
 };
 const categories = [
   {name: "Domestic", value: 0},
@@ -31,6 +33,8 @@ const IndicesForm = () => {
   const validationSchema = yup.object().shape({
     name: yup.string().required(t("name_is_required")),
     price: yup.string().required(t("price_is_required")),
+    short_term: yup.string().required(t("short_term_is_required")),
+    long_term: yup.string().required(t("long_term_is_required")),
     country: yup.string().required(t("country_is_required")),
     category: yup.string().required(t("category_is_required"))
   });
@@ -156,20 +160,22 @@ const IndicesForm = () => {
         </div>
         <div className="col-span-4 md:col-span-2">
             <FileUpload 
-              value={values?.short_term}
+              value={values?.short_term_url}
               name="short_term"
               isLabel={t("stock_short_term_chart")} 
               onChange={(e)=> {
-                setFieldValue('short_term', e?.currentTarget?.files[0])
+                setFieldValue('short_term', e?.currentTarget?.files[0]);
+                setFieldValue('short_term_url', URL.createObjectURL(e?.target?.files[0]));
               }}/>
         </div>
         <div className="col-span-4 md:col-span-2">
             <FileUpload 
               isLabel={t("stock_long_term_chart")}
-              value={values?.long_term}
+              value={values?.long_term_url}
               name="long_term"
               onChange={(e)=> {
-                setFieldValue('long_term', e?.currentTarget?.files[0])
+                setFieldValue('long_term', e?.currentTarget?.files[0]);
+                setFieldValue('long_term_url', URL.createObjectURL(e?.target?.files[0]));
               }}
             />
         </div>

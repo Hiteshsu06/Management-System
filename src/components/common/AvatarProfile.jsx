@@ -74,7 +74,6 @@ const AvatarProfile = ({ size, shape }) => {
       </div>
       <Avatar
         image="https://primefaces.org/cdn/primereact/images/avatar/amyelsner.png"
-        className="mr-2"
         size={size}
         shape={shape}
         onClick={(e) => menu.current.toggle(e)}

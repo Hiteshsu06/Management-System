@@ -35,7 +35,9 @@
 
   --avatar-menu-background-color: #1d1d1d;
 }
-
+#root{
+  height: 100vh;
+}
 /* var(--color) */
   
 /* For sidebar */
