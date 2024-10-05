@@ -53,15 +53,15 @@ const AvatarProfile = ({ size, shape }) => {
         allApiWithHeaderToken(`users/sign_out`,"", "delete")
         .then((response) => {
           if(response?.status === 200){
-           navigate('/')
+           navigate('/');
+           let theme = localStorage.getItem("theme");
+           localStorage.clear();
+           localStorage.setItem("theme", theme);
           }
         })
         .catch((err) => {
           console.log("err", err);
         });
-        let theme = localStorage.getItem("theme");
-        localStorage.clear();
-        localStorage.setItem("theme", theme);
       },
     },
   ];
