@@ -38,10 +38,15 @@
 #root{
   height: 100vh;
 }
-.p-toast{
-  scale: 0.8;
+.p-toast-message-content{
+  font-size: 12px;
 }
-/* var(--color) */
+.p-toast-message-icon{
+  scale: 0.6;
+}
+.p-toast{
+  max-width: 19rem;
+}
   
 /* For sidebar */
 .sidebar {
@@ -109,8 +114,10 @@
   }
   .p-paginator{
     font-size: 0.8rem;
-    scale: 0.7;
     background-color: var(--secondary-background-color);
+  }
+  .p-dropdown .p-component .p-inputwrapper .p-inputwrapper-filled{
+    scale: 0.7;
   }
   .p-menuitem-icon{
     color: var(--custom-tertiary-color);

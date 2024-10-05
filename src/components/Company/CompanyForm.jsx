@@ -24,6 +24,8 @@ const CompanyForm = () => {
   const [data, setData] = useState(structure);
   const { id } = useParams();
 
+  const theme = localStorage.getItem('theme');
+
   const validationSchema = yup.object().shape({
     name: yup.string().required(t("name_is_required")),
     address: yup.string().required(t("address_is_required")),
@@ -154,7 +156,7 @@ const CompanyForm = () => {
             onClick={() => handleBack()}
             type="button"
             label={t("back")}
-            className="rounded bg-[#1f1f70] px-6 py-2 text-[12px] text-white"
+            className="rounded bg-BgTertiaryColor px-6 py-2 text-[12px] text-white"
             icon="pi pi-arrow-right"
             iconPos="right"
           />
@@ -162,7 +164,7 @@ const CompanyForm = () => {
             onClick={() => handleSubmit()}
             type="submit"
             label={t("submit")}
-            className="rounded bg-[#1f1f70] px-6 py-2 text-[12px] text-white"
+            className="rounded bg-BgTertiaryColor px-6 py-2 text-[12px] text-white"
             icon="pi pi-arrow-right"
             iconPos="right"
           />
