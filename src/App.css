@@ -35,9 +35,6 @@
 
   --avatar-menu-background-color: #1d1d1d;
 }
-#root{
-  height: 100vh;
-}
 .p-toast-message-content{
   font-size: 12px;
 }
@@ -116,7 +113,7 @@
     font-size: 0.8rem;
     background-color: var(--secondary-background-color);
   }
-  .p-dropdown .p-component .p-inputwrapper .p-inputwrapper-filled{
+  .p-dropdown.p-component.p-inputwrapper.p-inputwrapper-filled{
     scale: 0.7;
   }
   .p-menuitem-icon{
