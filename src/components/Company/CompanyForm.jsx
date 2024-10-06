@@ -50,7 +50,7 @@ const CompanyForm = () => {
       contact_number: value?.contactNumber,
       gst_number: value?.gstNumber
     }
-    allApiWithHeaderToken("companies", body, "post")
+    allApiWithHeaderToken("demo_companies", body, "post")
       .then(() => {
         navigate("/dashboard");
       })
@@ -60,7 +60,13 @@ const CompanyForm = () => {
   };
 
   const updateCompany = (value) => {
-    allApiWithHeaderToken(`company/${id}`, value, "put")
+    let body = {
+      name: value?.name,
+      address: value?.address,
+      contact_number: value?.contactNumber,
+      gst_number: value?.gstNumber
+    }
+    allApiWithHeaderToken(`demo_companies/${id}`, body, "put")
       .then(() => {
         navigate("/dashboard");
       })
@@ -75,9 +81,15 @@ const CompanyForm = () => {
 
   useEffect(() => {
     if (id) {
-      allApiWithHeaderToken(`companies/${id}`, "", "get")
+      allApiWithHeaderToken(`demo_companies/${id}`, "", "get")
         .then((response) => {
-          setData(response?.data);
+          let data = {
+            name: response?.data?.name,
+            address: response?.data?.address,
+            contactNumber: response?.data?.contact_number,
+            gstNumber: response?.data?.gst_number
+          }
+          setData(data);
         })
         .catch((err) => {
           console.log("err", err);

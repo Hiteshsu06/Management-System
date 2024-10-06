@@ -32,7 +32,7 @@ const SectorList = () => {
         <ButtonComponent
           label={t("view_stocks")}
           className="rounded bg-BgTertiaryColor px-6 py-2 text-[12px] text-white"
-          onClick={() => editCompany(rowData)}
+          onClick={() => editSector(rowData)}
         />
       </div>
     );
@@ -43,7 +43,7 @@ const SectorList = () => {
         <ButtonComponent
           label={t("short_term")}
           className="rounded bg-BgTertiaryColor px-6 py-2 text-[12px] text-white"
-          onClick={() => editCompany(rowData)}
+          onClick={() => editSector(rowData)}
         />
         <ButtonComponent
           label={t("long_term")}
@@ -60,7 +60,7 @@ const SectorList = () => {
         <ButtonComponent
           icon="ri-pencil-line"
           className="text-[1rem]"
-          onClick={() => editCompany(rowData)}
+          onClick={() => editSector(rowData)}
         />
         <ButtonComponent
           icon="ri-delete-bin-line"
@@ -78,7 +78,7 @@ const SectorList = () => {
     { header: t("action"), body: actionBodyTemplate, headerStyle: { paddingLeft: '3%'} },
   ];
 
-  const editCompany = (item) => {
+  const editSector = (item) => {
     navigate(`/edit-sector/${item?.id}`);
   };
 
@@ -94,7 +94,7 @@ const SectorList = () => {
 
   const confirmDialogbox = () => {
     setIsConfirm(!isConfirm);
-    allApiWithHeaderToken(`companies/${deleteId}`, "", "delete")
+    allApiWithHeaderToken(`sector_masters/${deleteId}`, "", "delete")
       .then((response) => {
         fetchStockList();
       })
@@ -106,7 +106,7 @@ const SectorList = () => {
   const fetchStockList = () => {
     // To get all users stored in json
     setLoader(true);
-    allApiWithHeaderToken("companies", "", "get")
+    allApiWithHeaderToken("sector_masters", "", "get")
       .then((response) => {
         setData(response?.data);
       })

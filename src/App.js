@@ -36,6 +36,9 @@ function App() {
           <Route path="/create-stock" element={<StockForm />}/>
           <Route path="/create-sector" element={<SectorForm />}/>
           <Route path="/create-index" element={<IndicesForm />}/>
+          <Route path="/edit-stock/:id" element={<StockForm />}/>
+          <Route path="/edit-sector/:id" element={<SectorForm />}/>
+          <Route path="/edit-index/:id" element={<IndicesForm />}/>
           <Route path="/edit-company/:id" element={<CompanyForm />}/>
           <Route path="/create-stock-management" element={<StockManagementForm />}/>
           <Route path="/edit-stock-management/:id" element={<StockManagementForm />}/>

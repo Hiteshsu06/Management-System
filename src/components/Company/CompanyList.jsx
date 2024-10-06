@@ -65,7 +65,7 @@ const CompanyList = () => {
 
   const confirmDialogbox = () => {
     setIsConfirm(!isConfirm);
-    allApiWithHeaderToken(`companies/${deleteId}`, "", "delete")
+    allApiWithHeaderToken(`demo_companies/${deleteId}`, "", "delete")
       .then((response) => {
         fetchCompanyList();
       })
@@ -77,7 +77,7 @@ const CompanyList = () => {
   const fetchCompanyList = () => {
     // To get all users stored in json
     setLoader(true);
-    allApiWithHeaderToken("companies", "", "get")
+    allApiWithHeaderToken("demo_companies", "", "get")
       .then((response) => {
         setData(response?.data);
       })

@@ -113,7 +113,7 @@
     font-size: 0.8rem;
     background-color: var(--secondary-background-color);
   }
-  .p-dropdown.p-component.p-inputwrapper.p-inputwrapper-filled{
+  .p-paginator-bottom > .p-dropdown.p-component.p-inputwrapper.p-inputwrapper-filled{
     scale: 0.7;
   }
   .p-menuitem-icon{

@@ -32,8 +32,9 @@ const StockManagementForm = () => {
 
   useEffect(()=>{
     fetchCompanyList();
-    if (id) {
-      allApiWithHeaderToken(`stocks/${id}`, "", "get")
+
+    if (id && allCompanies.length > 0) {
+      allApiWithHeaderToken(`demo_stocks/${id}`, "", "get")
         .then((response) => {
           let filteredData = {
               brandName: response?.data?.brand_name,
@@ -43,16 +44,17 @@ const StockManagementForm = () => {
               modelNumber: response?.data?.model_number,
               productQty: response?.data?.product_qty,
               sellPrice: response?.data?.sell_price,
-              stockName: response?.data?.stock_name,
-              company: response?.data?.company
-          }
+              stockName: response?.data?.stock_name
+          };
+          const selectedCompany = allCompanies.find((item) => item.id === response?.data?.demo_company_id);
+          filteredData['company'] = selectedCompany || {};
           setData(filteredData);
         })
         .catch((err) => {
           console.log("err", err);
         });
     }
-  },[])
+  }, [id, allCompanies])
 
   const validationSchema = yup.object().shape({
     category: yup.string().required(t("category_is_required")),
@@ -77,7 +79,7 @@ const StockManagementForm = () => {
 
   const fetchCompanyList = () => {
     // To get all users stored in json
-    allApiWithHeaderToken("companies", "", "get")
+    allApiWithHeaderToken("demo_companies", "", "get")
       .then((response) => {
         setAllCompanies(response?.data);
       })
@@ -96,9 +98,9 @@ const StockManagementForm = () => {
       buy_price: value?.buyPrice,
       sell_price: value?.sellPrice,
       gst_number: value?.gst,
-      company_id: value?.company?.id
+      demo_company_id: value?.company?.id
     }
-    allApiWithHeaderToken("stocks", body, "post")
+    allApiWithHeaderToken("demo_stocks", body, "post")
       .then(() => {
         navigate("/dashboard/stock-management");
       })
@@ -108,7 +110,7 @@ const StockManagementForm = () => {
   };
 
   const updateStock = (value) => {
-    allApiWithHeaderToken(`stockManagement/${id}`, value, "put")
+    allApiWithHeaderToken(`demo_stocks/${id}`, value, "put")
       .then(() => {
         navigate("/dashboard/stock-management");
       })
@@ -129,7 +131,7 @@ const StockManagementForm = () => {
     validateOnBlur: true,
   });
 
-  const { values, errors, handleSubmit, handleChange, touched } = formik;
+  const { values, errors, handleSubmit, handleChange, touched, setFieldValue } = formik;
   return (
     <div className="flex h-full overflow-y-auto bg-BgPrimaryColor py-4">
       <div className="mx-4 sm:mx-16 my-auto grid h-fit w-full grid-cols-4 gap-4 bg-BgSecondaryColor p-8 border rounded border-BorderColor">

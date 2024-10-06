@@ -34,7 +34,7 @@ const IndicesList = () => {
         <ButtonComponent
           label={t("view_stocks")}
           className="rounded bg-BgTertiaryColor px-6 py-2 text-[12px] text-white"
-          onClick={() => editCompany(rowData)}
+          onClick={() => editIndex(rowData)}
         />
       </div>
     );
@@ -45,7 +45,7 @@ const IndicesList = () => {
         <ButtonComponent
           label={t("short_term")}
           className="rounded bg-BgTertiaryColor px-6 py-2 text-[12px] text-white"
-          onClick={() => editCompany(rowData)}
+          onClick={() => editIndex(rowData)}
         />
         <ButtonComponent
           label={t("long_term")}
@@ -62,7 +62,7 @@ const IndicesList = () => {
         <ButtonComponent
           icon="ri-pencil-line"
           className="text-[1rem]"
-          onClick={() => editCompany(rowData)}
+          onClick={() => editIndex(rowData)}
         />
         <ButtonComponent
           icon="ri-delete-bin-line"
@@ -80,8 +80,8 @@ const IndicesList = () => {
     { header: t("action"), body: actionBodyTemplate, headerStyle: { paddingLeft: '3%'} },
   ];
 
-  const editCompany = (item) => {
-    navigate(`/edit-sector/${item?.id}`);
+  const editIndex = (item) => {
+    navigate(`/edit-index/${item?.id}`);
   };
 
   const confirmDeleteCompany = (item) => {
@@ -96,7 +96,7 @@ const IndicesList = () => {
 
   const confirmDialogbox = () => {
     setIsConfirm(!isConfirm);
-    allApiWithHeaderToken(`companies/${deleteId}`, "", "delete")
+    allApiWithHeaderToken(`indices/${deleteId}`, "", "delete")
       .then((response) => {
         fetchStockList();
       })
@@ -108,7 +108,7 @@ const IndicesList = () => {
   const fetchStockList = () => {
     // To get all users stored in json
     setLoader(true);
-    allApiWithHeaderToken("companies", "", "get")
+    allApiWithHeaderToken("indices", "", "get")
       .then((response) => {
         setData(response?.data);
       })

@@ -67,7 +67,7 @@ const StockList = () => {
   ];
 
   const editCompany = (item) => {
-    navigate(`/edit-company/${item?.id}`);
+    navigate(`/edit-stock/${item?.id}`);
   };
 
   const confirmDeleteCompany = (item) => {
@@ -82,7 +82,7 @@ const StockList = () => {
 
   const confirmDialogbox = () => {
     setIsConfirm(!isConfirm);
-    allApiWithHeaderToken(`companies/${deleteId}`, "", "delete")
+    allApiWithHeaderToken(`stocks/${deleteId}`, "", "delete")
       .then((response) => {
         fetchStockList();
       })
@@ -94,7 +94,7 @@ const StockList = () => {
   const fetchStockList = () => {
     // To get all users stored in json
     setLoader(true);
-    allApiWithHeaderToken("companies", "", "get")
+    allApiWithHeaderToken("stocks", "", "get")
       .then((response) => {
         setData(response?.data);
       })

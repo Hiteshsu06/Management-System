@@ -29,8 +29,8 @@ const SectorForm = () => {
   const validationSchema = yup.object().shape({
     name: yup.string().required(t("name_is_required")),
     price: yup.string().required(t("price_is_required")),
-    short_term: yup.string().required(t("short_term_is_required")),
-    long_term: yup.string().required(t("long_term_is_required"))
+    short_term: id ? yup.string() : yup.string().required(t("short_term_is_required")),
+    long_term: id ? yup.string() : yup.string().required(t("long_term_is_required"))
   });
 
   const onHandleSubmit = async (value) => {
@@ -47,10 +47,10 @@ const SectorForm = () => {
     let body = {
       name: value?.name,
       price: value?.price,
-      short_term: value?.short_term,
-      long_term: value?.long_term
+      sector_short_term_chart: value?.short_term,
+      sector_long_term_chart: value?.long_term
     }
-    allApiWithHeaderToken("companies", body, "post", 'multipart/form-data')
+    allApiWithHeaderToken("sector_masters", body, "post", 'multipart/form-data')
       .then(() => {
         navigate("/dashboard");
       })
@@ -60,9 +60,19 @@ const SectorForm = () => {
   };
 
   const updateSector = (value) => {
-    allApiWithHeaderToken(`company/${id}`, value, "put")
+    let body = {
+      name: value?.name,
+      price: value?.price
+    }
+    if(value?.short_term){
+      body['sector_short_term_chart'] = value?.short_term
+    }
+    if(value?.long_term){
+      body['sector_long_term_chart'] = value?.long_term
+    }
+    allApiWithHeaderToken(`sector_masters/${id}`, body, "put", 'multipart/form-data')
       .then(() => {
-        navigate("/dashboard");
+        navigate("/dashboard/sector-master");
       })
       .catch((err) => {
         console.log("err", err);
@@ -75,15 +85,23 @@ const SectorForm = () => {
 
   useEffect(() => {
     if (id) {
-      allApiWithHeaderToken(`companies/${id}`, "", "get")
+      allApiWithHeaderToken(`sector_masters/${id}`, "", "get")
         .then((response) => {
-          setData(response?.data);
+          let data = {
+            name: response?.data?.name,
+            price: response?.data?.price,
+            short_term: response?.data?.short_term,
+            long_term: response?.data?.long_term,
+            short_term_url: response?.data?.sector_short_term_chart_url ,
+            long_term_url: response?.data?.sector_long_term_chart_url 
+          }
+          setData(data);
         })
         .catch((err) => {
           console.log("err", err);
         });
     }
-  }, []);
+  }, [id]);
 
   const formik = useFormik({
     initialValues: data,

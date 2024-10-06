@@ -83,7 +83,7 @@ const IndicesForm = () => {
 
   useEffect(() => {
     if (id) {
-      allApiWithHeaderToken(`companies/${id}`, "", "get")
+      allApiWithHeaderToken(`indices/${id}`, "", "get")
         .then((response) => {
           setData(response?.data);
         })

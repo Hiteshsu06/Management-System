@@ -70,7 +70,7 @@ const StockManagementList = () => {
 
   const confirmDialogbox = () => {
     setIsConfirm(!isConfirm);
-    allApiWithHeaderToken(`stocks/${deleteId}`, "", "delete")
+    allApiWithHeaderToken(`demo_stocks/${deleteId}`, "", "delete")
       .then((response) => {
         fetchStockList();
       })
@@ -86,7 +86,7 @@ const StockManagementList = () => {
   const fetchStockList = () => {
     // To get all stocks stored in json
     setLoader(true);
-    allApiWithHeaderToken("stocks", "", "get")
+    allApiWithHeaderToken("demo_stocks", "", "get")
       .then((response) => {
         setData(response?.data);
       })
