@@ -3,6 +3,7 @@ import ButtonComponent from "@common/ButtonComponent";
 import InputTextComponent from "@common/InputTextComponent";
 import FileUpload from "@common/FileUpload";
 import { allApiWithHeaderToken } from "@api/api";
+import Loading from '@common/Loading';
 
 // external libraries
 import * as yup from "yup";
@@ -24,6 +25,7 @@ const SectorForm = () => {
   const { t } = useTranslation("msg");
   const navigate = useNavigate();
   const [data, setData] = useState(structure);
+  const [loader, setLoader] = useState(false);
   const { id } = useParams();
 
   const validationSchema = yup.object().shape({
@@ -49,13 +51,17 @@ const SectorForm = () => {
       price: value?.price,
       sector_short_term_chart: value?.short_term,
       sector_long_term_chart: value?.long_term
-    }
+    };
+    setLoader(true);
     allApiWithHeaderToken("sector_masters", body, "post", 'multipart/form-data')
       .then(() => {
         navigate("/dashboard");
       })
       .catch((err) => {
         console.log("err", err);
+      })
+      .finally(()=>{
+        setLoader(false);
       });
   };
 
@@ -69,14 +75,18 @@ const SectorForm = () => {
     }
     if(value?.long_term){
       body['sector_long_term_chart'] = value?.long_term
-    }
+    };
+    setLoader(true);
     allApiWithHeaderToken(`sector_masters/${id}`, body, "put", 'multipart/form-data')
       .then(() => {
         navigate("/dashboard/sector-master");
       })
       .catch((err) => {
         console.log("err", err);
-      });
+      })
+      .finally(()=>{
+        setLoader(false);
+      });;
   };
 
   const handleBack = () => {
@@ -85,6 +95,7 @@ const SectorForm = () => {
 
   useEffect(() => {
     if (id) {
+      setLoader(true);
       allApiWithHeaderToken(`sector_masters/${id}`, "", "get")
         .then((response) => {
           let data = {
@@ -99,7 +110,10 @@ const SectorForm = () => {
         })
         .catch((err) => {
           console.log("err", err);
-        });
+        })
+        .finally(()=>{
+          setLoader(false);
+        });;
     }
   }, [id]);
 
@@ -115,6 +129,7 @@ const SectorForm = () => {
 
   return (
     <div className="flex h-screen bg-BgPrimaryColor py-4">
+      {loader && <Loading/>}
       <div className="mx-4 sm:mx-16 my-auto grid h-fit w-full grid-cols-4 gap-4 bg-BgSecondaryColor p-8 border rounded border-BorderColor">
         <div className="col-span-4 md:col-span-2">
           <InputTextComponent

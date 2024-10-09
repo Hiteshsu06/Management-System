@@ -3,6 +3,7 @@ import ButtonComponent from "@common/ButtonComponent";
 import InputTextComponent from "@common/InputTextComponent";
 import FileUpload from "@common/FileUpload";
 import { allApiWithHeaderToken } from "@api/api";
+import Loading from '@common/Loading';
 
 // external libraries
 import * as yup from "yup";
@@ -25,6 +26,8 @@ const StockForm = () => {
   const { t } = useTranslation("msg");
   const navigate = useNavigate();
   const [data, setData] = useState(structure);
+  const [loader, setLoader] = useState(false);
+  const [allSectors, setAllSectors] = useState([]);
   const { id } = useParams();
 
   const validationSchema = yup.object().shape({
@@ -51,24 +54,32 @@ const StockForm = () => {
       short_term: value?.short_term,
       long_term: value?.long_term,
       sector_id: value?.sector
-    }
+    };
+    setLoader(true);
     allApiWithHeaderToken("stocks", body, "post", 'multipart/form-data')
       .then(() => {
         navigate("/dashboard");
       })
       .catch((err) => {
         console.log("err", err);
+      })
+      .finally(()=>{
+        setLoader(false);
       });
   };
 
   const updateStock = (value) => {
+    setLoader(true);
     allApiWithHeaderToken(`stock/${id}`, value, "put", 'multipart/form-data')
       .then(() => {
         navigate("/dashboard");
       })
       .catch((err) => {
         console.log("err", err);
-      });
+      })
+      .finally(()=>{
+        setLoader(false);
+      });;
   };
 
   const handleBack = () => {
@@ -76,16 +87,34 @@ const StockForm = () => {
   };
 
   useEffect(() => {
+    getAllSectorRecords();
     if (id) {
+      setLoader(true);
       allApiWithHeaderToken(`companies/${id}`, "", "get")
         .then((response) => {
           setData(response?.data);
         })
         .catch((err) => {
           console.log("err", err);
+        })
+        .finally(()=>{
+          setLoader(false);
         });
-    }
+    };
   }, []);
+
+  const getAllSectorRecords=()=>{
+    allApiWithHeaderToken("sector_masters", "", "get")
+    .then((response) => {
+      setAllSectors(response?.data);
+    })
+    .catch((err) => {
+      console.log("err", err);
+    })
+    .finally(()=>{
+      setLoader(false);
+    });
+  }
 
   const formik = useFormik({
     initialValues: data,
@@ -99,6 +128,7 @@ const StockForm = () => {
 
   return (
     <div className="flex h-screen bg-BgPrimaryColor py-4">
+      {loader && <Loading/>}
       <div className="mx-4 sm:mx-16 my-auto grid h-fit w-full grid-cols-4 gap-4 bg-BgSecondaryColor p-8 border rounded border-BorderColor">
         <div className="col-span-4 md:col-span-2">
           <InputTextComponent
@@ -130,7 +160,7 @@ const StockForm = () => {
           <Dropdown 
             value={values?.sector}
             onChange={handleChange}
-            data= {[]}
+            data= {allSectors}
             placeholder={t("select_sector")}
             name="sector"
             error={errors?.sector}

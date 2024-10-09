@@ -24,7 +24,7 @@ const data = {
 const Signup = () => {
   const toast = useRef(null);
   const { t } = useTranslation("msg");
-  const [overallUser, setOverallUser] = useState([]);
+  const [loader, setLoader] = useState(false);
   const [checked, setChecked] = useState(false);
   const navigate = useNavigate();
 
@@ -57,7 +57,8 @@ const Signup = () => {
         email: value?.email,
         password: value?.password
       }
-    }
+    };
+    setLoader(true);
     // To get all users stored in json
     await allApi("users", body , "post")
       .then((response) => {
@@ -77,7 +78,9 @@ const Signup = () => {
           detail: "Error",
           life: 3000,
         });
-      });
+      }).finally(()=>{
+        setLoader(false);
+      });;
   };
 
   const formik = useFormik({
@@ -175,6 +178,7 @@ const Signup = () => {
             disabled={!checked}
             onClick={() => handleSubmit()}
             type="submit"
+            loading={loader}
             label={t("sign_up")}
             className="w-full rounded bg-BgTertiaryColor px-6 py-2 text-[12px] text-white"
           />

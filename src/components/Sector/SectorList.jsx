@@ -96,14 +96,14 @@ const SectorList = () => {
     setIsConfirm(!isConfirm);
     allApiWithHeaderToken(`sector_masters/${deleteId}`, "", "delete")
       .then((response) => {
-        fetchStockList();
+        fetchSectorList();
       })
       .catch((err) => {
         console.log("err", err);
       })
   };
 
-  const fetchStockList = () => {
+  const fetchSectorList = () => {
     // To get all users stored in json
     setLoader(true);
     allApiWithHeaderToken("sector_masters", "", "get")
@@ -114,11 +114,11 @@ const SectorList = () => {
         console.log("err", err);
       }).finally(()=>{
         setLoader(false);
-      });;;
+      });
   };
 
   useEffect(() => {
-    fetchStockList();
+    fetchSectorList();
   }, []);
 
   const createStock = () => {

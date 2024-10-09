@@ -2,6 +2,7 @@
 import ButtonComponent from "@common/ButtonComponent";
 import InputTextComponent from "@common/InputTextComponent";
 import { allApiWithHeaderToken } from "@api/api";
+import Loading from '@common/Loading';
 
 // external libraries
 import * as yup from "yup";
@@ -22,9 +23,8 @@ const CompanyForm = () => {
   const { t } = useTranslation("msg");
   const navigate = useNavigate();
   const [data, setData] = useState(structure);
+  const [loader, setLoader] = useState(false);
   const { id } = useParams();
-
-  const theme = localStorage.getItem('theme');
 
   const validationSchema = yup.object().shape({
     name: yup.string().required(t("name_is_required")),
@@ -49,13 +49,16 @@ const CompanyForm = () => {
       address: value?.address,
       contact_number: value?.contactNumber,
       gst_number: value?.gstNumber
-    }
+    };
+    setLoader(true);
     allApiWithHeaderToken("demo_companies", body, "post")
       .then(() => {
         navigate("/dashboard");
       })
       .catch((err) => {
         console.log("err", err);
+      }).finally(()=>{
+        setLoader(false);
       });
   };
 
@@ -65,14 +68,17 @@ const CompanyForm = () => {
       address: value?.address,
       contact_number: value?.contactNumber,
       gst_number: value?.gstNumber
-    }
+    };
+    setLoader(true);
     allApiWithHeaderToken(`demo_companies/${id}`, body, "put")
       .then(() => {
         navigate("/dashboard");
       })
       .catch((err) => {
         console.log("err", err);
-      });
+      }).finally(()=>{
+        setLoader(false);
+      });;
   };
 
   const handleBack = () => {
@@ -81,6 +87,7 @@ const CompanyForm = () => {
 
   useEffect(() => {
     if (id) {
+      setLoader(true);
       allApiWithHeaderToken(`demo_companies/${id}`, "", "get")
         .then((response) => {
           let data = {
@@ -93,6 +100,8 @@ const CompanyForm = () => {
         })
         .catch((err) => {
           console.log("err", err);
+        }).finally(()=>{
+          setLoader(false);
         });
     }
   }, []);
@@ -109,12 +118,13 @@ const CompanyForm = () => {
 
   return (
     <div className="flex h-screen bg-BgPrimaryColor py-4">
-      <div className="mx-4 sm:mx-16 my-auto grid h-fit w-full grid-cols-4 gap-4 bg-BgSecondaryColor p-8 border rounded border-BorderColor">
+    {loader && <Loading/>}
+    <div className="mx-4 sm:mx-16 my-auto grid h-fit w-full grid-cols-4 gap-4 bg-BgSecondaryColor p-8 border rounded border-BorderColor">
         <div className="col-span-4 md:col-span-2">
           <InputTextComponent
             value={values?.name}
             onChange={handleChange}
-            type="name"
+            type="text"
             placeholder={t("company_name")}
             name="name"
             isLabel={true}
@@ -127,7 +137,7 @@ const CompanyForm = () => {
           <InputTextComponent
             value={values?.address}
             onChange={handleChange}
-            type="address"
+            type="text"
             placeholder={t("company_address")}
             name="address"
             isLabel={true}
@@ -140,7 +150,7 @@ const CompanyForm = () => {
           <InputTextComponent
             value={values?.contactNumber}
             onChange={handleChange}
-            type="contactNumber"
+            type="number"
             placeholder={t("company_contact_number")}
             name="contactNumber"
             isLabel={true}
@@ -153,7 +163,7 @@ const CompanyForm = () => {
           <InputTextComponent
             value={values?.gstNumber}
             onChange={handleChange}
-            type="gstNumber"
+            type="text"
             placeholder={t("company_gst_number")}
             name="gstNumber"
             isLabel={true}

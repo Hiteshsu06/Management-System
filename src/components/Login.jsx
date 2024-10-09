@@ -21,7 +21,6 @@ const data = {
 const Login = () => {
   const toast = useRef(null);
   const { t } = useTranslation("msg");
-  const [checked, setChecked] = useState(false);
   const [loader, setLoader] = useState(false);
   const navigate = useNavigate();
 

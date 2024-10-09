@@ -3,6 +3,7 @@ import ButtonComponent from "@common/ButtonComponent";
 import InputTextComponent from "@common/InputTextComponent";
 import FileUpload from "@common/FileUpload";
 import { allApiWithHeaderToken } from "@api/api";
+import Loading from '@common/Loading';
 
 // external libraries
 import * as yup from "yup";
@@ -28,15 +29,14 @@ const IndicesForm = () => {
   const { t } = useTranslation("msg");
   const navigate = useNavigate();
   const [data, setData] = useState(structure);
+  const [loader, setLoader] = useState(false);
   const { id } = useParams();
 
   const validationSchema = yup.object().shape({
     name: yup.string().required(t("name_is_required")),
     price: yup.string().required(t("price_is_required")),
     short_term: yup.string().required(t("short_term_is_required")),
-    long_term: yup.string().required(t("long_term_is_required")),
-    country: yup.string().required(t("country_is_required")),
-    category: yup.string().required(t("category_is_required"))
+    long_term: yup.string().required(t("long_term_is_required"))
   });
 
   const onHandleSubmit = async (value) => {
@@ -64,6 +64,9 @@ const IndicesForm = () => {
       })
       .catch((err) => {
         console.log("err", err);
+      })
+      .finally(()=>{
+        setLoader(false);
       });
   };
 
@@ -74,6 +77,9 @@ const IndicesForm = () => {
       })
       .catch((err) => {
         console.log("err", err);
+      })
+      .finally(()=>{
+        setLoader(false);
       });
   };
 
@@ -89,7 +95,10 @@ const IndicesForm = () => {
         })
         .catch((err) => {
           console.log("err", err);
-        });
+        })
+        .finally(()=>{
+          setLoader(false);
+        });;
     }
   }, []);
 
@@ -105,6 +114,7 @@ const IndicesForm = () => {
 
   return (
     <div className="flex h-screen bg-BgPrimaryColor py-4">
+      {loader && <Loading/>}
       <div className="mx-4 sm:mx-16 my-auto grid h-fit w-full grid-cols-4 gap-4 bg-BgSecondaryColor p-8 border rounded border-BorderColor">
         <div className="col-span-4 md:col-span-2">
           <InputTextComponent

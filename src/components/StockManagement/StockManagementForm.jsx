@@ -3,6 +3,7 @@ import ButtonComponent from "@common/ButtonComponent";
 import InputTextComponent from "@common/InputTextComponent";
 import Dropdown from "@common/DropdownComponent";
 import { allApiWithHeaderToken } from "@api/api";
+import Loading from '@common/Loading';
 
 // external libraries
 import * as yup from "yup";
@@ -28,12 +29,14 @@ const StockManagementForm = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [allCompanies, setAllCompanies] = useState([]);
+  const [loader, setLoader] = useState(false);
   const [data, setData] = useState(structure);
 
   useEffect(()=>{
     fetchCompanyList();
 
     if (id && allCompanies.length > 0) {
+      setLoader(true);
       allApiWithHeaderToken(`demo_stocks/${id}`, "", "get")
         .then((response) => {
           let filteredData = {
@@ -52,6 +55,9 @@ const StockManagementForm = () => {
         })
         .catch((err) => {
           console.log("err", err);
+        })
+        .finally(()=>{
+          setLoader(false);
         });
     }
   }, [id, allCompanies])
@@ -79,13 +85,17 @@ const StockManagementForm = () => {
 
   const fetchCompanyList = () => {
     // To get all users stored in json
+    setLoader(true);
     allApiWithHeaderToken("demo_companies", "", "get")
       .then((response) => {
         setAllCompanies(response?.data);
       })
       .catch((err) => {
         console.log("err", err);
-      });
+      })
+      .finally(()=>{
+        setLoader(false);
+      });;
   };
 
   const createStock = (value) => {
@@ -99,23 +109,31 @@ const StockManagementForm = () => {
       sell_price: value?.sellPrice,
       gst_number: value?.gst,
       demo_company_id: value?.company?.id
-    }
+    };
+    setLoader(true);
     allApiWithHeaderToken("demo_stocks", body, "post")
       .then(() => {
         navigate("/dashboard/stock-management");
       })
       .catch((err) => {
         console.log("err", err);
-      });
+      })
+      .finally(()=>{
+        setLoader(false);
+      });;
   };
 
   const updateStock = (value) => {
+    setLoader(true);
     allApiWithHeaderToken(`demo_stocks/${id}`, value, "put")
       .then(() => {
         navigate("/dashboard/stock-management");
       })
       .catch((err) => {
         console.log("err", err);
+      })
+      .finally(()=>{
+        setLoader(false);
       });
   };
 
@@ -134,6 +152,7 @@ const StockManagementForm = () => {
   const { values, errors, handleSubmit, handleChange, touched, setFieldValue } = formik;
   return (
     <div className="flex h-full overflow-y-auto bg-BgPrimaryColor py-4">
+      {loader && <Loading/>}
       <div className="mx-4 sm:mx-16 my-auto grid h-fit w-full grid-cols-4 gap-4 bg-BgSecondaryColor p-8 border rounded border-BorderColor">
         <div className="col-span-4 md:col-span-2">
           <InputTextComponent
