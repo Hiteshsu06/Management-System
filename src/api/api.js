@@ -1,5 +1,5 @@
 import axios from 'axios';
-const apiBaseURL = 'https://management-system-backend-94z3.onrender.com';
+const apiBaseURL = process.env.REACT_APP_BASE_URL;
 
 export const allApi = (dataurl, data, method) => {
     const headers = {

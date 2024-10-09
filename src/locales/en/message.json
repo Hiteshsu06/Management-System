@@ -110,5 +110,7 @@
    "select_category" : "Select Category",
    "stock_short_term_chart" : "Stock Short Term Chart",
    "stock_long_term_chart" : "Stock Long Term Chart",
-   "select_sector" : "Select Sector"
+   "select_sector" : "Select Sector",
+   "request_reset_link" : "Request Reset Link",
+   "back_to_login" : "Back To Login"
 }

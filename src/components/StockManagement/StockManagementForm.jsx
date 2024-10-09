@@ -33,8 +33,6 @@ const StockManagementForm = () => {
   const [data, setData] = useState(structure);
 
   useEffect(()=>{
-    fetchCompanyList();
-
     if (id && allCompanies.length > 0) {
       setLoader(true);
       allApiWithHeaderToken(`demo_stocks/${id}`, "", "get")
@@ -60,7 +58,11 @@ const StockManagementForm = () => {
           setLoader(false);
         });
     }
-  }, [id, allCompanies])
+  }, [id, allCompanies]);
+
+  useEffect(()=>{
+    fetchCompanyList();
+  },[])
 
   const validationSchema = yup.object().shape({
     category: yup.string().required(t("category_is_required")),
@@ -151,7 +153,7 @@ const StockManagementForm = () => {
 
   const { values, errors, handleSubmit, handleChange, touched, setFieldValue } = formik;
   return (
-    <div className="flex h-full overflow-y-auto bg-BgPrimaryColor py-4">
+    <div className="flex h-screen bg-BgPrimaryColor py-4">
       {loader && <Loading/>}
       <div className="mx-4 sm:mx-16 my-auto grid h-fit w-full grid-cols-4 gap-4 bg-BgSecondaryColor p-8 border rounded border-BorderColor">
         <div className="col-span-4 md:col-span-2">

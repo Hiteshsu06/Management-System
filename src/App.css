@@ -165,3 +165,6 @@
   .p-tabview .p-tabview-nav li .p-tabview-nav-link {
     padding: 1rem !important;
   }
+  .avatar-background{
+    background-color: var(--quater-background-color) !important;
+  }

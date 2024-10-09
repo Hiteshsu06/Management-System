@@ -11,6 +11,7 @@ import "primereact/resources/themes/lara-light-cyan/theme.css";
 
 // pages
 const Login = lazy(() => import("@pages/LoginPage"));
+const ForgotPassword = lazy(() => import("@pages/ForgotPasswordPage"));
 const Signup = lazy(() => import("@pages/SignupPage"));
 const DashboardPage = lazy(() => import("@pages/DashboardPage"));
 const ProfilePage = lazy(() => import("@pages/ProfilePage"));
@@ -30,6 +31,7 @@ function App() {
     <Suspense fallback={<Loading />}>
         <Routes>
           <Route path="/" element={<Login />}/>
+          <Route path="/forgot-password" element={<ForgotPassword />}/>
           <Route path="/signup" element={<Signup />}/>
           <Route path="/dashboard/*" element={<DashboardPage />}/>
           <Route path="/create-company" element={<CompanyForm />}/>

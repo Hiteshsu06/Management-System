@@ -73,7 +73,8 @@ const AvatarProfile = ({ size, shape }) => {
         <div className="text-[0.6rem]">{t("super_admin")}</div>
       </div>
       <Avatar
-        image="https://primefaces.org/cdn/primereact/images/avatar/amyelsner.png"
+        label={data?.firstName?.split("")[0]?.toUpperCase()}
+        className="avatar-background"
         size={size}
         shape={shape}
         onClick={(e) => menu.current.toggle(e)}
