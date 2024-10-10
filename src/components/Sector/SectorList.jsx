@@ -21,8 +21,8 @@ const SectorList = () => {
     heading: t("sectors"),
     routes: [
       { label: t("dashboard"), route: "/dashboard" },
-      { label: t("sector"), route: "/dashboard/sector" },
-    ],
+      { label: t("sector"), route: "/dashboard/sector-master" },
+    ]
   };
 
   const [data, setData] = useState([]);
@@ -72,7 +72,7 @@ const SectorList = () => {
   };
   const columns = [
     { field: "name", header: t("name") },
-    { field: "address", header: t("price") },
+    { field: "price", header: t("price") },
     { header: t("stocks"), body: stocksBodyTemplate, headerStyle: { paddingLeft: '3%'} },
     { header: t("charts"), body: chartBodyTemplate, headerStyle: { paddingLeft: '3%'} },
     { header: t("action"), body: actionBodyTemplate, headerStyle: { paddingLeft: '3%'} },
@@ -132,7 +132,7 @@ const SectorList = () => {
         closeDialogbox={closeDialogbox}
         confirmDialogbox={confirmDialogbox}
       />
-      <Breadcrum item={item} />
+      <Breadcrum item={item}/>
       <div className="mt-4 flex justify-end bg-BgSecondaryColor border rounded border-BorderColor p-2">
         <ButtonComponent
           onClick={() => createStock()}

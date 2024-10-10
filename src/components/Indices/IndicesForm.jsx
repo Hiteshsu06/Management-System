@@ -29,6 +29,7 @@ const IndicesForm = () => {
   const { t } = useTranslation("msg");
   const navigate = useNavigate();
   const [data, setData] = useState(structure);
+  const [allCountries, setAllCountries] = useState([]);
   const [loader, setLoader] = useState(false);
   const { id } = useParams();
 
@@ -49,18 +50,34 @@ const IndicesForm = () => {
     }
   };
 
+  const fetchCountryList = () => {
+    setLoader(true);
+    allApiWithHeaderToken("countries/list", "", "get")
+      .then((response) => {
+        setAllCountries(response?.data);
+      })
+      .catch((err) => {
+        console.log("err", err);
+      })
+      .finally(()=>{
+        setLoader(false);
+      });
+  };
+
+
   const createIndex = (value) => {
+    setLoader(true);
     let body = {
       name: value?.name,
       price: value?.price,
-      short_term: value?.short_term,
-      long_term: value?.long_term,
+      index_short_term_chart: value?.short_term,
+      index_long_term_chart: value?.long_term,
       country_code: value?.country?.value,
       category_code: value?.category?.value
     }
     allApiWithHeaderToken("indices", body, "post", 'multipart/form-data')
       .then(() => {
-        navigate("/dashboard");
+        navigate("/dashboard/indices");
       })
       .catch((err) => {
         console.log("err", err);
@@ -71,9 +88,10 @@ const IndicesForm = () => {
   };
 
   const updateIndex = (value) => {
+    setLoader(true);
     allApiWithHeaderToken(`indices/${id}`, value, "put")
       .then(() => {
-        navigate("/dashboard");
+        navigate("/dashboard/indices");
       })
       .catch((err) => {
         console.log("err", err);
@@ -89,9 +107,18 @@ const IndicesForm = () => {
 
   useEffect(() => {
     if (id) {
+      setLoader(true);
       allApiWithHeaderToken(`indices/${id}`, "", "get")
         .then((response) => {
-          setData(response?.data);
+          let data = {
+            name: response?.data?.name,
+            price: response?.data?.price,
+            short_term: response?.data?.short_term,
+            short_term_url: response?.data?.index_short_term_chart_url,
+            long_term: response?.data?.long_term,
+            long_term_url: response?.data?.index_long_term_chart_url
+          }
+          setData(data);
         })
         .catch((err) => {
           console.log("err", err);
@@ -100,6 +127,7 @@ const IndicesForm = () => {
           setLoader(false);
         });;
     }
+    fetchCountryList();
   }, []);
 
   const formik = useFormik({
@@ -146,7 +174,7 @@ const IndicesForm = () => {
           <Dropdown 
             value={values?.country}
             onChange={handleChange}
-            data= {[]}
+            data= {allCountries}
             placeholder={t("select_country")}
             name="country"
             error={errors?.country}

@@ -86,7 +86,6 @@ const StockManagementForm = () => {
   };
 
   const fetchCompanyList = () => {
-    // To get all users stored in json
     setLoader(true);
     allApiWithHeaderToken("demo_companies", "", "get")
       .then((response) => {
@@ -97,7 +96,7 @@ const StockManagementForm = () => {
       })
       .finally(()=>{
         setLoader(false);
-      });;
+      });
   };
 
   const createStock = (value) => {
@@ -153,7 +152,7 @@ const StockManagementForm = () => {
 
   const { values, errors, handleSubmit, handleChange, touched, setFieldValue } = formik;
   return (
-    <div className="flex h-screen bg-BgPrimaryColor py-4">
+    <div className="flex h-full bg-BgPrimaryColor py-4">
       {loader && <Loading/>}
       <div className="mx-4 sm:mx-16 my-auto grid h-fit w-full grid-cols-4 gap-4 bg-BgSecondaryColor p-8 border rounded border-BorderColor">
         <div className="col-span-4 md:col-span-2">

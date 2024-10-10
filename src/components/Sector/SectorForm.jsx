@@ -55,7 +55,7 @@ const SectorForm = () => {
     setLoader(true);
     allApiWithHeaderToken("sector_masters", body, "post", 'multipart/form-data')
       .then(() => {
-        navigate("/dashboard");
+        navigate("/dashboard/sector-master");
       })
       .catch((err) => {
         console.log("err", err);
@@ -135,7 +135,7 @@ const SectorForm = () => {
           <InputTextComponent
             value={values?.name}
             onChange={handleChange}
-            type="name"
+            type="text"
             placeholder={t("sector_name")}
             name="name"
             isLabel={true}
@@ -148,7 +148,7 @@ const SectorForm = () => {
           <InputTextComponent
             value={values?.price}
             onChange={handleChange}
-            type="price"
+            type="number"
             placeholder={t("sector_price")}
             name="price"
             isLabel={true}

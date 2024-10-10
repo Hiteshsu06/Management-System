@@ -168,3 +168,6 @@
   .avatar-background{
     background-color: var(--quater-background-color) !important;
   }
+  .input#dropzone-file:hover{
+    cursor: pointer !important;
+  }
