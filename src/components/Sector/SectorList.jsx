@@ -131,6 +131,7 @@ const SectorList = () => {
         isConfirm={isConfirm}
         closeDialogbox={closeDialogbox}
         confirmDialogbox={confirmDialogbox}
+        message={t("sector_has_been_deleted_successfully")}
       />
       <Breadcrum item={item}/>
       <div className="mt-4 flex justify-end bg-BgSecondaryColor border rounded border-BorderColor p-2">

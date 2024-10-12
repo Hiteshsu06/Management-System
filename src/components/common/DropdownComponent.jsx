@@ -1,6 +1,6 @@
 import { Dropdown } from 'primereact/dropdown';
 
-const DropdownComponent = ({value, name, data, onChange, optionLabel, placeholder, className, error, touched, label}) => {
+const DropdownComponent = ({value, name, editable, data, onChange, optionLabel, placeholder, className, error, touched, label}) => {
   return (
     <div>
        {placeholder ? (
@@ -11,6 +11,7 @@ const DropdownComponent = ({value, name, data, onChange, optionLabel, placeholde
             value={value} 
             onChange={onChange} 
             options={data} 
+            editable={editable}
             optionLabel={optionLabel}
             placeholder={placeholder}
             className={className}

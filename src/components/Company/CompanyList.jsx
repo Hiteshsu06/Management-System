@@ -1,5 +1,5 @@
 // hooks
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
@@ -16,6 +16,7 @@ const CompanyList = () => {
   const [isConfirm, setIsConfirm] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   const [loader, setLoader] = useState(false);
+  const [data, setData] = useState([]);
   const item = {
     heading: t("company"),
     routes: [
@@ -24,7 +25,6 @@ const CompanyList = () => {
     ],
   };
 
-  const [data, setData] = useState([]);
   const actionBodyTemplate = (rowData) => {
     return (
       <div className="flex">
@@ -67,15 +67,17 @@ const CompanyList = () => {
     setIsConfirm(!isConfirm);
     allApiWithHeaderToken(`demo_companies/${deleteId}`, "", "delete")
       .then((response) => {
-        fetchCompanyList();
+        if(response){
+          fetchCompanyList();
+        }
       })
       .catch((err) => {
-        console.log("err", err);
+        console.log(err)
       });
   };
 
   const fetchCompanyList = () => {
-    // To get all users stored in json
+    // To get all companies
     setLoader(true);
     allApiWithHeaderToken("demo_companies", "", "get")
       .then((response) => {
@@ -102,6 +104,7 @@ const CompanyList = () => {
         isConfirm={isConfirm}
         closeDialogbox={closeDialogbox}
         confirmDialogbox={confirmDialogbox}
+        message={t("company_has_been_deleted_successfully")}
       />
       <Breadcrum item={item} />
       <div className="mt-4 flex justify-end bg-BgSecondaryColor border rounded border-BorderColor p-2">

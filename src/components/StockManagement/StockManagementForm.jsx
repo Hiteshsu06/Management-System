@@ -10,7 +10,8 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { Toast } from "primereact/toast";
 
 const structure = {
   category: "",
@@ -31,6 +32,8 @@ const StockManagementForm = () => {
   const [allCompanies, setAllCompanies] = useState([]);
   const [loader, setLoader] = useState(false);
   const [data, setData] = useState(structure);
+  const toast = useRef(null);
+  const [toastType, setToastType] = useState(''); 
 
   useEffect(()=>{
     if (id && allCompanies.length > 0) {
@@ -113,25 +116,25 @@ const StockManagementForm = () => {
     };
     setLoader(true);
     allApiWithHeaderToken("demo_stocks", body, "post")
-      .then(() => {
-        navigate("/dashboard/stock-management");
+      .then((response) => {
+        successToaster(response);
       })
       .catch((err) => {
-        console.log("err", err);
+        errorToaster(err);
       })
       .finally(()=>{
         setLoader(false);
-      });;
+      });
   };
 
   const updateStock = (value) => {
     setLoader(true);
     allApiWithHeaderToken(`demo_stocks/${id}`, value, "put")
-      .then(() => {
-        navigate("/dashboard/stock-management");
+      .then((response) => {
+        successToaster(response);
       })
       .catch((err) => {
-        console.log("err", err);
+        errorToaster(err);
       })
       .finally(()=>{
         setLoader(false);
@@ -141,6 +144,32 @@ const StockManagementForm = () => {
   const handleBack = () => {
     navigate("/dashboard/stock-management");
   };
+
+  const successToaster=(response)=>{
+    setToastType('success');
+    return toast.current.show({
+      severity: "success",
+      summary: "Success",
+      detail: response?.data?.message,
+      life: 500
+    });
+  };
+
+  const errorToaster=(err)=>{
+    setToastType('error');
+    return toast.current.show({
+      severity: "error",
+      summary: "Error",
+      detail: err?.response?.data,
+      life: 500
+    });
+  };
+
+  const toastHandler=()=>{
+    if (toastType === 'success') {
+        navigate('/dashboard/stock-management');
+     }
+  }
 
   const formik = useFormik({
     initialValues: data,
@@ -152,8 +181,10 @@ const StockManagementForm = () => {
 
   const { values, errors, handleSubmit, handleChange, touched, setFieldValue } = formik;
   return (
-    <div className="flex h-full bg-BgPrimaryColor py-4">
+    <div className="h-screen p-auto">
+      <div className="flex h-full bg-BgPrimaryColor py-4">
       {loader && <Loading/>}
+      <Toast ref={toast} position="top-right" style={{scale: '0.7'}} onHide={toastHandler}/>
       <div className="mx-4 sm:mx-16 my-auto grid h-fit w-full grid-cols-4 gap-4 bg-BgSecondaryColor p-8 border rounded border-BorderColor">
         <div className="col-span-4 md:col-span-2">
           <InputTextComponent
@@ -285,12 +316,13 @@ const StockManagementForm = () => {
           <ButtonComponent
             onClick={() => handleSubmit()}
             type="submit"
-            label={t("submit")}
+            label={id ? t("update") : t("submit")}
             className="rounded bg-BgTertiaryColor px-6 py-2 text-[12px] text-white"
             icon="pi pi-arrow-right"
             iconPos="right"
           />
         </div>
+      </div>
       </div>
     </div>
   );

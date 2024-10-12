@@ -10,8 +10,9 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Dropdown from "@common/DropdownComponent";
+import { Toast } from "primereact/toast";
 
 const structure = {
   name: "",
@@ -21,16 +22,20 @@ const structure = {
   long_term: "",
   long_term_url: ""
 };
+
 const categories = [
   {name: "Domestic", value: 0},
   {name: "International", value: 1}
 ]
+
 const IndicesForm = () => {
   const { t } = useTranslation("msg");
   const navigate = useNavigate();
   const [data, setData] = useState(structure);
   const [allCountries, setAllCountries] = useState([]);
   const [loader, setLoader] = useState(false);
+  const toast = useRef(null);
+  const [toastType, setToastType] = useState(''); 
   const { id } = useParams();
 
   const validationSchema = yup.object().shape({
@@ -42,10 +47,10 @@ const IndicesForm = () => {
 
   const onHandleSubmit = async (value) => {
     if (id) {
-      // Update
+      // Update Index
       updateIndex(value);
     } else {
-      // Create
+      // Create Index
       createIndex(value);
     }
   };
@@ -64,6 +69,25 @@ const IndicesForm = () => {
       });
   };
 
+  const successToaster=(response)=>{
+    setToastType('success');
+    return toast.current.show({
+      severity: "success",
+      summary: "Success",
+      detail: response?.data?.message,
+      life: 500
+    });
+  };
+
+  const errorToaster=(err)=>{
+    setToastType('error');
+    return toast.current.show({
+      severity: "error",
+      summary: "Error",
+      detail: err?.response?.data,
+      life: 500
+    });
+  }
 
   const createIndex = (value) => {
     setLoader(true);
@@ -72,15 +96,15 @@ const IndicesForm = () => {
       price: value?.price,
       index_short_term_chart: value?.short_term,
       index_long_term_chart: value?.long_term,
-      country_code: value?.country?.value,
-      category_code: value?.category?.value
+      country_code: value?.country?.name,
+      category_code: value?.category
     }
     allApiWithHeaderToken("indices", body, "post", 'multipart/form-data')
-      .then(() => {
-        navigate("/dashboard/indices");
+      .then((response) => {
+        successToaster(response);
       })
       .catch((err) => {
-        console.log("err", err);
+        errorToaster(err);
       })
       .finally(()=>{
         setLoader(false);
@@ -90,11 +114,11 @@ const IndicesForm = () => {
   const updateIndex = (value) => {
     setLoader(true);
     allApiWithHeaderToken(`indices/${id}`, value, "put")
-      .then(() => {
-        navigate("/dashboard/indices");
+      .then((response) => {
+        successToaster(response);
       })
       .catch((err) => {
-        console.log("err", err);
+        errorToaster(err);
       })
       .finally(()=>{
         setLoader(false);
@@ -125,10 +149,16 @@ const IndicesForm = () => {
         })
         .finally(()=>{
           setLoader(false);
-        });;
+        });
     }
     fetchCountryList();
   }, []);
+
+  const toastHandler=()=>{
+    if (toastType === 'success') {
+        navigate('/dashboard/indices');
+     }
+  }
 
   const formik = useFormik({
     initialValues: data,
@@ -143,6 +173,7 @@ const IndicesForm = () => {
   return (
     <div className="flex h-screen bg-BgPrimaryColor py-4">
       {loader && <Loading/>}
+      <Toast ref={toast} position="top-right" style={{scale: '0.7'}} onHide={toastHandler}/>
       <div className="mx-4 sm:mx-16 my-auto grid h-fit w-full grid-cols-4 gap-4 bg-BgSecondaryColor p-8 border rounded border-BorderColor">
         <div className="col-span-4 md:col-span-2">
           <InputTextComponent
@@ -177,9 +208,10 @@ const IndicesForm = () => {
             data= {allCountries}
             placeholder={t("select_country")}
             name="country"
+            editable ={true}
             error={errors?.country}
             touched={touched?.country}
-            className="col-span-2 w-full rounded border-[1px] border-[#ddd] custom-dropdown focus:outline-none"
+            className="col-span-2 w-full ps-3 rounded border-[1px] border-[#ddd] custom-dropdown focus:outline-none"
             optionLabel="name"
           />
         </div>
@@ -230,7 +262,7 @@ const IndicesForm = () => {
           <ButtonComponent
             onClick={() => handleSubmit()}
             type="submit"
-            label={t("submit")}
+            label={id ? t("update") : t("submit")}
             className="rounded bg-[#1f1f70] px-6 py-2 text-[12px] text-white"
             icon="pi pi-arrow-right"
             iconPos="right"

@@ -10,7 +10,8 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import { Toast } from "primereact/toast";
 
 const structure = {
   name: "",
@@ -27,6 +28,8 @@ const SectorForm = () => {
   const [data, setData] = useState(structure);
   const [loader, setLoader] = useState(false);
   const { id } = useParams();
+  const toast = useRef(null);
+  const [toastType, setToastType] = useState('');
 
   const validationSchema = yup.object().shape({
     name: yup.string().required(t("name_is_required")),
@@ -37,10 +40,10 @@ const SectorForm = () => {
 
   const onHandleSubmit = async (value) => {
     if (id) {
-      // Update
+      // Update Sector
       updateSector(value);
     } else {
-      // Create
+      // Create Sector
       createSector(value);
     }
   };
@@ -54,11 +57,11 @@ const SectorForm = () => {
     };
     setLoader(true);
     allApiWithHeaderToken("sector_masters", body, "post", 'multipart/form-data')
-      .then(() => {
-        navigate("/dashboard/sector-master");
+      .then((response) => {
+        successToaster(response);
       })
       .catch((err) => {
-        console.log("err", err);
+        errorToaster(err);
       })
       .finally(()=>{
         setLoader(false);
@@ -78,15 +81,15 @@ const SectorForm = () => {
     };
     setLoader(true);
     allApiWithHeaderToken(`sector_masters/${id}`, body, "put", 'multipart/form-data')
-      .then(() => {
-        navigate("/dashboard/sector-master");
+      .then((response) => {
+        successToaster(response);
       })
       .catch((err) => {
-        console.log("err", err);
+        errorToaster(err);
       })
       .finally(()=>{
         setLoader(false);
-      });;
+      });
   };
 
   const handleBack = () => {
@@ -113,9 +116,35 @@ const SectorForm = () => {
         })
         .finally(()=>{
           setLoader(false);
-        });;
+        });
     }
   }, [id]);
+
+  const successToaster=(response)=>{
+    setToastType('success');
+    return toast.current.show({
+      severity: "success",
+      summary: "Success",
+      detail: response?.data?.message,
+      life: 500
+    });
+  };
+
+  const errorToaster=(err)=>{
+    setToastType('error');
+    return toast.current.show({
+      severity: "error",
+      summary: "Error",
+      detail: err?.response?.data,
+      life: 500
+    });
+  };
+
+  const toastHandler=()=>{
+    if (toastType === 'success') {
+        navigate('/dashboard/sector-master');
+     }
+  }
 
   const formik = useFormik({
     initialValues: data,
@@ -130,6 +159,7 @@ const SectorForm = () => {
   return (
     <div className="flex h-screen bg-BgPrimaryColor py-4">
       {loader && <Loading/>}
+      <Toast ref={toast} position="top-right" style={{scale: '0.7'}} onHide={toastHandler}/>
       <div className="mx-4 sm:mx-16 my-auto grid h-fit w-full grid-cols-4 gap-4 bg-BgSecondaryColor p-8 border rounded border-BorderColor">
         <div className="col-span-4 md:col-span-2">
           <InputTextComponent
@@ -190,7 +220,7 @@ const SectorForm = () => {
           <ButtonComponent
             onClick={() => handleSubmit()}
             type="submit"
-            label={t("submit")}
+            label={id ? t("update") : t("submit")}
             className="rounded bg-[#1f1f70] px-6 py-2 text-[12px] text-white"
             icon="pi pi-arrow-right"
             iconPos="right"

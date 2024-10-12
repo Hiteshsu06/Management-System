@@ -18,6 +18,8 @@ const IndicesList = () => {
   const [isConfirm, setIsConfirm] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   const [loader, setLoader] = useState(false);
+  const [domesticData, setDomesticData] = useState([]);
+  const [internationalData, setInternational] = useState([]);
 
   const item = {
     heading: t("Indices"),
@@ -27,7 +29,6 @@ const IndicesList = () => {
     ],
   };
 
-  const [data, setData] = useState([]);
   const stocksBodyTemplate = (rowData) => {
     return (
       <div className="flex gap-2">
@@ -50,7 +51,7 @@ const IndicesList = () => {
         <ButtonComponent
           label={t("long_term")}
           className="rounded bg-BgTertiaryColor px-6 py-2 text-[12px] text-white"
-          onClick={() => confirmDeleteCompany(rowData)}
+          onClick={() => confirmDeleteIndex(rowData)}
         />
       </div>
     );
@@ -67,14 +68,14 @@ const IndicesList = () => {
         <ButtonComponent
           icon="ri-delete-bin-line"
           className="text-[1rem]"
-          onClick={() => confirmDeleteCompany(rowData)}
+          onClick={() => confirmDeleteIndex(rowData)}
         />
       </div>
     );
   };
   const columns = [
     { field: "name", header: t("name") },
-    { field: "address", header: t("price") },
+    { field: "price", header: t("price") },
     { header: t("stocks"), body: stocksBodyTemplate, headerStyle: { paddingLeft: '3%'} },
     { header: t("charts"), body: chartBodyTemplate, headerStyle: { paddingLeft: '3%'} },
     { header: t("action"), body: actionBodyTemplate, headerStyle: { paddingLeft: '3%'} },
@@ -84,7 +85,7 @@ const IndicesList = () => {
     navigate(`/edit-index/${item?.id}`);
   };
 
-  const confirmDeleteCompany = (item) => {
+  const confirmDeleteIndex = (item) => {
     setIsConfirm(!isConfirm);
     setDeleteId(item?.id);
   };
@@ -98,29 +99,31 @@ const IndicesList = () => {
     setIsConfirm(!isConfirm);
     allApiWithHeaderToken(`indices/${deleteId}`, "", "delete")
       .then((response) => {
-        fetchStockList();
+        fetchIndicesList();
       })
       .catch((err) => {
         console.log("err", err);
       })
   };
 
-  const fetchStockList = () => {
-    // To get all users stored in json
+  const fetchIndicesList = () => {
+    // To get all indices
     setLoader(true);
     allApiWithHeaderToken("indices", "", "get")
       .then((response) => {
-        setData(response?.data);
+        let data = response?.data?.data;
+        setInternational(data?.international_data);
+        setDomesticData(data?.domestic_data)
       })
       .catch((err) => {
         console.log("err", err);
       }).finally(()=>{
         setLoader(false);
-      });;;
+      });
   };
 
   useEffect(() => {
-    fetchStockList();
+    fetchIndicesList();
   }, []);
 
   const createStock = () => {
@@ -133,6 +136,7 @@ const IndicesList = () => {
         isConfirm={isConfirm}
         closeDialogbox={closeDialogbox}
         confirmDialogbox={confirmDialogbox}
+        message={t("index_has_been_deleted_successfully")}
       />
       <Breadcrum item={item} />
       <div className="mt-4 flex justify-end bg-BgSecondaryColor border rounded border-BorderColor p-2">
@@ -152,7 +156,7 @@ const IndicesList = () => {
                     className="bg-BgPrimaryColor border rounded border-BorderColor"
                     columns={columns}
                     loader={loader}
-                    data={data}
+                    data={domesticData}
                     showGridlines={true}
                   />
                 </TabPanel>
@@ -161,7 +165,7 @@ const IndicesList = () => {
                       className="bg-BgPrimaryColor border rounded border-BorderColor"
                       columns={columns}
                       loader={loader}
-                      data={data}
+                      data={internationalData}
                       showGridlines={true}
                     />
                 </TabPanel>

@@ -6,16 +6,16 @@ import ButtonComponent from "@common/ButtonComponent";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { Toast } from "primereact/toast";
 
-const Confirmbox = ({ isConfirm, closeDialogbox, confirmDialogbox }) => {
+const Confirmbox = ({ isConfirm, closeDialogbox, confirmDialogbox, message }) => {
   const { t } = useTranslation("msg");
   const toast = useRef(null);
 
   const accept = () => {
     toast.current.show({
-      severity: "info",
-      summary: t("confirmed"),
-      detail: t("you_have_accepted"),
-      life: 3000,
+      severity: "success",
+      summary: "Success",
+      detail: message,
+      life: 1000
     });
   };
 

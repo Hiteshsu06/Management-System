@@ -107,6 +107,7 @@ const StockManagementList = () => {
         isConfirm={isConfirm}
         closeDialogbox={closeDialogbox}
         confirmDialogbox={confirmDialogbox}
+        message={t("stock_has_been_deleted_successfully")}
       />
       <Breadcrum item={item} />
       <div className="mt-4 flex justify-end bg-BgSecondaryColor p-2 border rounded border-BorderColor">
