@@ -36,8 +36,8 @@ const StockForm = () => {
   const validationSchema = yup.object().shape({
     name: yup.string().required(t("name_is_required")),
     price: yup.string().required(t("price_is_required")),
-    short_term: yup.string().required(t("short_term_is_required")),
-    long_term: yup.string().required(t("long_term_is_required"))
+    short_term: id ? yup.string() : yup.string().required(t("short_term_is_required")),
+    long_term: id ? yup.string() : yup.string().required(t("long_term_is_required"))
   });
 
   const onHandleSubmit = async (value) => {

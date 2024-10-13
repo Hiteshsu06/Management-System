@@ -161,7 +161,7 @@ const SectorList = () => {
         message={t("sector_has_been_deleted_successfully")}
       />
       <Breadcrum item={item}/>
-      <div className="mt-4 flex justify-between bg-BgSecondaryColor border rounded border-BorderColor p-2">
+      <div className="mt-4 flex justify-end gap-2 bg-BgSecondaryColor border rounded border-BorderColor p-2">
         <ButtonComponent
           onClick={() => exportData()}
           type="button"
