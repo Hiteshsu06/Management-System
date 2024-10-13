@@ -157,7 +157,7 @@ const SectorForm = () => {
   const { values, errors, handleSubmit, handleChange, setFieldValue, touched } = formik;
 
   return (
-    <div className="flex h-screen bg-BgPrimaryColor py-4">
+    <div className="flex min-h-screen bg-BgPrimaryColor py-4">
       {loader && <Loading/>}
       <Toast ref={toast} position="top-right" style={{scale: '0.7'}} onHide={toastHandler}/>
       <div className="mx-4 sm:mx-16 my-auto grid h-fit w-full grid-cols-4 gap-4 bg-BgSecondaryColor p-8 border rounded border-BorderColor">

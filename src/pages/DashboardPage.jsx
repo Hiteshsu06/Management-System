@@ -47,7 +47,7 @@ const DashboardPage = () => {
       <div className={`sidebar ${toggle ? "open" : "closed"} h-full min-w-fit  max-lg:max-w-[60px] max-lg:absolute max-lg:z-10`}>
         <Sidebar selectSidebarItem={selectSidebarItem}/>
       </div>
-      <div className="w-full h-screen" onClick={handleClick} onTouchMove={(e)=>{slideHandler(e)}}>
+      <div className="w-full min-h-screen" onClick={handleClick} onTouchMove={(e)=>{slideHandler(e)}}>
         <Topbar toggleExpansionSwitch={toggleExpansionSwitch} toggle={toggle}/>
         <div className="bg-BgPrimaryColor px-5 py-2 h-[calc(100vh_-_4rem)] overflow-y-scroll scrollbar-thumb-BgTertiaryColor scrollbar-track-white scrollbar-thin">
           <Suspense fallback={<Loading loadingText={t("loading")} />}>

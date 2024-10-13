@@ -90,7 +90,7 @@ const Sidebar = ({selectSidebarItem}) => {
   ];
 
   return (
-    <div className="h-screen bg-BgTertiaryColor text-TextPrimaryColor">
+    <div className="min-h-screen bg-BgTertiaryColor text-TextPrimaryColor">
       <div className="p-5">
         <div>LOGO</div>
         <div className="text-[0.6rem] hidden lg:block">{t("management_system")}</div>

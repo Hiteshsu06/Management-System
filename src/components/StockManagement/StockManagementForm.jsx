@@ -182,7 +182,7 @@ const StockManagementForm = () => {
   const { values, errors, handleSubmit, handleChange, touched, setFieldValue } = formik;
   return (
     <div className="h-screen p-auto">
-      <div className="flex h-full bg-BgPrimaryColor py-4">
+      <div className="flex min-h-full bg-BgPrimaryColor py-4 overflow-y-auto">
       {loader && <Loading/>}
       <Toast ref={toast} position="top-right" style={{scale: '0.7'}} onHide={toastHandler}/>
       <div className="mx-4 sm:mx-16 my-auto grid h-fit w-full grid-cols-4 gap-4 bg-BgSecondaryColor p-8 border rounded border-BorderColor">
