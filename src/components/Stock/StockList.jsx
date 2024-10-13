@@ -113,6 +113,33 @@ const StockList = () => {
     navigate("/create-stock");
   };
 
+  const exportData= async ()=>{
+    setLoader(true);
+    try {
+      allApiWithHeaderToken("stocks/export-report", "", "get", "", "blob")
+        .then((response) => {
+          // Create a Blob URL and download the file
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', `stocks_${new Date().toLocaleDateString()}.csv`); // File name
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          setLoader(false);
+        })
+        .catch((err) => {
+          console.log("err", err);
+        })
+        .finally(()=>{
+          setLoader(false);
+        });
+      } 
+    catch (error) {
+        console.error('Error downloading the CSV file:', error);
+    }
+ }
+
   return (
     <div className="text-TextPrimaryColor">
       <Confirmbox
@@ -122,14 +149,20 @@ const StockList = () => {
         message={t("stock_has_been_deleted_successfully")}
       />
       <Breadcrum item={item} />
-      <div className="mt-4 flex justify-end bg-BgSecondaryColor border rounded border-BorderColor p-2">
+      <div className="mt-4 flex justify-between bg-BgSecondaryColor border rounded border-BorderColor p-2">
+        <ButtonComponent
+          onClick={() => exportData()}
+          type="button"
+          label={t("export_data")}
+          className="rounded bg-BgTertiaryColor px-6 py-2 text-[12px] text-white"
+          icon="ri-download-2-fill"
+          iconPos="right"
+        />
         <ButtonComponent
           onClick={() => createStock()}
           type="submit"
           label={t("create_stock")}
           className="rounded bg-BgTertiaryColor px-6 py-2 text-[12px] text-white"
-          icon="pi pi-arrow-right"
-          iconPos="right"
         />
       </div>
       <div className="mt-4">

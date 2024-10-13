@@ -12,6 +12,7 @@ import { useFormik } from "formik";
 import { Toast } from "primereact/toast";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import Cookies from 'js-cookie';
 
 const data = {
   email: "",
@@ -56,7 +57,7 @@ const Login = () => {
         }
         let jwtToken = response?.headers?.authorization;
         localStorage.setItem("user", JSON.stringify(data));
-        localStorage.setItem("token", jwtToken);
+        Cookies.set('token', jwtToken, { expires: 3 });
         setToastType('success');
         toast.current.show({
           severity: "success",

@@ -117,5 +117,6 @@
    "company_has_been_deleted_successfully" : "Company has been deleted successfully",
    "index_has_been_deleted_successfully" : "Index has been deleted successfully",
    "sector_has_been_deleted_successfully" : "Sector has been deleted successfully",
-   "stock_has_been_deleted_successfully" : "Stock has been deleted successfully"
+   "stock_has_been_deleted_successfully" : "Stock has been deleted successfully",
+   "export_data" : "Export Data"
 }

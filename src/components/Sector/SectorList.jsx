@@ -9,6 +9,7 @@ import DataTable from "@common/DataTable";
 import ButtonComponent from "@common/ButtonComponent";
 import Confirmbox from "@common/Confirmbox";
 import { allApiWithHeaderToken } from "@api/api";
+import axios from "axios";
 
 const SectorList = () => {
   const { t } = useTranslation("msg");
@@ -125,6 +126,32 @@ const SectorList = () => {
     navigate("/create-sector");
   };
 
+  const exportData= async ()=>{
+    setLoader(true);
+    try {
+      allApiWithHeaderToken("sectors/export-report", "", "get", "", "blob")
+        .then((response) => {
+          // Create a Blob URL and download the file
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', `sectors_${new Date().toLocaleDateString()}.csv`); // File name
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          setLoader(false);
+        })
+        .catch((err) => {
+          console.log("err", err);
+        })
+        .finally(()=>{
+          setLoader(false);
+        });
+  } catch (error) {
+      console.error('Error downloading the CSV file:', error);
+  }
+  }
+
   return (
     <div className="text-TextPrimaryColor">
       <Confirmbox
@@ -134,14 +161,20 @@ const SectorList = () => {
         message={t("sector_has_been_deleted_successfully")}
       />
       <Breadcrum item={item}/>
-      <div className="mt-4 flex justify-end bg-BgSecondaryColor border rounded border-BorderColor p-2">
+      <div className="mt-4 flex justify-between bg-BgSecondaryColor border rounded border-BorderColor p-2">
+        <ButtonComponent
+          onClick={() => exportData()}
+          type="button"
+          label={t("export_data")}
+          className="rounded bg-BgTertiaryColor px-6 py-2 text-[12px] text-white"
+          icon="ri-download-2-fill"
+          iconPos="right"
+        />
         <ButtonComponent
           onClick={() => createStock()}
-          type="submit"
+          type="button"
           label={t("create_sector")}
           className="rounded bg-BgTertiaryColor px-6 py-2 text-[12px] text-white"
-          icon="pi pi-arrow-right"
-          iconPos="right"
         />
       </div>
       <div className="mt-4">

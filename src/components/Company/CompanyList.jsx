@@ -113,8 +113,6 @@ const CompanyList = () => {
           type="submit"
           label={t("create_company")}
           className="rounded bg-BgTertiaryColor px-6 py-2 text-[12px] text-white"
-          icon="pi pi-arrow-right"
-          iconPos="right"
         />
       </div>
       <div className="mt-4">

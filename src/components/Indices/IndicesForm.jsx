@@ -256,16 +256,12 @@ const IndicesForm = () => {
             type="button"
             label={t("back")}
             className="rounded bg-[#1f1f70] px-6 py-2 text-[12px] text-white"
-            icon="pi pi-arrow-right"
-            iconPos="right"
           />
           <ButtonComponent
             onClick={() => handleSubmit()}
             type="submit"
             label={id ? t("update") : t("submit")}
             className="rounded bg-[#1f1f70] px-6 py-2 text-[12px] text-white"
-            icon="pi pi-arrow-right"
-            iconPos="right"
           />
         </div>
       </div>
