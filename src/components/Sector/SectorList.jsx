@@ -9,7 +9,6 @@ import DataTable from "@common/DataTable";
 import ButtonComponent from "@common/ButtonComponent";
 import Confirmbox from "@common/Confirmbox";
 import { allApiWithHeaderToken } from "@api/api";
-import axios from "axios";
 
 const SectorList = () => {
   const { t } = useTranslation("msg");

@@ -49,7 +49,7 @@ const DashboardPage = () => {
       </div>
       <div className="w-full min-h-screen" onClick={handleClick} onTouchMove={(e)=>{slideHandler(e)}}>
         <Topbar toggleExpansionSwitch={toggleExpansionSwitch} toggle={toggle}/>
-        <div className="bg-BgPrimaryColor ps-5 pe-4 py-2 h-[calc(100vh_-_4rem)] overflow-y-scroll scrollbar-thumb-BgTertiaryColor scrollbar-thin">
+         <div className="bg-BgPrimaryColor ps-5 pe-4 py-2 h-[calc(100vh_-_4rem)] overflow-y-scroll scrollbar-thumb-BgTertiaryColor scrollbar-thin">
           <Suspense fallback={<Loading loadingText={t("loading")} />}>
             <Routes>
               <Route path="/" element={<CompanyList />} />

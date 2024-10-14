@@ -20,12 +20,13 @@ const structure = {
   short_term: "",
   short_term_url: "",
   long_term: "",
-  long_term_url: ""
+  long_term_url: "",
+  category: {}
 };
 
 const categories = [
-  {name: "Domestic", value: 0},
-  {name: "International", value: 1}
+  {name: "Domestic", value: "0"},
+  {name: "International", value: "1"}
 ]
 
 const IndicesForm = () => {
@@ -41,8 +42,8 @@ const IndicesForm = () => {
   const validationSchema = yup.object().shape({
     name: yup.string().required(t("name_is_required")),
     price: yup.string().required(t("price_is_required")),
-    short_term: yup.string().required(t("short_term_is_required")),
-    long_term: yup.string().required(t("long_term_is_required"))
+    short_term: id ? yup.string() : yup.string().required(t("short_term_is_required")),
+    long_term: id ? yup.string() : yup.string().required(t("long_term_is_required"))
   });
 
   const onHandleSubmit = async (value) => {
@@ -96,8 +97,8 @@ const IndicesForm = () => {
       price: value?.price,
       index_short_term_chart: value?.short_term,
       index_long_term_chart: value?.long_term,
-      country_code: value?.country?.name,
-      category_code: value?.category
+      country_id: value?.country?.id,
+      category_id: Number(value?.category)
     }
     allApiWithHeaderToken("indices", body, "post", 'multipart/form-data')
       .then((response) => {
@@ -113,7 +114,13 @@ const IndicesForm = () => {
 
   const updateIndex = (value) => {
     setLoader(true);
-    allApiWithHeaderToken(`indices/${id}`, value, "put")
+    let body = {
+      name: value?.name,
+      price: value?.price,
+      country_id: value?.country?.name,
+      category_id: Number(value?.category)
+    }
+    allApiWithHeaderToken(`indices/${id}`, body, "put")
       .then((response) => {
         successToaster(response);
       })
@@ -142,6 +149,12 @@ const IndicesForm = () => {
             long_term: response?.data?.long_term,
             long_term_url: response?.data?.index_long_term_chart_url
           }
+          const selectedCategory = categories?.find((item) => item?.value == response?.data?.category_id);
+          data['category'] = selectedCategory || {};
+
+          const selectedCountry = allCountries?.find((item) => item?.id == response?.data?.country_id);
+          console.log("R",selectedCountry)
+          data['country'] = selectedCountry || {};
           setData(data);
         })
         .catch((err) => {

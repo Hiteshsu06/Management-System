@@ -14,6 +14,9 @@ const AvatarProfile = ({ size, shape }) => {
     {
       label: t("my_profile"),
       icon: "ri-id-card-line",
+      command: () => {
+        navigate('/edit-profile')
+      }
     },
     {
       label: t("help"),
