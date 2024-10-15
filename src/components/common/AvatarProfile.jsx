@@ -87,7 +87,7 @@ const AvatarProfile = ({ size, shape }) => {
         popup
         ref={menu}
         breakpoint="767px"
-        className="w-44 p-0 text-[0.8rem] bg-BgTertiaryColor"
+        className="w-44 p-0 text-[0.8rem] bg-BgTertiaryColor mt-1"
       />
     </div>
   );

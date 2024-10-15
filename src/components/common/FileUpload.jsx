@@ -8,7 +8,7 @@ const FileUpload = ({value="", name, isLabel, onChange, isProfile}) => {
               {value ? <div className={isProfile ? "relative flex justify-center" : "relative"}>
                    {isProfile ? <img src={value} alt="" style={{ borderRadius:"50%", maxWidth: "180px", height: "180px", minWidth: "180px"}}/>
                    : <img src={value} alt="" style={{ borderRadius:"5px", maxWidth: "100%", height: "230px", minWidth: "100%"}}/>}
-                   <div className={`absolute right-[4px] top-0 scale-[1.3] ${isProfile && "right-[38%]"}`}>
+                   <div className={`absolute top-0 scale-[1.3] ${isProfile ? "ms-[180px]" : "right-[4px]"}`}>
                      <div className="relative">
                           <span className='ri-pencil-line'></span>
                           <input id="dropzone-file" onChange={onChange} type="file" name={name} className="opacity-0 z-10 w-[25px] absolute right-[20%] top-[15%]" />

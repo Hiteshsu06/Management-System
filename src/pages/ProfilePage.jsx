@@ -53,29 +53,29 @@ const ProfilePage = () => {
   const { values, errors, handleSubmit, handleChange, touched, setFieldValue } = formik;
 
   return (
-    <section className="my-auto py-10 dark:bg-gray-900">
-      <div className="xs:w-[96%] mx-auto flex gap-4 md:w-[90%] lg:w-[80%]">
-        <div className="xs:w-full mx-auto h-fit self-center rounded-xl p-4 shadow-2xl sm:w-[88%] md:w-[80%] lg:w-[88%] dark:bg-gray-800/40">
-          <div>
-            <h4 className="xs:text-xl mb-2 font-serif font-extrabold sm:text-xl md:text-2xl lg:text-3xl dark:text-white">
-              Edit Profile
-            </h4>
-            <div>
-              <FileUpload
-                isLabel={t("profile_image")}
-                value={values?.profile_image_url}
-                name="profile_image"
-                onChange={(e) => {
-                  setFieldValue("profile_image", e?.currentTarget?.files[0]);
-                  setFieldValue(
-                    "profile_image_url",
-                    URL.createObjectURL(e?.target?.files[0]),
-                  );
-                }}
-                isProfile={true}
-              />
-            </div>
-            <div  className="sm:mr-16 sm:ms-0 my-auto grid h-fit w-full grid-cols-4 gap-4 bg-BgSecondaryColor p-8">
+    <div className="h-screen p-auto">
+      <div className="flex min-h-full bg-BgPrimaryColor py-4 overflow-y-auto">
+            <div className="mx-4 sm:mx-16 my-auto grid h-fit w-full grid-cols-4 gap-4 bg-BgSecondaryColor p-8 border rounded border-BorderColor">
+              <div className="col-span-4 md:col-span-4">
+                  <h4 className="xs:text-xl mb-2 font-serif font-extrabold sm:text-xl md:text-2xl lg:text-3xl dark:text-white">
+                     {t("my_profile")}
+                  </h4>
+                  <div>
+                    <FileUpload
+                      isLabel={t("profile_image")}
+                      value={values?.profile_image_url}
+                      name="profile_image"
+                      onChange={(e) => {
+                        setFieldValue("profile_image", e?.currentTarget?.files[0]);
+                        setFieldValue(
+                          "profile_image_url",
+                          URL.createObjectURL(e?.target?.files[0]),
+                        );
+                      }}
+                      isProfile={true}
+                    />
+                  </div>
+              </div>
               <div className="col-span-4 md:col-span-2">
                 <InputTextComponent
                   value={values?.firstName}
@@ -144,8 +144,8 @@ const ProfilePage = () => {
                 />
               </div>
               <div className="col-span-4 md:col-span-2"></div>
-            </div>
-            <div className="mt-4 flex justify-end gap-4">
+              <div className="col-span-3"></div>
+              <div className="mt-4 flex justify-end gap-4">
               <ButtonComponent
                 onClick={() => {
                   navigate("/dashboard");
@@ -160,11 +160,10 @@ const ProfilePage = () => {
                 label={t("update")}
                 className="rounded bg-[#1f1f70] px-6 py-2 text-[12px] text-white"
               />
+              </div>
             </div>
-          </div>
-        </div>
       </div>
-    </section>
+    </div>
   );
 };
 
