@@ -171,6 +171,7 @@ const IndicesList = () => {
           onClick={() => exportData()}
           type="button"
           label={t("export_data")}
+          disabled={(domesticData?.length > 0 || internationalData?.length > 0) ? false : true}
           className="rounded bg-BgTertiaryColor px-6 py-2 text-[12px] text-white"
           icon="ri-download-2-fill"
           iconPos="right"

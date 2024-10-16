@@ -17,9 +17,10 @@ import { useTranslation } from "react-i18next";
 const data = {
   email: "",
   password: "",
+  confirmPassword: ""
 };
 
-const ForgotPassword = () => {
+const ResetPassword = () => {
   const toast = useRef(null);
   const { t } = useTranslation("msg");
   const [loader, setLoader] = useState(false);
@@ -29,13 +30,29 @@ const ForgotPassword = () => {
     email: yup
       .string()
       .email(t("please_enter_valid_email"))
-      .required(t("email_is_required"))
+      .required(t("email_is_required")),
+    password: yup
+      .string()
+      .min(6, t("please_enter_password_more_then_6_characters"))
+      .max(20, t("please_enter_password_less_then_20_characters"))
+      .required(t("password_is_required")),
+    confirmPassword: yup
+      .string()
+      .min(6, t("please_enter_password_more_then_6_characters"))
+      .max(20, t("please_enter_password_less_then_20_characters"))
+      .required(t("confirm_password_is_required"))
+      .oneOf(
+        [yup.ref("password")],
+        t("confirm_password_and_new_password_should_be_same"),
+      ),
   });
 
   const onHandleSubmit = async (value) => {
     let body = {
       user: {
-        email: value?.email
+        email: value?.email,
+        password: "",
+        confirmPassword: ""
       }
     }
     setLoader(true);
@@ -79,22 +96,48 @@ const ForgotPassword = () => {
   return (
     <div className="h-screen items-center flex justify-center max-sm:px-4">
       {loader && <Loading/>}
-      <div className="w-1/3 h-[40%] max-lg:w-1/2 max-sm:w-full border px-5 py-5 max-lg:px-10 max-md:px-5">
+      <div className="w-1/3 max-lg:w-1/2 max-sm:w-full border px-5 py-5 max-lg:px-10 max-md:px-5">
         <Toast ref={toast} position="top-right" style={{scale: '0.7'}} onHide={()=>{ navigate('/dashboard') }}/>
         <div className="text-center text-[1.5rem] font-[600] tracking-wide max-lg:text-[1.4em] max-sm:text-[1rem]">
-          {t("forgot_password")}
+          {t("reset_password")}
         </div>
         <div className="mt-2 flex flex-col gap-2">
-          <InputTextComponent
-            value={values?.email}
-            onChange={handleChange}
-            type="email"
-            placeholder={t("your_email")}
-            name="email"
-            error={errors?.email}
-            touched={touched?.email}
-            className="w-full rounded border-[1px] border-[#ddd] px-[1rem] py-[8px] text-[11px] focus:outline-none"
-          />
+        <div>
+            <InputTextComponent
+              value={values?.email}
+              onChange={handleChange}
+              type="email"
+              placeholder={t("your_email")}
+              name="email"
+              error={errors?.email}
+              touched={touched?.email}
+              className="w-full rounded border-[1px] border-[#ddd] px-[1rem] py-[8px] text-[11px] focus:outline-none"
+            />
+          </div>
+          <div>
+            <InputTextComponent
+              value={values?.password}
+              onChange={handleChange}
+              type="password"
+              placeholder={t("your_password")}
+              name="password"
+              error={errors?.password}
+              touched={touched?.password}
+              className="w-full rounded border-[1px] border-[#ddd] px-[1rem] py-[8px] text-[11px] focus:outline-none"
+            />
+          </div>
+          <div>
+            <InputTextComponent
+              value={values?.confirmPassword}
+              onChange={handleChange}
+              type="password"
+              placeholder={t("your_confirm_password")}
+              name="confirmPassword"
+              error={errors?.confirmPassword}
+              touched={touched?.confirmPassword}
+              className="w-full rounded border-[1px] border-[#ddd] px-[1rem] py-[8px] text-[11px] focus:outline-none"
+            />
+          </div>
         </div>
         <div className="mt-4">
           <ButtonComponent
@@ -116,4 +159,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default ResetPassword;

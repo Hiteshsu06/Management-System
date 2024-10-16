@@ -164,6 +164,7 @@ const SectorList = () => {
         <ButtonComponent
           onClick={() => exportData()}
           type="button"
+          disabled={(data?.length > 0 ) ? false : true}
           label={t("export_data")}
           className="rounded bg-BgTertiaryColor px-6 py-2 text-[12px] text-white"
           icon="ri-download-2-fill"

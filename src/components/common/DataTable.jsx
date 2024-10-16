@@ -1,16 +1,17 @@
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
+import { Skeleton } from 'primereact/skeleton';
 
 const Datatable = ({ columns, data = [], loader, className, showGridlines }) => {
+  const items = Array?.from({ length: 5 }, (v, i) => i);
   return (
     <div>
       <DataTable
-        value={data}
+        value={data?.length > 0 ? data : items}
         tableStyle={{ minWidth: "50rem" }}
         className={className}
         showGridlines={showGridlines}
         paginator
-        loading={loader}
         rows={5}
         rowsPerPageOptions={[5, 10, 25, 50]}
       >
@@ -19,7 +20,7 @@ const Datatable = ({ columns, data = [], loader, className, showGridlines }) => 
             key={i}
             field={col?.field}
             header={col?.header}
-            body={col?.body}
+            body={loader ? <Skeleton /> : col?.body}
             className="capitalize"
             headerStyle={col.headerStyle}
           />

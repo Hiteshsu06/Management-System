@@ -120,5 +120,6 @@
    "stock_has_been_deleted_successfully" : "Stock has been deleted successfully",
    "export_data" : "Export Data",
    "select_gender" : "Select Gender",
-   "profile_image" : "Profile Image"
+   "profile_image" : "Profile Image",
+   "reset_password" : "Reset Password"
 }

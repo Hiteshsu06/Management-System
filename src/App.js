@@ -20,6 +20,7 @@ const StockManagementForm = lazy(() => import("@components/StockManagement/Stock
 const StockForm = lazy(() => import("@components/Stock/StockForm"));
 const SectorForm = lazy(() => import("@components/Sector/SectorForm"));
 const IndicesForm = lazy(() => import("@components/Indices/IndicesForm"));
+const ResetPassword = lazy(() => import("@pages/ResetPasswordPage"));
 
 function App() {
   const theme = localStorage.getItem('theme');
@@ -32,6 +33,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />}/>
           <Route path="/forgot-password" element={<ForgotPassword />}/>
+          <Route path="/reset-password/:id" element={<ResetPassword />}/>
           <Route path="/signup" element={<Signup />}/>
           <Route path="/dashboard/*" element={<DashboardPage />}/>
           <Route path="/create-company" element={<CompanyForm />}/>

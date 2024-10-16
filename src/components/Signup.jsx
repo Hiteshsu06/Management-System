@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 import ButtonComponent from "@common/ButtonComponent";
 import InputTextComponent from "@common/InputTextComponent";
 import { allApi } from "@api/api";
+import Loading from '@common/Loading';
 
 // external libraries
 import * as yup from "yup";
@@ -95,6 +96,7 @@ const Signup = () => {
 
   return (
     <div className="my-16 flex justify-center max-sm:px-4">
+      {loader && <Loading/>}
       <div className="w-1/3 max-lg:w-1/2 max-sm:w-full border px-5 py-5 max-lg:px-10 max-md:px-5">
         <Toast ref={toast} position="top-right" style={{scale: '0.7'}} onHide={()=>{ navigate('/') }}/>
         <div className="my-2 text-left text-[1.5rem] font-[600] tracking-wide max-xl:text-center max-lg:text-[1.4em] max-sm:text-[1rem]">
@@ -178,7 +180,6 @@ const Signup = () => {
             disabled={!checked}
             onClick={() => handleSubmit()}
             type="submit"
-            loading={loader}
             label={t("sign_up")}
             className="w-full rounded bg-BgTertiaryColor px-6 py-2 text-[12px] text-white"
           />
