@@ -14,7 +14,8 @@ const InputTextComponent = ({
   onFocus,
   error,
   touched,
-  isLabel
+  isLabel,
+  onKeyDown
 }) => (
   <div className="custom-input-design w-full">
     {isLabel ? (
@@ -23,6 +24,7 @@ const InputTextComponent = ({
     <InputText
       value={value}
       onChange={onChange}
+      onKeyDown={onKeyDown}
       type={type}
       id={id}
       placeholder={placeholder}

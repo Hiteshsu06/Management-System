@@ -7,7 +7,7 @@ const Datatable = ({ columns, data = [], loader, className, showGridlines }) => 
   return (
     <div>
       <DataTable
-        value={data?.length > 0 ? data : items}
+        value={data?.length == 0 && loader ? items : data}
         tableStyle={{ minWidth: "50rem" }}
         className={className}
         showGridlines={showGridlines}

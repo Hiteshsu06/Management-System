@@ -43,13 +43,13 @@ const DashboardPage = () => {
   }
 
   return (
-    <div className="flex overflow-hidden bg-BgPrimaryColor">
+    <div className="flex overflow-hidden bg-BgPrimaryColor h-[100svh]">
       <div className={`sidebar ${toggle ? "open" : "closed"} min-w-fit  max-lg:max-w-[60px] max-lg:absolute max-lg:z-10`}>
         <Sidebar selectSidebarItem={selectSidebarItem}/>
       </div>
       <div className="w-full min-h-screen" onClick={handleClick} onTouchMove={(e)=>{slideHandler(e)}}>
         <Topbar toggleExpansionSwitch={toggleExpansionSwitch} toggle={toggle}/>
-         <div className="bg-BgPrimaryColor px-5 py-2" style={{ height: 'calc(100svh - 4rem)' }}>
+         <div className="bg-BgPrimaryColor px-5 py-2 overflow-y-scroll h-[80svh]">
           <Suspense fallback={<Loading loadingText={t("loading")} />}>
             <Routes>
               <Route path="/" element={<CompanyList />} />

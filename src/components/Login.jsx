@@ -85,7 +85,13 @@ const Login = () => {
    if (toastType === 'success') {
        navigate('/dashboard');
     }
-  }
+  };
+  
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleSubmit(event); // Call the submit function when Enter is pressed
+    }
+  };
 
   const loginByFacebook = () => {};
 
@@ -118,6 +124,7 @@ const Login = () => {
             placeholder={t("your_email")}
             name="email"
             error={errors?.email}
+            onKeyDown={handleKeyDown}
             touched={touched?.email}
             className="w-full rounded border-[1px] border-[#ddd] px-[1rem] py-[8px] text-[11px] focus:outline-none"
           />
@@ -127,6 +134,7 @@ const Login = () => {
             type="password"
             placeholder={t("your_password")}
             name="password"
+            onKeyDown={handleKeyDown}
             error={errors?.password}
             touched={touched?.password}
             className="w-full rounded border-[1px] border-[#ddd] px-[1rem] py-[8px] text-[11px] focus:outline-none"
