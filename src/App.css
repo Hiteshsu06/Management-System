@@ -52,6 +52,15 @@
     transform: translateX(-100%);
 }
 
+
+.content-scroll-bar {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+.content-scroll-bar::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+
 .sidebar.open {
     transform: translateX(0);
 }
