@@ -146,7 +146,7 @@ const CompanyForm = () => {
   const { values, errors, handleSubmit, handleChange, touched } = formik;
 
   return (
-    <div className="flex min-h-[100svh] bg-BgPrimaryColor py-auto items-center">
+    <div className="flex min-h-[80vh] bg-BgPrimaryColor py-4">
     {loader && <Loading/>}
     <Toast ref={toast} position="top-right" style={{scale: '0.7'}} onHide={toastHandler}/>
     <div className="mx-4 sm:mx-16 my-auto grid h-fit w-full grid-cols-4 gap-4 bg-BgSecondaryColor p-8 border rounded border-BorderColor">
