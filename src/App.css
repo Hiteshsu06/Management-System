@@ -175,3 +175,9 @@
   .scrollbar-medium::-webkit-scrollbar {
     width: 2px;
   }
+
+  @media screen and (max-width: 400px) {
+    .mobile-screen-view-point {
+      height: 80vh;
+    }
+  }
