@@ -23,6 +23,7 @@ const ForgotPassword = () => {
   const toast = useRef(null);
   const { t } = useTranslation("msg");
   const [loader, setLoader] = useState(false);
+  const [toastType, setToastType] = useState('');
   const navigate = useNavigate();
 
   const validationSchema = yup.object().shape({
@@ -43,6 +44,7 @@ const ForgotPassword = () => {
     allApi(`users/password`, body, "post")
     .then((response) => {
       if(response?.status === 200){
+        setToastType('success');
         toast.current.show({
           severity: "success",
           summary: "Success",
@@ -58,6 +60,13 @@ const ForgotPassword = () => {
     });
   };
 
+  const toastHandler=()=>{
+    if (toastType === 'success') {
+        navigate('/');
+     }
+  };
+
+
   const formik = useFormik({
     initialValues: data,
     onSubmit: onHandleSubmit,
@@ -72,7 +81,7 @@ const ForgotPassword = () => {
     <div className="h-screen items-center flex justify-center max-sm:px-4">
       {loader && <Loading/>}
       <div className="w-1/3 h-[40%] max-lg:w-1/2 max-sm:w-full border px-5 py-5 max-lg:px-10 max-md:px-5">
-        <Toast ref={toast} position="top-right" style={{scale: '0.7'}} onHide={()=>{ navigate('/dashboard') }}/>
+        <Toast ref={toast} position="top-right" style={{scale: '0.7'}} onHide={toastHandler}/>
         <div className="text-center text-[1.5rem] font-[600] tracking-wide max-lg:text-[1.4em] max-sm:text-[1rem]">
           {t("forgot_password")}
         </div>

@@ -11,11 +11,10 @@ import Loading from '@common/Loading';
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { Toast } from "primereact/toast";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 const data = {
-  email: "",
   password: "",
   confirmPassword: ""
 };
@@ -24,13 +23,11 @@ const ResetPassword = () => {
   const toast = useRef(null);
   const { t } = useTranslation("msg");
   const [loader, setLoader] = useState(false);
+  const [toastType, setToastType] = useState('');
+  const { id } = useParams();
   const navigate = useNavigate();
 
   const validationSchema = yup.object().shape({
-    email: yup
-      .string()
-      .email(t("please_enter_valid_email"))
-      .required(t("email_is_required")),
     password: yup
       .string()
       .min(6, t("please_enter_password_more_then_6_characters"))
@@ -50,24 +47,17 @@ const ResetPassword = () => {
   const onHandleSubmit = async (value) => {
     let body = {
       user: {
-        email: value?.email,
-        password: "",
-        confirmPassword: ""
+        password: value?.password,
+        reset_password_token: id,
+        password_confirmation: value?.confirmPassword
       }
     }
     setLoader(true);
     // To Handle Normal submit
-    allApi(`users/sign_in`, body, "post")
+    allApi(`users/password`, body, "put")
     .then((response) => {
       if(response?.status === 200){
-        let data = {
-          firstName: response?.data?.data?.email,
-          lastName: "",
-          email: response?.data?.data?.email
-        }
-        let jwtToken = response?.headers?.authorization;
-        localStorage.setItem("user", JSON.stringify(data));
-        localStorage.setItem("token", jwtToken);
+        setToastType('success');
         toast.current.show({
           severity: "success",
           summary: "Success",
@@ -81,6 +71,12 @@ const ResetPassword = () => {
     }).finally(()=>{
       setLoader(false);
     });
+  };
+
+  const toastHandler=()=>{
+    if (toastType === 'success') {
+        navigate('/');
+     }
   };
 
   const formik = useFormik({
@@ -97,23 +93,11 @@ const ResetPassword = () => {
     <div className="h-screen items-center flex justify-center max-sm:px-4">
       {loader && <Loading/>}
       <div className="w-1/3 max-lg:w-1/2 max-sm:w-full border px-5 py-5 max-lg:px-10 max-md:px-5">
-        <Toast ref={toast} position="top-right" style={{scale: '0.7'}} onHide={()=>{ navigate('/dashboard') }}/>
+        <Toast ref={toast} position="top-right" style={{scale: '0.7'}} onHide={toastHandler}/>
         <div className="text-center text-[1.5rem] font-[600] tracking-wide max-lg:text-[1.4em] max-sm:text-[1rem]">
           {t("reset_password")}
         </div>
         <div className="mt-2 flex flex-col gap-2">
-        <div>
-            <InputTextComponent
-              value={values?.email}
-              onChange={handleChange}
-              type="email"
-              placeholder={t("your_email")}
-              name="email"
-              error={errors?.email}
-              touched={touched?.email}
-              className="w-full rounded border-[1px] border-[#ddd] px-[1rem] py-[8px] text-[11px] focus:outline-none"
-            />
-          </div>
           <div>
             <InputTextComponent
               value={values?.password}
