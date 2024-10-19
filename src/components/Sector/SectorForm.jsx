@@ -61,7 +61,13 @@ const SectorForm = () => {
         successToaster(response);
       })
       .catch((err) => {
-        errorToaster(err);
+        if(Array.isArray(err?.response?.data?.errors)){
+          err?.response?.data?.errors?.forEach((item)=>{
+            errorToaster(item);
+          })
+        }else{
+          errorToaster(err?.response?.data);
+        }
       })
       .finally(()=>{
         setLoader(false);
@@ -85,7 +91,13 @@ const SectorForm = () => {
         successToaster(response);
       })
       .catch((err) => {
-        errorToaster(err);
+        if(Array.isArray(err?.response?.data?.errors)){
+          err?.response?.data?.errors?.forEach((item)=>{
+            errorToaster(item);
+          })
+        }else{
+          errorToaster(err?.response?.data);
+        }
       })
       .finally(()=>{
         setLoader(false);
@@ -135,8 +147,8 @@ const SectorForm = () => {
     return toast.current.show({
       severity: "error",
       summary: "Error",
-      detail: err?.response?.data,
-      life: 500
+      detail: err,
+      life: 1000
     });
   };
 
