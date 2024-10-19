@@ -27,6 +27,7 @@ const Signup = () => {
   const { t } = useTranslation("msg");
   const [loader, setLoader] = useState(false);
   const [checked, setChecked] = useState(false);
+  const [toastType, setToastType] = useState('');
   const navigate = useNavigate();
 
   const validationSchema = yup.object().shape({
@@ -64,6 +65,7 @@ const Signup = () => {
     await allApi("users", body , "post")
       .then((response) => {
         if(response?.status === 200){
+          setToastType('success');
           toast.current.show({
             severity: "success",
             summary: "Success",
@@ -76,12 +78,18 @@ const Signup = () => {
         toast.current.show({
           severity: "error",
           summary: "Error",
-          detail: err.response?.data,
+          detail: err?.response?.data?.errors,
           life: 3000,
         });
       }).finally(()=>{
         setLoader(false);
       });;
+  };
+
+  const toastHandler=()=>{
+    if (toastType === 'success') {
+        navigate('/dashboard');
+     }
   };
 
   const formik = useFormik({
@@ -98,7 +106,7 @@ const Signup = () => {
     <div className="my-16 flex justify-center max-sm:px-4">
       {loader && <Loading/>}
       <div className="w-1/3 max-lg:w-1/2 max-sm:w-full border px-5 py-5 max-lg:px-10 max-md:px-5">
-        <Toast ref={toast} position="top-right" style={{scale: '0.7'}} onHide={()=>{ navigate('/') }}/>
+        <Toast ref={toast} position="top-right" style={{scale: '0.7'}} onHide={toastHandler} />
         <div className="my-2 text-left text-[1.5rem] font-[600] tracking-wide max-xl:text-center max-lg:text-[1.4em] max-sm:text-[1rem]">
           {t("signup")}
         </div>

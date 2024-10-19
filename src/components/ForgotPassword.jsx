@@ -40,17 +40,9 @@ const ForgotPassword = () => {
     }
     setLoader(true);
     // To Handle Normal submit
-    allApi(`users/sign_in`, body, "post")
+    allApi(`users/password`, body, "post")
     .then((response) => {
       if(response?.status === 200){
-        let data = {
-          firstName: response?.data?.data?.email,
-          lastName: "",
-          email: response?.data?.data?.email
-        }
-        let jwtToken = response?.headers?.authorization;
-        localStorage.setItem("user", JSON.stringify(data));
-        localStorage.setItem("token", jwtToken);
         toast.current.show({
           severity: "success",
           summary: "Success",
