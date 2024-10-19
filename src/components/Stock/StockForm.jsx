@@ -4,6 +4,7 @@ import InputTextComponent from "@common/InputTextComponent";
 import FileUpload from "@common/FileUpload";
 import { allApiWithHeaderToken } from "@api/api";
 import Loading from '@common/Loading';
+import Dropdown from "@common/DropdownComponent";
 
 // external libraries
 import * as yup from "yup";
@@ -19,7 +20,8 @@ const structure = {
   short_term: "",
   long_term: "",
   short_term_url: "",
-  long_term_url: ""
+  long_term_url: "",
+  sector: ""
 };
 
 const StockForm = () => {
@@ -110,8 +112,11 @@ const StockForm = () => {
     navigate("/dashboard/stocks");
   };
 
-  useEffect(() => {
+  useEffect(()=> {
     getAllSectorRecords();
+  },[])
+
+  useEffect(() => {
     if (id) {
       setLoader(true);
       allApiWithHeaderToken(`stocks/${id}`, "", "get")
@@ -131,7 +136,7 @@ const StockForm = () => {
           setLoader(false);
         });
     };
-  }, []);
+  }, [id]);
 
   const getAllSectorRecords=()=>{
     allApiWithHeaderToken("sector_masters", "", "get")
@@ -213,6 +218,20 @@ const StockForm = () => {
             className="col-span-2 w-full rounded border-[1px] border-[#ddd] px-[1rem] py-[8px] text-[11px] focus:outline-none"
           />
         </div>
+        <div className="col-span-4 md:col-span-2 mb-3">
+          <Dropdown 
+            value={values?.sector}
+            onChange={handleChange}
+            data= {allSectors}
+            placeholder={t("select_sector")}
+            name="sector"
+            error={errors?.sector}
+            touched={touched?.sector}
+            className="col-span-2 w-full rounded border-[1px] border-[#ddd] custom-dropdown focus:outline-none"
+            optionLabel="name"
+          />
+        </div>
+        <div className="col-span-4 md:col-span-2 mb-3"></div>
         <div className="col-span-4 md:col-span-2">
             <FileUpload 
               value={values?.short_term_url}

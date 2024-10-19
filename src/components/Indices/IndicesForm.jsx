@@ -148,6 +148,10 @@ const IndicesForm = () => {
     navigate("/dashboard/indices");
   };
 
+  useEffect(()=>{
+    fetchCountryList();
+  },[])
+
   useEffect(() => {
     if (id) {
       setLoader(true);
@@ -161,11 +165,10 @@ const IndicesForm = () => {
             long_term: response?.data?.long_term,
             long_term_url: response?.data?.index_long_term_chart_url
           }
-          const selectedCategory = categories?.find((item) => item?.value == response?.data?.category_id);
+          const selectedCategory = categories?.find((item) => item?.value === response?.data?.category_id);
           data['category'] = selectedCategory || {};
 
-          const selectedCountry = allCountries?.find((item) => item?.id == response?.data?.country_id);
-          console.log("R",selectedCountry)
+          const selectedCountry = allCountries?.find((item) => item?.id === response?.data?.country_id);
           data['country'] = selectedCountry || {};
           setData(data);
         })
@@ -176,8 +179,7 @@ const IndicesForm = () => {
           setLoader(false);
         });
     }
-    fetchCountryList();
-  }, []);
+  }, [id]);
 
   const toastHandler=()=>{
     if (toastType === 'success') {

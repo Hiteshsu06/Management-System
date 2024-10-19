@@ -191,7 +191,7 @@ const StockManagementForm = () => {
     validateOnBlur: true,
   });
 
-  const { values, errors, handleSubmit, handleChange, touched, setFieldValue } = formik;
+  const { values, errors, handleSubmit, handleChange, touched } = formik;
   return (
     <div className="h-screen p-auto">
       <div className="flex min-h-full bg-BgPrimaryColor py-4 overflow-y-auto">

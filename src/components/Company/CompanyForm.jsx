@@ -139,7 +139,7 @@ const CompanyForm = () => {
           setLoader(false);
         });
     }
-  }, []);
+  }, [id]);
 
   const toastHandler=()=>{
     if (toastType === 'success') {
