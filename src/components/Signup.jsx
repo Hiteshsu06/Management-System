@@ -76,7 +76,7 @@ const Signup = () => {
         toast.current.show({
           severity: "error",
           summary: "Error",
-          detail: "Error",
+          detail: err.response?.data,
           life: 3000,
         });
       }).finally(()=>{
