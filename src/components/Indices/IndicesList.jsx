@@ -39,23 +39,28 @@ const IndicesList = () => {
         />
       </div>
     );
-  }
+  };
+  
   const chartBodyTemplate = (rowData) => {
     return (
       <div className="flex gap-2">
         <ButtonComponent
           label={t("short_term")}
           className="rounded bg-BgTertiaryColor px-6 py-2 text-[12px] text-white"
-          onClick={() => editIndex(rowData)}
+          onClick={() => viewChart(rowData, t("short_term"), 'index_short_term_chart_url')}
         />
         <ButtonComponent
           label={t("long_term")}
           className="rounded bg-BgTertiaryColor px-6 py-2 text-[12px] text-white"
-          onClick={() => confirmDeleteIndex(rowData)}
+          onClick={() => viewChart(rowData, t("short_term"), 'index_short_term_chart_url')}
         />
       </div>
     );
-  }
+  };
+
+  const viewChart=(rowData, caption, range)=>{
+    navigate('/view-chart', { state: { url: rowData?.[range], heading: caption, currentUrl: '/dashboard/sector-master'}})
+  };
 
   const actionBodyTemplate = (rowData) => {
     return (

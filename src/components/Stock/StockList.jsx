@@ -31,12 +31,12 @@ const StockList = () => {
         <ButtonComponent
           label={t("short_term")}
           className="rounded bg-BgTertiaryColor px-6 py-2 text-[12px] text-white"
-          onClick={() => editCompany(rowData)}
+          onClick={() => viewChart(rowData, t("short_term"), 'stock_short_term_chart_url')}
         />
         <ButtonComponent
           label={t("long_term")}
           className="rounded bg-BgTertiaryColor px-6 py-2 text-[12px] text-white"
-          onClick={() => confirmDeleteCompany(rowData)}
+          onClick={() => viewChart(rowData, t("short_term"), 'stock_long_term_chart_url')}
         />
       </div>
     );
@@ -58,6 +58,11 @@ const StockList = () => {
       </div>
     );
   };
+
+  const viewChart=(rowData, caption, range)=>{
+    navigate('/view-chart', { state: { url: rowData?.[range], heading: caption, currentUrl: '/dashboard/sector-master'}})
+  };
+
   const columns = [
     { field: "name", header: t("name") },
     { field: "price", header: t("price") },

@@ -21,6 +21,7 @@ const StockForm = lazy(() => import("@components/Stock/StockForm"));
 const SectorForm = lazy(() => import("@components/Sector/SectorForm"));
 const IndicesForm = lazy(() => import("@components/Indices/IndicesForm"));
 const ResetPassword = lazy(() => import("@pages/ResetPasswordPage"));
+const ImageViewer = lazy(() => import("@common/ImageViewer"));
 
 function App() {
   const theme = localStorage.getItem('theme');
@@ -47,6 +48,7 @@ function App() {
           <Route path="/create-stock-management" element={<StockManagementForm />}/>
           <Route path="/edit-stock-management/:id" element={<StockManagementForm />}/>
           <Route path="/edit-profile" element={<ProfilePage />}/>
+          <Route path="/view-chart" element={<ImageViewer />}/>
         </Routes>
     </Suspense>
   );
