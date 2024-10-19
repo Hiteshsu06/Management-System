@@ -88,7 +88,7 @@ const Signup = () => {
 
   const toastHandler=()=>{
     if (toastType === 'success') {
-        navigate('/dashboard');
+        navigate('/');
      }
   };
 
