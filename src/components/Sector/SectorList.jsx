@@ -32,7 +32,7 @@ const SectorList = () => {
         <ButtonComponent
           label={t("view_stocks")}
           className="rounded bg-BgTertiaryColor px-6 py-2 text-[12px] text-white"
-          onClick={() => editSector(rowData)}
+          onClick={() => {navigate(`/sector-master/stocks/${rowData?.id}`, { state: { heading: rowData?.name}})}}
         />
       </div>
     );

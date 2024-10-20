@@ -57,7 +57,7 @@ const StockForm = () => {
       price: value?.price,
       stock_short_term_chart: value?.short_term,
       stock_long_term_chart: value?.long_term,
-      sector_id: value?.sector
+      sector_masters_id: value?.sector?.id
     };
     setLoader(true);
     allApiWithHeaderToken("stocks", body, "post", 'multipart/form-data')
@@ -127,6 +127,7 @@ const StockForm = () => {
             short_term_url: response?.data?.stock_long_term_chart_url ,
             long_term_url: response?.data?.stock_short_term_chart_url 
           }
+          data['sector'] = response?.data?.sector || {};
           setData(data);
         })
         .catch((err) => {

@@ -1,7 +1,7 @@
 // hooks
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 
 // components
 import Breadcrum from "@common/Breadcrum";
@@ -10,21 +10,18 @@ import ButtonComponent from "@common/ButtonComponent";
 import Confirmbox from "@common/Confirmbox";
 import { allApiWithHeaderToken } from "@api/api";
 
-const StockList = () => {
+const SectorwiseStockList = () => {
   const { t } = useTranslation("msg");
   const navigate = useNavigate();
+  const { id } = useParams();
   const [isConfirm, setIsConfirm] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   const [loader, setLoader] = useState(false);
-  const item = {
-    heading: t("stocks"),
-    routes: [
-      { label: t("dashboard"), route: "/dashboard" },
-      { label: t("stocks"), route: "/dashboard/stocks" },
-    ],
-  };
-
   const [data, setData] = useState([]);
+  const location = useLocation();
+  const { heading } = location.state || {};
+  console.log("heading",heading)
+
   const chartBodyTemplate = (rowData) => {
     return (
       <div className="flex gap-2">
@@ -66,7 +63,6 @@ const StockList = () => {
   const columns = [
     { field: "name", header: t("name") },
     { field: "price", header: t("price") },
-    { body: (item)=> item?.sector?.name , header: t("sector") },
     { header: t("charts"), body: chartBodyTemplate, headerStyle: { paddingLeft: '3%'} },
     { header: t("action"), body: actionBodyTemplate, headerStyle: { paddingLeft: '3%'} },
   ];
@@ -96,26 +92,28 @@ const StockList = () => {
       });
   };
 
-  const fetchStockList = () => {
-    // To get all users stored in json
-    setLoader(true);
-    allApiWithHeaderToken("stocks", "", "get")
-      .then((response) => {
+  const fetchStockList=()=>{
+    allApiWithHeaderToken(`sectors/stocks/${id}`, "", "get")
+    .then((response) => {
         setData(response?.data);
-      })
-      .catch((err) => {
-        console.log("err", err);
-      }).finally(()=>{
-        setLoader(false);
-      });
-  };
+    })
+    .catch((err) => {
+      console.log("err", err);
+    })
+    .finally(()=>{
+      setLoader(false);
+    });
+  }
 
-  useEffect(() => {
-    fetchStockList();
-  }, []);
+  useEffect(()=>{
+    if (id) {
+      setLoader(true);
+      fetchStockList();
+    }
+  }, [id]);
 
-  const createStock = () => {
-    navigate("/create-stock");
+  const handleBack = () => {
+    navigate("/dashboard/sector-master");
   };
 
   const exportData= async ()=>{
@@ -146,15 +144,17 @@ const StockList = () => {
  }
 
   return (
-    <div className="text-TextPrimaryColor">
+    <div className="text-TextPrimaryColor p-4 sm:p-8">
       <Confirmbox
         isConfirm={isConfirm}
         closeDialogbox={closeDialogbox}
         confirmDialogbox={confirmDialogbox}
         message={t("stock_has_been_deleted_successfully")}
       />
-      <Breadcrum item={item} />
-      <div className="mt-4 flex justify-end gap-2 bg-BgSecondaryColor border rounded border-BorderColor p-2">
+      <div className="mt-4 flex justify-between gap-2 bg-BgSecondaryColor border rounded border-BorderColor p-2">
+        <div className="flex items-center">
+            <h4 className="text-[1.2rem] text-TextSecondaryColor ms-[4px] font-[600]">{heading}</h4>
+        </div>
         <ButtonComponent
           onClick={() => exportData()}
           type="button"
@@ -163,12 +163,6 @@ const StockList = () => {
           className="rounded bg-BgTertiaryColor px-6 py-2 text-[12px] text-white"
           icon="ri-download-2-fill"
           iconPos="right"
-        />
-        <ButtonComponent
-          onClick={() => createStock()}
-          type="submit"
-          label={t("create_stock")}
-          className="rounded bg-BgTertiaryColor px-6 py-2 text-[12px] text-white"
         />
       </div>
       <div className="mt-4">
@@ -180,8 +174,16 @@ const StockList = () => {
           showGridlines={true}
         />
       </div>
+      <div className="mt-4 flex justify-end gap-4">
+          <ButtonComponent
+            onClick={() => handleBack()}
+            type="button"
+            label={t("back")}
+            className="rounded bg-BgTertiaryColor px-6 py-2 text-[12px] text-white"
+          />
+        </div>
     </div>
   );
 };
 
-export default StockList;
+export default SectorwiseStockList;
