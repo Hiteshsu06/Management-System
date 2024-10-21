@@ -81,7 +81,6 @@ const IndicesList = () => {
   const columns = [
     { field: "name", header: t("name") },
     { field: "price", header: t("price") },
-    { header: t("stocks"), body: stocksBodyTemplate, headerStyle: { paddingLeft: '3%'} },
     { header: t("charts"), body: chartBodyTemplate, headerStyle: { paddingLeft: '3%'} },
     { header: t("action"), body: actionBodyTemplate, headerStyle: { paddingLeft: '3%'} },
   ];

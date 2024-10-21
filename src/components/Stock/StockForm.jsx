@@ -84,13 +84,14 @@ const StockForm = () => {
       price: value?.price
     }
     if(value?.short_term){
-      body['stock_short_term_chart'] = value?.short_term
+      body['stock_short_term_chart'] = value?.short_term;
     }
     if(value?.long_term){
-      body['stock_long_term_chart'] = value?.long_term
+      body['stock_long_term_chart'] = value?.long_term;
     };
+    body['sector_masters_id'] = value?.sector?.id;
     setLoader(true);
-    allApiWithHeaderToken(`stock/${id}`, body, "put", 'multipart/form-data')
+    allApiWithHeaderToken(`stocks/${id}`, body, "put", 'multipart/form-data')
       .then((response) => {
         successToaster(response);
       })
@@ -125,9 +126,11 @@ const StockForm = () => {
             name: response?.data?.name,
             price: response?.data?.price,
             short_term_url: response?.data?.stock_long_term_chart_url ,
-            long_term_url: response?.data?.stock_short_term_chart_url 
+            long_term_url: response?.data?.stock_short_term_chart_url,
+            sector: response?.data?.sector
           }
-          data['sector'] = response?.data?.sector || {};
+          const sectorData = allSectors.find((item)=> item?.id === response?.data?.sector?.id);
+          data['sector'] = sectorData;
           setData(data);
         })
         .catch((err) => {
@@ -137,7 +140,7 @@ const StockForm = () => {
           setLoader(false);
         });
     };
-  }, [id]);
+  }, [id, allSectors]);
 
   const getAllSectorRecords=()=>{
     allApiWithHeaderToken("sector_masters", "", "get")
@@ -210,7 +213,7 @@ const StockForm = () => {
           <InputTextComponent
             value={values?.price}
             onChange={handleChange}
-            type="text"
+            type="number"
             placeholder={t("stock_price")}
             name="price"
             isLabel={true}

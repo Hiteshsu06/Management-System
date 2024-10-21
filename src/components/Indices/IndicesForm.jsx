@@ -25,8 +25,8 @@ const structure = {
 };
 
 const categories = [
-  {name: "Domestic", value: "0"},
-  {name: "International", value: "1"}
+  {id: 0, name: "Domestic"},
+  {id: 1, name: "International"}
 ]
 
 const IndicesForm = () => {
@@ -98,7 +98,7 @@ const IndicesForm = () => {
       index_short_term_chart: value?.short_term,
       index_long_term_chart: value?.long_term,
       country_id: value?.country?.id,
-      category_id: Number(value?.category)
+      category_id: value?.category?.id
     }
     allApiWithHeaderToken("indices", body, "post", 'multipart/form-data')
       .then((response) => {
@@ -123,8 +123,8 @@ const IndicesForm = () => {
     let body = {
       name: value?.name,
       price: value?.price,
-      country_id: value?.country?.name,
-      category_id: Number(value?.category)
+      country_id: value?.country?.id,
+      category_id: Number(value?.category?.id)
     }
     allApiWithHeaderToken(`indices/${id}`, body, "put")
       .then((response) => {
@@ -165,11 +165,11 @@ const IndicesForm = () => {
             long_term: response?.data?.long_term,
             long_term_url: response?.data?.index_long_term_chart_url
           }
-          const selectedCategory = categories?.find((item) => item?.value === response?.data?.category_id);
-          data['category'] = selectedCategory || {};
+          const selectedCategory = categories?.find((item) => item?.id == response?.data?.category_id);
+          data['category'] = selectedCategory;
 
           const selectedCountry = allCountries?.find((item) => item?.id === response?.data?.country_id);
-          data['country'] = selectedCountry || {};
+          data['country'] = selectedCountry;
           setData(data);
         })
         .catch((err) => {
@@ -179,7 +179,7 @@ const IndicesForm = () => {
           setLoader(false);
         });
     }
-  }, [id]);
+  }, [id, allCountries]);
 
   const toastHandler=()=>{
     if (toastType === 'success') {
@@ -206,7 +206,7 @@ const IndicesForm = () => {
           <InputTextComponent
             value={values?.name}
             onChange={handleChange}
-            type="name"
+            type="text"
             placeholder={t("index_name")}
             name="name"
             isLabel={true}
@@ -219,7 +219,7 @@ const IndicesForm = () => {
           <InputTextComponent
             value={values?.price}
             onChange={handleChange}
-            type="price"
+            type="number"
             placeholder={t("index_price")}
             name="price"
             isLabel={true}
