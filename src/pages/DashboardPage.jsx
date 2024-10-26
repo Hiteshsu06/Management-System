@@ -1,5 +1,6 @@
 // components
 import { Topbar, Sidebar, CompanyList, StockManagementList, StockList, SectorList, IndicesList } from "@components";
+import { PrivateRoute } from "../App";
 import Loading from "@common/Loading";
 
 // utils
@@ -52,22 +53,35 @@ const DashboardPage = () => {
          <div className="bg-BgPrimaryColor px-5 py-2 overflow-y-scroll h-[90svh] content-scroll-bar">
           <Suspense fallback={<Loading loadingText={t("loading")} />}>
             <Routes>
-              <Route path="/" element={<CompanyList />} />
-              <Route
-                path="/stock-management"
-                element={<StockManagementList />}
+              <Route path="/" element={
+                <PrivateRoute
+                    role={['super_admin', 'viewer']}>
+                    <CompanyList />
+                </PrivateRoute>}
               />
-              <Route
-                path="/stocks"
-                element={<StockList />}
+              <Route path="/stock-management" element={
+                <PrivateRoute
+                    role={['super_admin', 'viewer']}>
+                    <StockManagementList />
+                </PrivateRoute>}
               />
-              <Route
-                path="/sector-master"
-                element={<SectorList />}
+              <Route path="/stocks" element={
+                <PrivateRoute
+                    role={['super_admin', 'admin']}>
+                    <StockList />
+                </PrivateRoute>}
               />
-               <Route
-                path="/indices"
-                element={<IndicesList />}
+              <Route path="/sector-master" element={
+                <PrivateRoute
+                    role={['super_admin', 'admin']}>
+                    <SectorList />
+                </PrivateRoute>}
+              />
+              <Route path="/indices" element={
+                <PrivateRoute
+                    role={['super_admin', 'admin']}>
+                    <IndicesList />
+                </PrivateRoute>}
               />
             </Routes>
           </Suspense>

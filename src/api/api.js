@@ -20,6 +20,25 @@ export const allApi = (dataurl, data, method) => {
     }
 };
 
+export const authApi = (dataurl, data, method, token) => {
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+    }
+    if ('post' === method) {
+        return axios.post(`${apiBaseURL}/${dataurl}`, JSON.stringify(data), { headers: headers });
+    }
+    if ('get' === method) {
+        return axios.get(`${apiBaseURL}/${dataurl}`);
+    }
+    if ('delete' === method) {
+        return axios.delete(`${apiBaseURL}/${dataurl}`);
+    }
+    if ('put' === method) {
+        return axios?.put(`${apiBaseURL}/${dataurl}`, data);
+    }
+};
+
 export const allApiWithHeaderToken = (dataurl, data, method, contentType, responseType="json") => {
     let token = Cookies.get('token');
     const headers = {

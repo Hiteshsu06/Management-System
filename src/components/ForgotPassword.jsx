@@ -40,7 +40,6 @@ const ForgotPassword = () => {
       }
     }
     setLoader(true);
-    // To Handle Normal submit
     allApi(`users/password`, body, "post")
     .then((response) => {
       if(response?.status === 200){
@@ -65,7 +64,6 @@ const ForgotPassword = () => {
         navigate('/');
      }
   };
-
 
   const formik = useFormik({
     initialValues: data,

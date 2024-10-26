@@ -1,10 +1,9 @@
-// hooks
+// utils
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 
 // components
-import Breadcrum from "@common/Breadcrum";
 import DataTable from "@common/DataTable";
 import ButtonComponent from "@common/ButtonComponent";
 import Confirmbox from "@common/Confirmbox";

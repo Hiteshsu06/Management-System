@@ -1,13 +1,17 @@
+// hooks
+import React from 'react';
+
+// utils
 import { ToggleButton } from 'primereact/togglebutton';
 
 const ToggleButton = ({checked}) => {
   return (
-    <div>
+    <React.Fragment>
         <ToggleButton 
             checked={checked} 
             onChange={(e) => setChecked(e.value)} 
         />
-    </div>
+    </React.Fragment>
   )
 }
 

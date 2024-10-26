@@ -1,7 +1,9 @@
-// hooks
-import { useEffect, useState } from "react";
+// utils
+import { useEffect, useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { TabView, TabPanel } from 'primereact/tabview';
+import { Toast } from "primereact/toast";
 
 // components
 import Breadcrum from "@common/Breadcrum";
@@ -9,8 +11,6 @@ import DataTable from "@common/DataTable";
 import ButtonComponent from "@common/ButtonComponent";
 import Confirmbox from "@common/Confirmbox";
 import { allApiWithHeaderToken } from "@api/api";
-import { TabView, TabPanel } from 'primereact/tabview';
-
 
 const IndicesList = () => {
   const { t } = useTranslation("msg");
@@ -20,6 +20,7 @@ const IndicesList = () => {
   const [loader, setLoader] = useState(false);
   const [domesticData, setDomesticData] = useState([]);
   const [internationalData, setInternational] = useState([]);
+  const toast = useRef(null);
 
   const item = {
     heading: t("Indices"),
@@ -120,7 +121,7 @@ const IndicesList = () => {
         setDomesticData(data?.domestic_data)
       })
       .catch((err) => {
-        console.log("err", err);
+        errorToaster(err?.response?.data?.error);
       }).finally(()=>{
         setLoader(false);
       });
@@ -161,8 +162,18 @@ const IndicesList = () => {
     }
   }
 
+  const errorToaster=(err)=>{
+    return toast.current.show({
+      severity: "error",
+      summary: "Error",
+      detail: err,
+      life: 2000
+    });
+  };
+
   return (
     <div className="text-TextPrimaryColor">
+      <Toast ref={toast} position="top-right" style={{scale: '0.7'}}/>
       <Confirmbox
         isConfirm={isConfirm}
         closeDialogbox={closeDialogbox}

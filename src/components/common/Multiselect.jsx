@@ -1,8 +1,12 @@
+// hooks
+import React from 'react';
+
+// utils
 import { MultiSelect } from 'primereact/multiselect';
 
 const Multiselect = ({selectedCities, cities, optionLabel, placeholder, maxSelectedLabels, className}) => {
   return (
-    <div>
+    <React.Fragment>
         <MultiSelect 
             value={selectedCities} 
             onChange={(e) => setSelectedCities(e.value)} 
@@ -12,7 +16,7 @@ const Multiselect = ({selectedCities, cities, optionLabel, placeholder, maxSelec
             maxSelectedLabels={maxSelectedLabels} 
             className={className}  
         />
-    </div>
+    </React.Fragment>
   )
 }
 

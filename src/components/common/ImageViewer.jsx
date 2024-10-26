@@ -2,7 +2,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ButtonComponent from "@common/ButtonComponent";
 import { useTranslation } from "react-i18next";
-import { downloadImage } from '@components/helpers/downloadImage';
+import { downloadImage } from '@helpers/downloadImage';
 
 const ImageViewer = () => {
     const location = useLocation();

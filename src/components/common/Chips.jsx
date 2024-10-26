@@ -1,13 +1,17 @@
+// hooks
+import React from 'react';
+
+// utils
 import { Chips } from 'primereact/chips';
 
 const Chips = ({value}) => {
   return (
-    <div>
+    <React.Fragment>
         <Chips 
             value={value} 
             onChange={(e) => setValue(e.value)} 
         />
-    </div>
+    </React.Fragment>
   )
 }
 

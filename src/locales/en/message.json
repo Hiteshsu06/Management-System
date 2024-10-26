@@ -84,7 +84,6 @@
    "gender" : "Gender",
    "full_address" : "Full Address",
    "update" : "Update",
-
    "stocks" : "Stocks",
    "price" : "Price",
    "sector" : "Sector",
@@ -121,5 +120,9 @@
    "export_data" : "Export Data",
    "select_gender" : "Select Gender",
    "profile_image" : "Profile Image",
-   "reset_password" : "Reset Password"
+   "reset_password" : "Reset Password",
+   "viewer" : "Viewer",
+   "not_authorized" : "Not Authorized",
+   "no_permission" : "You do not have permission to view this page.",
+   "back_to_home" : "Back To Home"
 }

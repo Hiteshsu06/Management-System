@@ -1,8 +1,12 @@
+// hooks
+import React from 'react';
+
+// utils
 import { Dropdown } from 'primereact/dropdown';
 
 const DropdownComponent = ({value, name, editable, data, onChange, optionLabel, placeholder, className, error, touched, label}) => {
   return (
-    <div>
+    <React.Fragment>
        {placeholder ? (
           <label className="text-[12px] text-TextSecondaryColor ms-[4px] font-[600]">{placeholder}</label>
         ) : null}
@@ -21,7 +25,7 @@ const DropdownComponent = ({value, name, editable, data, onChange, optionLabel, 
           ) : (
             ""
           )}
-    </div>
+    </React.Fragment>
   )
 }
 

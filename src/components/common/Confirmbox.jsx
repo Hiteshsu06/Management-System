@@ -1,10 +1,11 @@
-import { useRef, useEffect } from "react";
+// utils
+import React, { useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-
-import ButtonComponent from "@common/ButtonComponent";
-
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { Toast } from "primereact/toast";
+
+// components
+import ButtonComponent from "@common/ButtonComponent";
 
 const Confirmbox = ({ isConfirm, closeDialogbox, confirmDialogbox, message }) => {
   const { t } = useTranslation("msg");
@@ -32,7 +33,7 @@ const Confirmbox = ({ isConfirm, closeDialogbox, confirmDialogbox, message }) =>
   }, [isConfirm]);
 
   return (
-    <div>
+    <React.Fragment>
       <Toast ref={toast}  style={{scale: '0.7'}}/>
       <ConfirmDialog
         group="headless"
@@ -78,7 +79,7 @@ const Confirmbox = ({ isConfirm, closeDialogbox, confirmDialogbox, message }) =>
           </div>
         )}
       />
-    </div>
+    </React.Fragment>
   );
 };
 

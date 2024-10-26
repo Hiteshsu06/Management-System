@@ -61,7 +61,6 @@ const Signup = () => {
       }
     };
     setLoader(true);
-    // To get all users stored in json
     await allApi("users", body , "post")
       .then((response) => {
         if(response?.status === 200){

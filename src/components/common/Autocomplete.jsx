@@ -1,8 +1,12 @@
+// hooks
+import React from 'react';
+
+// utils
 import { AutoComplete } from 'primereact/autocomplete';
 
 const Autocomplete = ({value, items, search, dropdown}) => {
   return (
-    <div>
+    <React.Fragment>
         <AutoComplete 
             value={value} 
             suggestions={items} 
@@ -10,7 +14,7 @@ const Autocomplete = ({value, items, search, dropdown}) => {
             onChange={(e) => setValue(e.value)} 
             dropdown={dropdown}
          />
-    </div>
+    </React.Fragment>
   )
 }
 

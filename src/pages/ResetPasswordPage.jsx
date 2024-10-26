@@ -1,10 +1,13 @@
-import ResetPassword from '@components/ResetPassword';
+// utils
+import React from 'react';
 
+// components
+import ResetPassword from '@components/ResetPassword';
 const ResetPasswordPage = () => {
   return (
-    <>
-    <ResetPassword/>
-    </>
+    <React.Fragment>
+      <ResetPassword/>
+    </React.Fragment>
   )
 }
 

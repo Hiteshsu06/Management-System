@@ -4,7 +4,7 @@ import React, { useRef, useState } from "react";
 // components
 import ButtonComponent from "@common/ButtonComponent";
 import InputTextComponent from "@common/InputTextComponent";
-import { allApi } from "@api/api";
+import { allApi, authApi } from "@api/api";
 import Loading from '@common/Loading';
 
 // external libraries
@@ -14,6 +14,8 @@ import { Toast } from "primereact/toast";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Cookies from 'js-cookie';
+import { useGoogleLogin } from '@react-oauth/google';
+import { FacebookLoginClient } from '@greatsumini/react-facebook-login';
 
 const data = {
   email: "",
@@ -52,9 +54,16 @@ const Login = () => {
     .then((response) => {
       if(response?.status === 200){
         let data = {
-          firstName: response?.data?.data?.email,
-          lastName: "",
-          email: response?.data?.data?.email
+          id: response?.data?.data?.id,
+          fullName: "",
+          email: response?.data?.data?.email,
+          role: response?.data?.data?.role,
+          gender: response?.data?.data?.gender
+        }
+        let firstName = response?.data?.data?.first_name ? response?.data?.data?.first_name : "";
+        let lastName = response?.data?.data?.last_name ? response?.data?.data?.last_name : "";
+        if(firstName && lastName){
+          data.fullName = firstName + " " + lastName
         }
         let jwtToken = response?.headers?.authorization;
         localStorage.setItem("user", JSON.stringify(data));
@@ -83,7 +92,13 @@ const Login = () => {
 
   const toastHandler=()=>{
    if (toastType === 'success') {
-       navigate('/dashboard');
+      let userNavigation = JSON.parse(localStorage.getItem("user"))?.role && JSON.parse(localStorage.getItem("user"))?.role === 'admin' && '/dashboard/sector-master';
+      if(userNavigation){
+        navigate(userNavigation);
+      }
+      else{
+        navigate('/dashboard');
+      }
     }
   };
   
@@ -95,7 +110,41 @@ const Login = () => {
 
   const loginByFacebook = () => {};
 
-  const loginByGoogle = () => {};
+  const loginByGoogle = useGoogleLogin({
+    onSuccess: tokenResponse => {
+      authApi(`users/auth/google_oauth2/callback`, tokenResponse, "post", tokenResponse.access_token)
+      .then((response) => {
+        if(response?.status === 200){
+          // let data = {
+          //   firstName: response?.data?.data?.email,
+          //   lastName: "",
+          //   email: response?.data?.data?.email
+          // }
+          // let jwtToken = response?.headers?.authorization;
+          // localStorage.setItem("user", JSON.stringify(data));
+          // Cookies.set('token', jwtToken, { expires: 3 });
+          // setToastType('success');
+          // toast.current.show({
+          //   severity: "success",
+          //   summary: "Success",
+          //   detail: response?.data?.message,
+          //   life: 1000
+          // });
+        }
+      })
+      .catch((err) => {
+        setToastType('error');
+        toast.current.show({
+          severity: "error",
+          summary: "Error",
+          detail: err.response?.data,
+          life: 1000
+        });
+      }).finally(()=>{
+        setLoader(false);
+      });
+    }
+  });
 
   const formik = useFormik({
     initialValues: data,

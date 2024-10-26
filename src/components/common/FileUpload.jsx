@@ -1,6 +1,10 @@
+// hooks
+import React from 'react';
+
+// utils
 const FileUpload = ({value="", name, isLabel, onChange, isProfile}) => {
     return (
-      <div>
+      <React.Fragment>
           <div className="flex flex-col w-full">
               {isLabel && !isProfile ? (
                   <label className="text-[12px] text-TextSecondaryColor ms-[4px] font-[600]">{isLabel}</label>
@@ -25,7 +29,7 @@ const FileUpload = ({value="", name, isLabel, onChange, isProfile}) => {
                   <input id="dropzone-file" onChange={onChange} type="file" name={name} className="hidden" />
               </label>}
           </div>
-      </div>
+      </React.Fragment>
     )
 }
 

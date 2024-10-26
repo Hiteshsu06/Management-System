@@ -1,6 +1,7 @@
+// components
+import { useEffect, useState } from "react";
 import { Menu } from "primereact/menu";
 import { useTranslation } from "react-i18next";
-import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const Sidebar = ({selectSidebarItem}) => {
@@ -8,6 +9,7 @@ const Sidebar = ({selectSidebarItem}) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [activeItem, setActiveItem] = useState("");
+  let data = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     // Update the active item based on the current URL
@@ -37,7 +39,8 @@ const Sidebar = ({selectSidebarItem}) => {
       command: () => {
         navigate("/dashboard");
       },
-      className: activeItem === "company" ? "active" : "", // Highlight if active
+      className: activeItem === "company" ? "active" : "",
+      allowedRoles: ["viewer", "super_admin"]
     },
     {
       label: (
@@ -49,7 +52,8 @@ const Sidebar = ({selectSidebarItem}) => {
       command: () => {
         navigate("/dashboard/stock-management");
       },
-      className: activeItem === "stock_management" ? "active" : "", // Highlight if active
+      className: activeItem === "stock_management" ? "active" : "",
+      allowedRoles: ["viewer", "super_admin"]
     },
     {
       label: (
@@ -61,7 +65,8 @@ const Sidebar = ({selectSidebarItem}) => {
       command: () => {
         navigate("/dashboard/sector-master");
       },
-      className: activeItem === "sector_master" ? "active" : "", // Highlight if active
+      className: activeItem === "sector_master" ? "active" : "",
+      allowedRoles: ["admin", "super_admin"]
     },
     {
       label: (
@@ -73,7 +78,8 @@ const Sidebar = ({selectSidebarItem}) => {
       command: () => {
         navigate("/dashboard/indices");
       },
-      className: activeItem === "indices" ? "active" : "", // Highlight if active
+      className: activeItem === "indices" ? "active" : "",
+      allowedRoles: ["admin", "super_admin"]
     },
     {
       label: (
@@ -85,9 +91,14 @@ const Sidebar = ({selectSidebarItem}) => {
       command: () => {
         navigate("/dashboard/stocks");
       },
-      className: activeItem === "stocks" ? "active" : "", // Highlight if active
+      className: activeItem === "stocks" ? "active" : "",
+      allowedRoles: ["admin", "super_admin"]
     },
   ];
+  
+  const accessibleItems = items.filter(item =>
+    item.allowedRoles.some(role => [data?.role]?.includes(role))
+  );
 
   return (
     <div className="min-h-screen mobile-screen-view-point bg-BgTertiaryColor text-TextPrimaryColor">
@@ -96,7 +107,7 @@ const Sidebar = ({selectSidebarItem}) => {
         <div className="text-[0.6rem] hidden lg:block">{t("management_system")}</div>
       </div>
       <Menu
-        model={items}
+        model={accessibleItems}
         className="custom-menu-container bg-BgTertiaryColor p-0 text-[0.8rem]"
       />
     </div>

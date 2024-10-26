@@ -1,7 +1,10 @@
+// utils
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+
+// components
 import InputTextComponent from "@common/InputTextComponent";
 import AvatarProfile from "@common/AvatarProfile";
-import { useTranslation } from "react-i18next";
 
 const Topbar = ({ toggleExpansionSwitch, toggle }) => {
   const { t } = useTranslation("msg");

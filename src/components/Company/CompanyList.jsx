@@ -1,7 +1,8 @@
-// hooks
+// utils
 import { useEffect, useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { Toast } from "primereact/toast";
 
 // components
 import Breadcrum from "@common/Breadcrum";
@@ -17,6 +18,8 @@ const CompanyList = () => {
   const [deleteId, setDeleteId] = useState(null);
   const [loader, setLoader] = useState(false);
   const [data, setData] = useState([]);
+  const toast = useRef(null);
+
   const item = {
     heading: t("company"),
     routes: [
@@ -84,7 +87,7 @@ const CompanyList = () => {
         setData(response?.data);
       })
       .catch((err) => {
-        console.log("err", err);
+        errorToaster(err?.response?.data?.error);
       }).finally(()=>{
         setLoader(false);
       });
@@ -98,8 +101,18 @@ const CompanyList = () => {
     navigate("/create-company");
   };
 
+  const errorToaster=(err)=>{
+    return toast.current.show({
+      severity: "error",
+      summary: "Error",
+      detail: err,
+      life: 2000
+    });
+  };
+
   return (
     <div className="text-TextPrimaryColor">
+       <Toast ref={toast} position="top-right" style={{scale: '0.7'}}/>
       <Confirmbox
         isConfirm={isConfirm}
         closeDialogbox={closeDialogbox}

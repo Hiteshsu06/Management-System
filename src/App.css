@@ -20,167 +20,169 @@
 }
 
 [data-theme="dark"] {
-   /* Color */
-   --custom-primary-color: #1d1d1d;
-   --custom-secondary-color: #b9b9b9;
-   --custom-tertiary-color: white;
-   
-   /* Background color */
-   --primary-background-color: rgb(21 21 21 / var(--tw-bg-opacity));
-   --secondary-background-color: #1d1d1d;
-   --tertiary-background-color: #242424;
+  /* Color */
+  --custom-primary-color: #1d1d1d;
+  --custom-secondary-color: #b9b9b9;
+  --custom-tertiary-color: white;
 
-   /* Hover Background color */
+  /* Background color */
+  --primary-background-color: rgb(21 21 21 / var(--tw-bg-opacity));
+  --secondary-background-color: #1d1d1d;
+  --tertiary-background-color: #242424;
+
+  /* Hover Background color */
   --quater-background-color: #1d1d1d;
 
   --avatar-menu-background-color: #1d1d1d;
 }
-.p-toast-message-content{
+.p-toast-message-content {
   font-size: 12px;
 }
-.p-toast-message-icon{
+.p-toast-message-icon {
   scale: 0.6;
 }
-.p-toast{
+.p-toast {
   max-width: 19rem;
 }
-  
+
 /* For sidebar */
 .sidebar {
-    overflow-x: hidden;
-    transition: transform 0s ease;
-    transform: translateX(-100%);
+  overflow-x: hidden;
+  transition: transform 0s ease;
+  transform: translateX(-100%);
 }
-
-
-.content-scroll-bar {
-  -ms-overflow-style: none;  /* Internet Explorer 10+ */
-  scrollbar-width: none;  /* Firefox */
-}
-.content-scroll-bar::-webkit-scrollbar { 
-    display: none;  /* Safari and Chrome */
-}
-
 .sidebar.open {
-    transform: translateX(0);
+  transform: translateX(0);
 }
-
 .sidebar.closed {
-    position: fixed;
-    transform: translateX(-100%);
+  position: fixed;
+  transform: translateX(-100%);
 }
 
+/* Navbar toggle button */
 .toggle-button {
-    transition: transform 0.3s ease;
-  }
-  
-  .icon {
-    display: inline-block;
-    transition: transform 0.3s ease;
-  }
-  
-  .rotate {
-    transform: rotate(180deg);
-  }
+  transition: transform 0.3s ease;
+}
+.icon {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+.rotate {
+  transform: rotate(180deg);
+}
 
-  #pr_id_2_sub_0{
-    background-color: var(--secondary-background-color);
-  }
+#pr_id_2_sub_0 {
+  background-color: var(--secondary-background-color);
+}
 
-  tr{
-    background-color: transparent;
-  }
-  th{
-    background-color: var(--secondary-background-color);
-    color: var(--custom-secondary-color) !important;
-    font-size: 0.8rem;
-  }
-  td{
-    background-color: var(--secondary-background-color);
-    color:var(--custom-secondary-color) !important;
-    font-size: 0.7rem;
-  }
-  .custom-menu-container > ul > li > .p-menuitem-content:hover{
-    background-color: var(--quater-background-color) !important;
-  }
-  .p-menu .p-menuitem:not(.p-highlight):not(.p-disabled).p-focus > .p-menuitem-content{
-    background-color: var(--quater-background-color) !important;
-  }
-  .p-tieredmenu .p-menuitem:not(.p-highlight):not(.p-disabled) > .p-menuitem-content:hover{
-    background-color: var(--quater-background-color) !important;
-  }
-  .p-submenu-list{
-     background-color: var(--color-BgTertiaryColor) !important;
-  }
-  .p-tieredmenu .p-menuitem > .p-menuitem-content .p-menuitem-link{
-    background-color: var(--color-BgTertiaryColor) !important;
-  }
-  .active.p-menuitem{
-    background-color: var(--quater-background-color) !important;
-  }
-  .p-paginator{
-    font-size: 0.8rem;
-    background-color: var(--secondary-background-color);
-  }
-  .p-paginator-bottom > .p-dropdown.p-component.p-inputwrapper.p-inputwrapper-filled{
-    scale: 0.7;
-  }
-  .p-menuitem-icon{
-    color: var(--custom-tertiary-color);
-  }
-  .p-menuitem-text{
-    color: var(--custom-tertiary-color);
-  }
-  .avatar-menu > ul > li > .p-menuitem-content{
-    background-color: var(--avatar-menu-background-color) !important;
-  }
-  .avatar-menu > ul > li > ul{
-    background-color: var(--avatar-menu-background-color) !important;
-  }
-  .avatar-menu > ul > li > .p-menuitem-content:hover{
-    background-color: var(--quater-background-color) !important;
-  }
-  .avatar-menu > ul > li > ul > li > .p-menuitem-content:hover{
-    background-color: var(--quater-background-color) !important;
-  }
-  .custom-dropdown > .p-dropdown-label{
-    font-size: 11px !important;
-    padding-top: 8px !important;
-    padding-bottom: 8px !important;
+/* Table custmisation */
+tr {
+  background-color: transparent;
+}
+th {
+  background-color: var(--secondary-background-color);
+  color: var(--custom-secondary-color) !important;
+  font-size: 0.8rem;
+}
+td {
+  background-color: var(--secondary-background-color);
+  color: var(--custom-secondary-color) !important;
+  font-size: 0.7rem;
+}
+.p-datatable .p-datatable-loading-overlay {
+  background-color: transparent !important;
+}
+.p-datatable-loading-overlay {
+  color: var(--color-BgTertiaryColor) !important;
+}
 
-  }
-  .p-dropdown-items-wrapper{
-    font-size: 11px !important;
-  }
-  .p-tabview-nav > li > a{
-    border: 1px solid var(--color-BorderColor);
-    color: var(--color-BgTertiaryColor) !important;
-    font-size: 12px !important;
-  }
-  .p-tabview-nav > .p-highlight > a{
-    background-color: var(--color-BgTertiaryColor) !important;
-    color: white !important;
-    font-size: 12px !important;
-  }
-  .p-tabview .p-tabview-panels {
-    padding: 0px !important;
-  }
-  .p-datatable .p-datatable-loading-overlay {
-    background-color: transparent !important;
-  }
-  .p-datatable-loading-overlay{
-    color: var(--color-BgTertiaryColor) !important;
-  }
-  .p-tabview .p-tabview-nav li .p-tabview-nav-link {
-    padding: 1rem !important;
-  }
-  .avatar-background{
-    background-color: var(--quater-background-color) !important;
-  }
-  .input#dropzone-file:hover{
-    cursor: pointer !important;
-  }
+/* Sidebar Menu Customisation */
+.custom-menu-container > ul > li > .p-menuitem-content:hover {
+  background-color: var(--quater-background-color) !important;
+}
+.p-menu
+  .p-menuitem:not(.p-highlight):not(.p-disabled).p-focus
+  > .p-menuitem-content {
+  background-color: var(--quater-background-color) !important;
+}
+.p-tieredmenu
+  .p-menuitem:not(.p-highlight):not(.p-disabled)
+  > .p-menuitem-content:hover {
+  background-color: var(--quater-background-color) !important;
+}
+.p-submenu-list {
+  background-color: var(--color-BgTertiaryColor) !important;
+}
+.p-tieredmenu .p-menuitem > .p-menuitem-content .p-menuitem-link {
+  background-color: var(--color-BgTertiaryColor) !important;
+}
+.active.p-menuitem {
+  background-color: var(--quater-background-color) !important;
+}
 
-  .scrollbar-medium::-webkit-scrollbar {
-    width: 2px;
-  }
+/* Pagination Customisation */
+.p-paginator {
+  font-size: 0.8rem;
+  background-color: var(--secondary-background-color);
+}
+.p-paginator-bottom
+  > .p-dropdown.p-component.p-inputwrapper.p-inputwrapper-filled {
+  scale: 0.7;
+}
+.p-menuitem-icon {
+  color: var(--custom-tertiary-color);
+}
+.p-menuitem-text {
+  color: var(--custom-tertiary-color);
+}
+
+/* Avatar Menubar */
+.avatar-menu > ul > li > .p-menuitem-content {
+  background-color: var(--avatar-menu-background-color) !important;
+}
+.avatar-menu > ul > li > ul {
+  background-color: var(--avatar-menu-background-color) !important;
+}
+.avatar-menu > ul > li > .p-menuitem-content:hover {
+  background-color: var(--quater-background-color) !important;
+}
+.avatar-menu > ul > li > ul > li > .p-menuitem-content:hover {
+  background-color: var(--quater-background-color) !important;
+}
+.custom-dropdown > .p-dropdown-label {
+  font-size: 11px !important;
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+.p-dropdown-items-wrapper {
+  font-size: 11px !important;
+}
+.p-tabview-nav > li > a {
+  border: 1px solid var(--color-BorderColor);
+  color: var(--color-BgTertiaryColor) !important;
+  font-size: 12px !important;
+}
+.p-tabview-nav > .p-highlight > a {
+  background-color: var(--color-BgTertiaryColor) !important;
+  color: white !important;
+  font-size: 12px !important;
+}
+.p-tabview .p-tabview-panels {
+  padding: 0px !important;
+}
+
+/* Tabs */
+.p-tabview .p-tabview-nav li .p-tabview-nav-link {
+  padding: 1rem !important;
+}
+
+/* Others */
+.avatar-background {
+  background-color: var(--quater-background-color) !important;
+}
+.input#dropzone-file:hover {
+  cursor: pointer !important;
+}
+.scrollbar-medium::-webkit-scrollbar {
+  width: 2px;
+}

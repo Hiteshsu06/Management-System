@@ -13,8 +13,10 @@ import i18next from 'i18next';
 import englishMessage from './locales/en/message.json';
 import hindiMessage from './locales/hi/messages.json';
 import swedishMessage from './locales/sv/message.json';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const language = localStorage.getItem('i18nextLng');
+const googleClientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
 i18next.init({
     interpolation: { escapeValue: false },
@@ -34,11 +36,13 @@ i18next.init({
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <BrowserRouter>
-    <I18nextProvider i18n={i18next}>
-      <App />
-    </I18nextProvider>
-  </BrowserRouter>
+  <GoogleOAuthProvider clientId={`${googleClientId}`}>
+    <BrowserRouter>
+      <I18nextProvider i18n={i18next}>
+        <App />
+      </I18nextProvider>
+    </BrowserRouter>
+  </GoogleOAuthProvider>
 );
 
 reportWebVitals();

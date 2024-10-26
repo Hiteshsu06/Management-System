@@ -1,3 +1,7 @@
+// hooks
+import React from 'react';
+
+// utils
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Skeleton } from 'primereact/skeleton';
@@ -5,9 +9,9 @@ import { Skeleton } from 'primereact/skeleton';
 const Datatable = ({ columns, data = [], loader, className, showGridlines }) => {
   const items = Array?.from({ length: 5 }, (v, i) => i);
   return (
-    <div>
+    <React.Fragment>
       <DataTable
-        value={data?.length == 0 && loader ? items : data}
+        value={data?.length === 0 && loader ? items : data}
         tableStyle={{ minWidth: "50rem" }}
         className={className}
         showGridlines={showGridlines}
@@ -26,7 +30,7 @@ const Datatable = ({ columns, data = [], loader, className, showGridlines }) => 
           />
         ))}
       </DataTable>
-    </div>
+    </React.Fragment>
   );
 };
 

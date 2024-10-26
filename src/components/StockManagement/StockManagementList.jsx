@@ -1,7 +1,8 @@
-// hooks
-import { useEffect, useState } from "react";
+// utils
+import { useEffect, useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { Toast } from "primereact/toast";
 
 // components
 import Breadcrum from "@common/Breadcrum";
@@ -17,7 +18,8 @@ const StockManagementList = () => {
   const [isConfirm, setIsConfirm] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   const [loader, setLoader] = useState(false);
-
+  const toast = useRef(null);
+  
   const item = {
     heading: t("stock_management"),
     routes: [
@@ -83,6 +85,15 @@ const StockManagementList = () => {
     fetchStockList();
   }, []);
 
+  const errorToaster=(err)=>{
+    return toast.current.show({
+      severity: "error",
+      summary: "Error",
+      detail: err,
+      life: 2000
+    });
+  };
+
   const fetchStockList = () => {
     // To get all stocks stored in json
     setLoader(true);
@@ -91,7 +102,7 @@ const StockManagementList = () => {
         setData(response?.data);
       })
       .catch((err) => {
-        console.log("err", err);
+        errorToaster(err?.response?.data?.error);
       }).finally(()=> {
         setLoader(false);
       });
@@ -103,6 +114,7 @@ const StockManagementList = () => {
 
   return (
     <div className="text-TextPrimaryColor">
+      <Toast ref={toast} position="top-right" style={{scale: '0.7'}}/>
       <Confirmbox
         isConfirm={isConfirm}
         closeDialogbox={closeDialogbox}

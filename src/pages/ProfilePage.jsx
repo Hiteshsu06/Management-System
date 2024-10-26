@@ -1,12 +1,16 @@
+// external libraries
+import * as yup from "yup";
 import { useFormik } from "formik";
 import { useTranslation } from "react-i18next";
-import * as yup from "yup";
 import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+
+// components
 import ButtonComponent from "@common/ButtonComponent";
 import InputTextComponent from "@common/InputTextComponent";
 import Dropdown from "@common/DropdownComponent";
 import FileUpload from "@common/FileUpload";
-import { useNavigate } from "react-router-dom";
+import { allApiWithHeaderToken } from "@api/api";
 
 const structure = {
   firstName: "",
@@ -28,6 +32,8 @@ const ProfilePage = () => {
   const { t } = useTranslation("msg");
   const [data, setData] = useState(structure);
   const navigate = useNavigate();
+  const [loader, setLoader] = useState(false);
+  const { id } = useParams();
 
   const validationSchema = yup.object().shape({
     email: yup.string().required(t("email_is_required")),
@@ -41,6 +47,31 @@ const ProfilePage = () => {
   const onHandleSubmit = async (value) => {
     console.log("data", value);
   };
+
+  useEffect(() => {
+   if(id){
+     setLoader(true);
+     allApiWithHeaderToken(`/users/${id}`, "", "get")
+     .then((response) => {
+        let data = {
+          firstName: response?.data?.first_name,
+          lastName: response?.data?.last_name,
+          email: response?.data?.email ,
+          address: response?.data?.full_address,
+          profile_image_url: response?.data?.profile_image_url
+        }
+        const genderData = genderList?.find((item)=> item?.value === response?.data?.gender);
+        data['gender'] = genderData?.value;
+        setData(data);
+     })
+     .catch((err) => {
+       console.log("err", err);
+     })
+     .finally(()=>{
+       setLoader(false);
+     });
+   }
+  }, [id]);
 
   const formik = useFormik({
     initialValues: data,

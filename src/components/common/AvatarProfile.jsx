@@ -10,12 +10,13 @@ const AvatarProfile = ({ size, shape }) => {
   const menu = useRef(null);
   const { t } = useTranslation("msg");
   const navigate = useNavigate();
+
   const items = [
     {
       label: t("my_profile"),
       icon: "ri-id-card-line",
       command: () => {
-        navigate('/edit-profile')
+        navigate(`/edit-profile/${data?.id}`)
       }
     },
     {
@@ -69,14 +70,23 @@ const AvatarProfile = ({ size, shape }) => {
     },
   ];
 
+  const getCredentials=()=>{
+   if(data?.fullName){
+    return `${data?.fullName}`
+   }
+   else{
+    return `${data?.email}`
+   }
+  }
+
   return (
     <div className="card justify-content-center flex text-TextPrimaryColor">
       <div className="me-4">
-        <div className="text-[0.8rem]">{data?.email}</div>
-        <div className="text-[0.6rem]">{t("super_admin")}</div>
+        <div className="text-[0.8rem]">{getCredentials()}</div>
+        <div className="text-[0.6rem]">{t(data?.role)}</div>
       </div>
       <Avatar
-        label={data?.firstName?.split("")[0]?.toUpperCase()}
+        label={`${data?.fullName ? data?.fullName : data?.email}`?.split("")[0]?.toUpperCase()}
         className="avatar-background"
         size={size}
         shape={shape}
