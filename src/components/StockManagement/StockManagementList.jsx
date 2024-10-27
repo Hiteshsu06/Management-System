@@ -11,7 +11,7 @@ import ButtonComponent from "@common/ButtonComponent";
 import Confirmbox from "@common/Confirmbox";
 import { allApiWithHeaderToken } from "@api/api";
 
-const StockManagementList = () => {
+const StockManagementList = ({search}) => {
   const [data, setData] = useState([]);
   const { t } = useTranslation("msg");
   const navigate = useNavigate();
@@ -83,7 +83,7 @@ const StockManagementList = () => {
 
   useEffect(() => {
     fetchStockList();
-  }, []);
+  }, [search]);
 
   const errorToaster=(err)=>{
     return toast.current.show({
@@ -95,9 +95,11 @@ const StockManagementList = () => {
   };
 
   const fetchStockList = () => {
-    // To get all stocks stored in json
     setLoader(true);
-    allApiWithHeaderToken("demo_stocks", "", "get")
+    let body = {
+      search: search
+    }
+    allApiWithHeaderToken("demo_stocks/filter", body, "post")
       .then((response) => {
         setData(response?.data);
       })

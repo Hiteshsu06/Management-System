@@ -11,7 +11,7 @@ import ButtonComponent from "@common/ButtonComponent";
 import Confirmbox from "@common/Confirmbox";
 import { allApiWithHeaderToken } from "@api/api";
 
-const StockList = () => {
+const StockList = ({search}) => {
   const { t } = useTranslation("msg");
   const navigate = useNavigate();
   const [isConfirm, setIsConfirm] = useState(false);
@@ -100,9 +100,11 @@ const StockList = () => {
   };
 
   const fetchStockList = () => {
-    // To get all users stored in json
+    let body = {
+      search: search
+    }
     setLoader(true);
-    allApiWithHeaderToken("stocks", "", "get")
+    allApiWithHeaderToken("stocks/filter", body, "post")
       .then((response) => {
         setData(response?.data);
       })
@@ -115,7 +117,7 @@ const StockList = () => {
 
   useEffect(() => {
     fetchStockList();
-  }, []);
+  }, [search]);
 
   const createStock = () => {
     navigate("/create-stock");

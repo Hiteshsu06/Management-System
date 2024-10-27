@@ -12,7 +12,7 @@ import ButtonComponent from "@common/ButtonComponent";
 import Confirmbox from "@common/Confirmbox";
 import { allApiWithHeaderToken } from "@api/api";
 
-const IndicesList = () => {
+const IndicesList = ({search}) => {
   const { t } = useTranslation("msg");
   const navigate = useNavigate();
   const [isConfirm, setIsConfirm] = useState(false);
@@ -28,18 +28,6 @@ const IndicesList = () => {
       { label: t("dashboard"), route: "/dashboard" },
       { label: t("Indices"), route: "/dashboard/Indices" },
     ],
-  };
-
-  const stocksBodyTemplate = (rowData) => {
-    return (
-      <div className="flex gap-2">
-        <ButtonComponent
-          label={t("view_stocks")}
-          className="rounded bg-BgTertiaryColor px-6 py-2 text-[12px] text-white"
-          onClick={() => editIndex(rowData)}
-        />
-      </div>
-    );
   };
   
   const chartBodyTemplate = (rowData) => {
@@ -114,7 +102,10 @@ const IndicesList = () => {
   const fetchIndicesList = () => {
     // To get all indices
     setLoader(true);
-    allApiWithHeaderToken("indices", "", "get")
+    let body = {
+      search: search
+    }
+    allApiWithHeaderToken("indices/filter", body, "post")
       .then((response) => {
         let data = response?.data?.data;
         setInternational(data?.international_data);
@@ -129,7 +120,7 @@ const IndicesList = () => {
 
   useEffect(() => {
     fetchIndicesList();
-  }, []);
+  }, [search]);
 
   const createStock = () => {
     navigate("/create-index");

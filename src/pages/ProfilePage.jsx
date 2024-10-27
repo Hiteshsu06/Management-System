@@ -2,7 +2,7 @@
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { useTranslation } from "react-i18next";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 // components
@@ -11,6 +11,8 @@ import InputTextComponent from "@common/InputTextComponent";
 import Dropdown from "@common/DropdownComponent";
 import FileUpload from "@common/FileUpload";
 import { allApiWithHeaderToken } from "@api/api";
+import Loading from '@common/Loading';
+import { Toast } from "primereact/toast";
 
 const structure = {
   firstName: "",
@@ -18,8 +20,8 @@ const structure = {
   email: "",
   gender: "",
   address: "",
-  profile_image: "",
-  profile_image_url: ""
+  profileImage: "",
+  profileImageUrl: ""
 };
 
 const genderList = [
@@ -34,6 +36,8 @@ const ProfilePage = () => {
   const navigate = useNavigate();
   const [loader, setLoader] = useState(false);
   const { id } = useParams();
+  const toast = useRef(null);
+  const [toastType, setToastType] = useState('');
 
   const validationSchema = yup.object().shape({
     email: yup.string().required(t("email_is_required")),
@@ -45,8 +49,55 @@ const ProfilePage = () => {
   }, []);
 
   const onHandleSubmit = async (value) => {
-    console.log("data", value);
+    setLoader(true);
+    let body = {
+      first_name: value?.firstName,
+      last_name: value?.lastName,
+      gender: value?.gender,
+      full_address: value?.address,
+      profile_image: value?.profileImage,
+      role: "viewer"
+    };
+    allApiWithHeaderToken(`users`, body, "put", 'multipart/form-data')
+      .then((response) => {
+        successToaster(response);
+        let data = {
+          id: response?.data?.data?.id,
+          fullName: "",
+          email: response?.data?.data?.email,
+          role: response?.data?.data?.role,
+          gender: response?.data?.data?.gender
+        }
+        let firstName = response?.data?.data?.first_name ? response?.data?.data?.first_name : "";
+        let lastName = response?.data?.data?.last_name ? response?.data?.data?.last_name : "";
+        if(firstName && lastName){
+          data.fullName = firstName + " " + lastName
+        }
+        localStorage.setItem("user", JSON.stringify(data));
+      })
+      .catch((err) => {
+        if(Array.isArray(err?.response?.data?.errors)){
+          err?.response?.data?.errors?.forEach((item)=>{
+            errorToaster(item);
+          })
+        }else{
+          errorToaster(err?.response?.data);
+        }
+      })
+      .finally(()=>{
+        setLoader(false);
+      });
   };
+
+  const backHandler=()=>{
+    let userNavigation = JSON.parse(localStorage.getItem("user"))?.role && JSON.parse(localStorage.getItem("user"))?.role === 'admin' && '/dashboard/sector-master';
+    if(userNavigation){
+      navigate(userNavigation);
+    }
+    else{
+      navigate('/dashboard');
+    }
+  }
 
   useEffect(() => {
    if(id){
@@ -81,10 +132,40 @@ const ProfilePage = () => {
     validateOnBlur: true,
   });
 
+  const successToaster=(response)=>{
+    console.log("response",response)
+    setToastType('success');
+    return toast.current.show({
+      severity: "success",
+      summary: "Success",
+      detail: response?.data?.message,
+      life: 500
+    });
+  };
+
+  const errorToaster=(err)=>{
+    setToastType('error');
+    return toast.current.show({
+      severity: "error",
+      summary: "Error",
+      detail: err,
+      life: 1000
+    });
+  };
+
+  const toastHandler=()=>{
+    if (toastType === 'success') {
+        backHandler();
+     }
+  };
+
+
   const { values, errors, handleSubmit, handleChange, touched, setFieldValue } = formik;
 
   return (
     <div className="h-screen p-auto">
+      {loader && <Loading/>}
+      <Toast ref={toast} position="top-right" style={{scale: '0.7'}} onHide={toastHandler}/>
       <div className="flex min-h-full bg-BgPrimaryColor py-4 overflow-y-auto">
             <div className="mx-4 sm:mx-16 my-auto grid h-fit w-full grid-cols-4 gap-4 bg-BgSecondaryColor p-8 border rounded border-BorderColor">
               <div className="col-span-4 md:col-span-4">
@@ -94,12 +175,12 @@ const ProfilePage = () => {
                   <div>
                     <FileUpload
                       isLabel={t("profile_image")}
-                      value={values?.profile_image_url}
+                      value={values?.profileImageUrl}
                       name="profile_image"
                       onChange={(e) => {
-                        setFieldValue("profile_image", e?.currentTarget?.files[0]);
+                        setFieldValue("profileImage", e?.currentTarget?.files[0]);
                         setFieldValue(
-                          "profile_image_url",
+                          "profileImageUrl",
                           URL.createObjectURL(e?.target?.files[0]),
                         );
                       }}
@@ -178,9 +259,7 @@ const ProfilePage = () => {
               <div className="col-span-3"></div>
               <div className="mt-4 flex justify-end gap-4">
               <ButtonComponent
-                onClick={() => {
-                  navigate("/dashboard");
-                }}
+                onClick={backHandler}
                 type="button"
                 label={t("back")}
                 className="rounded bg-[#1f1f70] px-6 py-2 text-[12px] text-white"

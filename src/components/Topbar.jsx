@@ -6,11 +6,12 @@ import { useTranslation } from "react-i18next";
 import InputTextComponent from "@common/InputTextComponent";
 import AvatarProfile from "@common/AvatarProfile";
 
-const Topbar = ({ toggleExpansionSwitch, toggle }) => {
+const Topbar = ({ toggleExpansionSwitch, toggle, searchChangeHandler, searchField }) => {
   const { t } = useTranslation("msg");
   const [expand, setExpand] = useState(true);
   const [theme, setTheme] = useState(false);
   const [userDetails, setUserDetails] = useState({});
+  const [searchvalue, setSearchValue] = useState("");
 
   const toggleTheme = () => {
     setTheme(!theme);
@@ -28,6 +29,10 @@ const Topbar = ({ toggleExpansionSwitch, toggle }) => {
       localStorage.setItem("theme", "dark");
     }
   };
+
+  useEffect(()=>{
+    setSearchValue(searchField);
+  },[searchField])
 
   useEffect(() => {
     setUserDetails(JSON.parse(localStorage.getItem("userDetails")));
@@ -47,7 +52,7 @@ const Topbar = ({ toggleExpansionSwitch, toggle }) => {
 
   useEffect(()=>{
     setExpand(toggle)
-  },[toggle])
+  },[toggle]);
 
   return (
     <div className="flex h-16 w-full items-center gap-4 bg-BgTertiaryColor px-5">
@@ -67,7 +72,9 @@ const Topbar = ({ toggleExpansionSwitch, toggle }) => {
           <InputTextComponent
             type="text"
             placeholder={t("search")}
-            name="search"
+            value={searchvalue}
+            onChange={(e)=>searchChangeHandler(e)}
+            name="searchvalue"
             className="w-full rounded border-[1px] border-[#ddd] px-[1rem] py-[8px] text-[11px] focus:outline-none"
           />
         </div>

@@ -11,7 +11,7 @@ import ButtonComponent from "@common/ButtonComponent";
 import Confirmbox from "@common/Confirmbox";
 import { allApiWithHeaderToken } from "@api/api";
 
-const CompanyList = () => {
+const CompanyList = ({search}) => {
   const { t } = useTranslation("msg");
   const navigate = useNavigate();
   const [isConfirm, setIsConfirm] = useState(false);
@@ -82,20 +82,23 @@ const CompanyList = () => {
   const fetchCompanyList = () => {
     // To get all companies
     setLoader(true);
-    allApiWithHeaderToken("demo_companies", "", "get")
-      .then((response) => {
-        setData(response?.data);
-      })
-      .catch((err) => {
-        errorToaster(err?.response?.data?.error);
-      }).finally(()=>{
-        setLoader(false);
-      });
+    let body = {
+      search: search
+    }
+    allApiWithHeaderToken("demo_companies/filter", body, "post")
+    .then((response) => {
+      setData(response?.data);
+    })
+    .catch((err) => {
+      errorToaster(err?.response?.data?.error);
+    }).finally(()=>{
+      setLoader(false);
+    });
   };
 
   useEffect(() => {
     fetchCompanyList();
-  }, []);
+  }, [search]);
 
   const createCompany = () => {
     navigate("/create-company");

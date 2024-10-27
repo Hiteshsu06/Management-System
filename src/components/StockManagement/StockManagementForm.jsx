@@ -33,7 +33,7 @@ const StockManagementForm = () => {
   const [loader, setLoader] = useState(false);
   const [data, setData] = useState(structure);
   const toast = useRef(null);
-  const [toastType, setToastType] = useState(''); 
+  const [toastType, setToastType] = useState('');
 
   useEffect(()=>{
     if (id && allCompanies.length > 0) {

@@ -11,14 +11,14 @@ import ButtonComponent from "@common/ButtonComponent";
 import Confirmbox from "@common/Confirmbox";
 import { allApiWithHeaderToken } from "@api/api";
 
-const SectorList = () => {
+const SectorList = ({search}) => {
   const { t } = useTranslation("msg");
   const navigate = useNavigate();
   const [isConfirm, setIsConfirm] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   const [loader, setLoader] = useState(false);
   const toast = useRef(null);
-
+  console.log("sector",search)
   const item = {
     heading: t("sectors"),
     routes: [
@@ -113,7 +113,10 @@ const SectorList = () => {
   const fetchSectorList = () => {
     // To get all users stored in json
     setLoader(true);
-    allApiWithHeaderToken("sector_masters", "", "get")
+    let body = {
+      search: search
+    }
+    allApiWithHeaderToken("sector_masters/filter", body, "post")
       .then((response) => {
         setData(response?.data);
       })
@@ -126,7 +129,7 @@ const SectorList = () => {
 
   useEffect(() => {
     fetchSectorList();
-  }, []);
+  }, [search]);
 
   const createStock = () => {
     navigate("/create-sector");
