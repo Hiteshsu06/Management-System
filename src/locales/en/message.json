@@ -124,5 +124,7 @@
    "viewer" : "Viewer",
    "not_authorized" : "Not Authorized",
    "no_permission" : "You do not have permission to view this page.",
-   "back_to_home" : "Back To Home"
+   "back_to_home" : "Back To Home",
+   "help_desk_assitance" : "For assistance, please contact us at:",
+   "help_desk" : "Helpdesk"
 }

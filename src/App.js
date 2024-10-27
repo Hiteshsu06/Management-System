@@ -24,6 +24,7 @@ const Signup = lazy(() => import("@pages/SignupPage"));
 const DashboardPage = lazy(() => import("@pages/DashboardPage"));
 const ProfilePage = lazy(() => import("@pages/ProfilePage"));
 const NotAuthorizedPage = lazy(() => import("@pages/NotAuthorizedPage"));
+const HelpdeskPage = lazy(() => import("@pages/HelpdeskPage"));
 
 export function PrivateRoute({ children, role }) {
   const userRole = JSON.parse(localStorage.getItem('user'))?.role;
@@ -34,7 +35,7 @@ export function PrivateRoute({ children, role }) {
           <Navigate to="/not-authorized" />
       )
   ) : (
-      <Navigate to="/login" />
+      <Navigate to="/dashboard" />
   );
 }
 
@@ -55,6 +56,7 @@ function App() {
           <Route path="/view-chart" element={<ImageViewer />}/>
           <Route path="/dashboard/*" element={<DashboardPage />}/>
           <Route path="/not-authorized" element={<NotAuthorizedPage />}/>
+          <Route path="/help" element={<HelpdeskPage />}/>
           <Route path="/create-company" element={
             <PrivateRoute
                 role={['super_admin', 'viewer']}>

@@ -22,6 +22,9 @@ const AvatarProfile = ({ size, shape }) => {
     {
       label: t("help"),
       icon: "ri-questionnaire-line",
+      command: () => {
+        navigate('/help')
+      }
     },
     {
       label: t("languages"),
