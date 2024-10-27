@@ -124,6 +124,12 @@
     "viewer": "Tittare",
     "not_authorized": "Ej auktoriserad",
     "no_permission": "Du har inte behörighet att visa den här sidan.",
-    "back_to_home": "Tillbaka till hem"
+    "back_to_home": "Tillbaka till hem",
+    "help_desk_assitance": "För hjälp, vänligen kontakta oss på:",
+    "help_desk": "Helpdesk",
+    "under_maintenance": "Underhåll pågår",
+    "info": "Info",
+    "success": "Framgång",
+    "error": "Fel"
  }
  

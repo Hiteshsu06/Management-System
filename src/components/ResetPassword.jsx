@@ -60,7 +60,7 @@ const ResetPassword = () => {
         setToastType('success');
         toast.current.show({
           severity: "success",
-          summary: "Success",
+          summary: t("success"),
           detail: response?.data?.message,
           life: 1000
         });

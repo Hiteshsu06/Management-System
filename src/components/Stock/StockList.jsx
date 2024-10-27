@@ -153,7 +153,7 @@ const StockList = ({search}) => {
  const errorToaster=(err)=>{
   return toast.current.show({
     severity: "error",
-    summary: "Error",
+    summary: t("error"),
     detail: err,
     life: 2000
   });

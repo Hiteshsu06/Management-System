@@ -74,7 +74,7 @@ const IndicesForm = () => {
     setToastType('success');
     return toast.current.show({
       severity: "success",
-      summary: "Success",
+      summary: t("success"),
       detail: response?.data?.message,
       life: 500
     });
@@ -84,7 +84,7 @@ const IndicesForm = () => {
     setToastType('error');
     return toast.current.show({
       severity: "error",
-      summary: "Error",
+      summary: t("error"),
       detail: err,
       life: 1000
     });

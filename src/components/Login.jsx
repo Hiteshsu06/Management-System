@@ -71,7 +71,7 @@ const Login = () => {
         setToastType('success');
         toast.current.show({
           severity: "success",
-          summary: "Success",
+          summary: t("success"),
           detail: response?.data?.message,
           life: 1000
         });
@@ -81,7 +81,7 @@ const Login = () => {
       setToastType('error');
       toast.current.show({
         severity: "error",
-        summary: "Error",
+        summary: t("error"),
         detail: err.response?.data,
         life: 1000
       });
@@ -108,44 +108,45 @@ const Login = () => {
     }
   };
 
-  const loginByFacebook = () => {};
+  const loginByFacebook = () => {
+    toast.current.show({
+      severity: "info",
+      summary: t("info"),
+      detail: t("under_maintenance"),
+      life: 1000
+    });
+  };
 
-  const loginByGoogle = useGoogleLogin({
-    onSuccess: tokenResponse => {
-      authApi(`users/auth/google_oauth2/callback`, tokenResponse, "post", tokenResponse.access_token)
-      .then((response) => {
-        if(response?.status === 200){
-          // let data = {
-          //   firstName: response?.data?.data?.email,
-          //   lastName: "",
-          //   email: response?.data?.data?.email
-          // }
-          // let jwtToken = response?.headers?.authorization;
-          // localStorage.setItem("user", JSON.stringify(data));
-          // Cookies.set('token', jwtToken, { expires: 3 });
-          // setToastType('success');
-          // toast.current.show({
-          //   severity: "success",
-          //   summary: "Success",
-          //   detail: response?.data?.message,
-          //   life: 1000
-          // });
-        }
-      })
-      .catch((err) => {
-        setToastType('error');
-        toast.current.show({
-          severity: "error",
-          summary: "Error",
-          detail: err.response?.data,
-          life: 1000
-        });
-      }).finally(()=>{
-        setLoader(false);
-      });
-    }
-  });
+  // const loginByGoogle = useGoogleLogin({
+  //   onSuccess: tokenResponse => {
+  //     authApi(`users/auth/google_oauth2/callback`, tokenResponse, "post", tokenResponse.access_token)
+  //     .then((response) => {
+  //       if(response?.status === 200){
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       setToastType('error');
+  //       toast.current.show({
+  //         severity: "error",
+  //         summary: "Error",
+  //         detail: err.response?.data,
+  //         life: 1000
+  //       });
+  //     }).finally(()=>{
+  //       setLoader(false);
+  //     });
+  //   }
+  // });
 
+  const loginByGoogle=()=>{
+    toast.current.show({
+      severity: "info",
+      summary: t("info"),
+      detail: t("under_maintenance"),
+      life: 1000
+    });
+  }
+  
   const formik = useFormik({
     initialValues: data,
     onSubmit: onHandleSubmit,
@@ -210,7 +211,7 @@ const Login = () => {
           {" "}
           {t("don't_have_an_account?")}
           <span className="ps-2 font-[500] text-BgTertiaryColor underline">
-            <Link to="/signup">Signup</Link>
+            <Link to="/signup">{t("signup")}</Link>
           </span>
         </div>
         <div className="relative flex items-center py-5">

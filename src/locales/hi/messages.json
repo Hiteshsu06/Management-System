@@ -124,5 +124,11 @@
     "viewer": "दर्शक",
     "not_authorized": "अधिकृत नहीं",
     "no_permission": "आपको इस पेज को देखने की अनुमति नहीं है।",
-    "back_to_home": "होम पर वापस जाएं"
+    "back_to_home": "होम पर वापस जाएं",
+    "help_desk_assitance": "सहायता के लिए, कृपया हमसे संपर्क करें:",
+    "help_desk": "सहायता डेस्क",
+    "under_maintenance": "रखरखाव के अंतर्गत",
+    "info": "जानकारी",
+    "success": "सफलता",
+    "error": "त्रुटि"
  } 

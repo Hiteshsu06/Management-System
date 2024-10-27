@@ -67,7 +67,7 @@ const Signup = () => {
           setToastType('success');
           toast.current.show({
             severity: "success",
-            summary: "Success",
+            summary: t("success"),
             detail: response?.data?.message,
             life: 1000
           });
@@ -76,7 +76,7 @@ const Signup = () => {
       .catch((err) => {
         toast.current.show({
           severity: "error",
-          summary: "Error",
+          summary: t("error"),
           detail: err?.response?.data?.errors,
           life: 3000,
         });
