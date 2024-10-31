@@ -192,6 +192,9 @@ const StockManagementForm = () => {
   });
 
   const { values, errors, handleSubmit, handleChange, touched } = formik;
+
+  console.log("e",values);
+  
   return (
     <div className="h-screen p-auto">
       <div className="flex min-h-full bg-BgPrimaryColor py-4 overflow-y-auto">
@@ -291,7 +294,7 @@ const StockManagementForm = () => {
         </div>
         <div className="col-span-4 md:col-span-2">
           <InputTextComponent
-            value={values?.gst}
+            value={values?.gst && values?.gst?.toLocaleUpperCase()}
             onChange={handleChange}
             type="text"
             placeholder={t("gst")}

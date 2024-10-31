@@ -53,7 +53,12 @@ const ForgotPassword = () => {
       }
     })
     .catch((err) => {
-      console.log("err", err);
+      toast.current.show({
+        severity: "error",
+        summary: t("error"),
+        detail: err?.response?.data?.error,
+        life: 3000,
+      });
     }).finally(()=>{
       setLoader(false);
     });

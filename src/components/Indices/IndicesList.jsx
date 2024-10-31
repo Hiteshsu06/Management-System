@@ -11,6 +11,7 @@ import DataTable from "@common/DataTable";
 import ButtonComponent from "@common/ButtonComponent";
 import Confirmbox from "@common/Confirmbox";
 import { allApiWithHeaderToken } from "@api/api";
+import Loading from '@common/Loading';
 
 const IndicesList = ({search}) => {
   const { t } = useTranslation("msg");
@@ -20,6 +21,7 @@ const IndicesList = ({search}) => {
   const [loader, setLoader] = useState(false);
   const [domesticData, setDomesticData] = useState([]);
   const [internationalData, setInternational] = useState([]);
+  const [exportLoader, setExportLoader] = useState(false);
   const toast = useRef(null);
 
   const item = {
@@ -127,7 +129,7 @@ const IndicesList = ({search}) => {
   };
 
   const exportData= async ()=>{
-    setLoader(true);
+    setExportLoader(true);
     try {
       allApiWithHeaderToken("indices/export-report", "", "get", "", "blob")
         .then((response) => {
@@ -139,13 +141,12 @@ const IndicesList = ({search}) => {
           document.body.appendChild(link);
           link.click();
           link.remove();
-          setLoader(false);
         })
         .catch((err) => {
           console.log("err", err);
         })
         .finally(()=>{
-          setLoader(false);
+          setExportLoader(false);
         });
       } 
     catch (error) {
@@ -165,6 +166,7 @@ const IndicesList = ({search}) => {
   return (
     <div className="text-TextPrimaryColor">
       <Toast ref={toast} position="top-right" style={{scale: '0.7'}}/>
+      {exportLoader && <Loading width='w-[85%]'/>}
       <Confirmbox
         isConfirm={isConfirm}
         closeDialogbox={closeDialogbox}

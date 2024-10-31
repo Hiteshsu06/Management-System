@@ -18,6 +18,8 @@ const Sidebar = ({selectSidebarItem}) => {
       setActiveItem("company");
     } else if (path.includes("/dashboard/stock-management")) {
       setActiveItem("stock_management");
+    } else if (path.includes("/dashboard/users")) {
+      setActiveItem("users");
     } else if (path.includes("/dashboard/sector-master")) {
       setActiveItem("sector_master");
     } else if (path.includes("/dashboard/indices")) {
@@ -93,6 +95,19 @@ const Sidebar = ({selectSidebarItem}) => {
       },
       className: activeItem === "stocks" ? "active" : "",
       allowedRoles: ["admin", "super_admin"]
+    },
+    {
+      label: (
+        <div className="flex items-center py-[2px]">
+          <i className="ri-group-line mr-2"></i>
+          <span>{t("users")}</span>
+        </div>
+      ),
+      command: () => {
+        navigate("/dashboard/users");
+      },
+      className: activeItem === "users" ? "active" : "",
+      allowedRoles: ["super_admin"]
     },
   ];
   

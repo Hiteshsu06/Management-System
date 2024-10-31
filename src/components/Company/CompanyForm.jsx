@@ -203,7 +203,7 @@ const CompanyForm = () => {
         </div>
         <div className="col-span-4 md:col-span-2">
           <InputTextComponent
-            value={values?.gstNumber}
+            value={values?.gstNumber?.toLocaleUpperCase()}
             onChange={handleChange}
             type="text"
             placeholder={t("company_gst_number")}

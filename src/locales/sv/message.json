@@ -130,6 +130,10 @@
     "under_maintenance": "Underhåll pågår",
     "info": "Info",
     "success": "Framgång",
-    "error": "Fel"
+    "error": "Fel",
+    "users": "Användare",
+    "role": "Roll",
+    "delete": "Radera",
+    "no_records_found": "Inga poster hittades"
  }
  

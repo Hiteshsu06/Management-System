@@ -55,8 +55,7 @@ const ProfilePage = () => {
       last_name: value?.lastName,
       gender: value?.gender,
       full_address: value?.address,
-      profile_image: value?.profileImage,
-      role: "viewer"
+      profile_image: value?.profileImage
     };
     allApiWithHeaderToken(`users`, body, "put", 'multipart/form-data')
       .then((response) => {
@@ -133,7 +132,6 @@ const ProfilePage = () => {
   });
 
   const successToaster=(response)=>{
-    console.log("response",response)
     setToastType('success');
     return toast.current.show({
       severity: "success",

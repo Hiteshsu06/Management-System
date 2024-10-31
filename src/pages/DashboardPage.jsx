@@ -1,5 +1,14 @@
 // components
-import { Topbar, Sidebar, CompanyList, StockManagementList, StockList, SectorList, IndicesList } from "@components";
+import { 
+  Topbar, 
+  Sidebar, 
+  CompanyList, 
+  StockManagementList, 
+  StockList, 
+  SectorList, 
+  IndicesList, 
+  UserList 
+} from "@components";
 import { PrivateRoute } from "../App";
 import Loading from "@common/Loading";
 
@@ -65,9 +74,15 @@ const DashboardPage = () => {
             <Routes>
               <Route path="/" element={
                 <PrivateRoute
-                    role={['super_admin', 'viewer']}>
+                role={['super_admin', 'viewer']}>
                     <CompanyList search={searchField}/>
                 </PrivateRoute>}
+              />
+              <Route path="/users" element={
+                  <PrivateRoute
+                      role={['super_admin']}>
+                      <UserList search={searchField}/>
+                  </PrivateRoute>}
               />
               <Route path="/stock-management" element={
                 <PrivateRoute

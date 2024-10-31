@@ -11,6 +11,7 @@ import IndicesList from './Indices/IndicesList';
 import IndicesForm from './Indices/IndicesForm';
 import StockList from './Stock/StockList';
 import StockForm from './Stock/StockForm';
+import UserList from './User/UserList';
 
 export { 
     Topbar, 
@@ -24,5 +25,6 @@ export {
     IndicesList,
     IndicesForm,
     StockList,
-    StockForm
+    StockForm,
+    UserList
 };

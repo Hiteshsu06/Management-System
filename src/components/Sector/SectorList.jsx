@@ -10,6 +10,7 @@ import DataTable from "@common/DataTable";
 import ButtonComponent from "@common/ButtonComponent";
 import Confirmbox from "@common/Confirmbox";
 import { allApiWithHeaderToken } from "@api/api";
+import Loading from '@common/Loading';
 
 const SectorList = ({search}) => {
   const { t } = useTranslation("msg");
@@ -17,8 +18,9 @@ const SectorList = ({search}) => {
   const [isConfirm, setIsConfirm] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   const [loader, setLoader] = useState(false);
+  const [exportLoader, setExportLoader] = useState(false);
   const toast = useRef(null);
-  console.log("sector",search)
+
   const item = {
     heading: t("sectors"),
     routes: [
@@ -111,7 +113,6 @@ const SectorList = ({search}) => {
   };
 
   const fetchSectorList = () => {
-    // To get all users stored in json
     setLoader(true);
     let body = {
       search: search
@@ -136,7 +137,7 @@ const SectorList = ({search}) => {
   };
 
   const exportData= async ()=>{
-    setLoader(true);
+    setExportLoader(true);
     try {
       allApiWithHeaderToken("sectors/export-report", "", "get", "", "blob")
         .then((response) => {
@@ -148,13 +149,12 @@ const SectorList = ({search}) => {
           document.body.appendChild(link);
           link.click();
           link.remove();
-          setLoader(false);
         })
         .catch((err) => {
           console.log("err", err);
         })
         .finally(()=>{
-          setLoader(false);
+          setExportLoader(false);
         });
   } catch (error) {
       console.error('Error downloading the CSV file:', error);
@@ -173,6 +173,7 @@ const SectorList = ({search}) => {
   return (
     <div className="text-TextPrimaryColor">
       <Toast ref={toast} position="top-right" style={{scale: '0.7'}}/>
+      {exportLoader && <Loading width='w-[85%]'/>}
       <Confirmbox
         isConfirm={isConfirm}
         closeDialogbox={closeDialogbox}
@@ -184,7 +185,7 @@ const SectorList = ({search}) => {
         <ButtonComponent
           onClick={() => exportData()}
           type="button"
-          disabled={(data?.length > 0 ) ? false : true}
+          disabled={(data?.length > 0 || exportLoader ) ? false : true}
           label={t("export_data")}
           className="rounded bg-BgTertiaryColor px-6 py-2 text-[12px] text-white"
           icon="ri-download-2-fill"

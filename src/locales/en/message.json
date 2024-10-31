@@ -123,13 +123,17 @@
    "reset_password" : "Reset Password",
    "viewer" : "Viewer",
    "not_authorized" : "Not Authorized",
-   "no_permission" : "You do not have permission to view this page.",
+   "no_permission" : "You do not have permission to view this page. Please contact admin for more details.",
    "back_to_home" : "Back To Home",
    "help_desk_assitance" : "For assistance, please contact us at:",
    "help_desk" : "Helpdesk",
    "under_maintenance" : "Under Maintenance",
-
    "info" : "Info",
    "success" : "Success",
-   "error" : "Error"
+   "error" : "Error",
+
+   "users" : "Users",
+   "role" : "Role",
+   "delete" : "Delete",
+   "no_records_found" : "No records found"
 }

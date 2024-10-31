@@ -5,9 +5,12 @@ import React from 'react';
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Skeleton } from 'primereact/skeleton';
+import { useTranslation } from "react-i18next";
 
 const Datatable = ({ columns, data = [], loader, className, showGridlines }) => {
   const items = Array?.from({ length: 5 }, (v, i) => i);
+  const { t } = useTranslation("msg");
+  
   return (
     <React.Fragment>
       <DataTable
@@ -18,6 +21,7 @@ const Datatable = ({ columns, data = [], loader, className, showGridlines }) => 
         paginator
         rows={5}
         rowsPerPageOptions={[5, 10, 25, 50]}
+        emptyMessage={t("no_records_found")}
       >
         {columns?.map((col, i) => (
           <Column
