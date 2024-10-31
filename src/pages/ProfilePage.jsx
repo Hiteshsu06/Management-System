@@ -53,11 +53,13 @@ const ProfilePage = () => {
     let body = {
       first_name: value?.firstName,
       last_name: value?.lastName,
-      gender: value?.gender,
-      full_address: value?.address,
-      profile_image: value?.profileImage
+      full_address: value?.address
     };
-    allApiWithHeaderToken(`users`, body, "put", 'multipart/form-data')
+    body['gender'] = value?.gender ? value?.gender : "";
+    if(value?.profileImage){
+      body['profile_image'] = value?.profileImage;
+    }
+    allApiWithHeaderToken(`users/update_user/${id}`, body, "put", 'multipart/form-data')
       .then((response) => {
         successToaster(response);
         let data = {
@@ -106,9 +108,9 @@ const ProfilePage = () => {
         let data = {
           firstName: response?.data?.first_name,
           lastName: response?.data?.last_name,
-          email: response?.data?.email ,
+          email: response?.data?.email,
           address: response?.data?.full_address,
-          profile_image_url: response?.data?.profile_image_url
+          profileImageUrl: response?.data?.profile_image_url
         }
         const genderData = genderList?.find((item)=> item?.value === response?.data?.gender);
         data['gender'] = genderData?.value;
