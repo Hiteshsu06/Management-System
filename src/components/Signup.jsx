@@ -57,7 +57,9 @@ const Signup = () => {
     let body = {
       user: {
         email: value?.email,
-        password: value?.password
+        password: value?.password,
+        first_name: value?.firstname,
+        last_name: value?.lastname,
       }
     };
     setLoader(true);
