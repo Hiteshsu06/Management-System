@@ -85,7 +85,7 @@ const AvatarProfile = ({ size, shape }) => {
   return (
     <div className="card justify-content-center flex text-TextPrimaryColor">
       <div className="me-4">
-        <div className="text-[0.8rem]">{getCredentials()}</div>
+        <div className="text-[0.8rem] capitalize">{getCredentials()}</div>
         <div className="text-[0.6rem]">{t(data?.role)}</div>
       </div>
       <Avatar

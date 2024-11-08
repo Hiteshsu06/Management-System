@@ -20,7 +20,7 @@ const NotAuthorizedPage = () => {
     navigate(navigationUrl);
   }
   return (
-    <div className="h-screen items-center flex justify-center max-sm:px-4">
+    <div className="my-16 mt-[10rem] flex justify-center max-sm:px-4">
       <div className="w-1/3 max-lg:w-1/2 max-sm:w-full border px-5 py-5 max-lg:px-10 max-md:px-5">
         <div className="text-center text-[1.5rem] font-semibold tracking-wide max-lg:text-[1.4em] max-sm:text-[1rem] text-red-600">
           {t("not_authorized")}
